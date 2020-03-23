@@ -12,7 +12,8 @@
 
 NAME = 21sh
 
-SRCS =	srcs/main.c \
+SRCS =	srcs/get_next_line.c \
+	srcs/main.c \
 
 INCL =	includes/
 INCL1 = libftprintf/includes
