@@ -12,8 +12,10 @@
 
 NAME = 21sh
 
-SRCS =	srcs/get_next_line.c \
-	srcs/main.c \
+SRCS = srcs/main.c \
+       srcs/config_terminal.c \
+       srcs/user_input.c \
+       srcs/utils.c \
 
 INCL =	includes/
 INCL1 = libftprintf/includes
@@ -24,13 +26,13 @@ LIBFOL = libftprintf/
 
 all: $(NAME)
 $(NAME):
-	#make -C libftprintf/
-	gcc -Wall -Werror -Wextra -I $(INCL) -I $(INCL1) -I $(INCL2) $(SRCS) -L$(LIBFOL) -l$(LIB) -o $(NAME)
+	make -C libftprintf/
+	gcc -Wall -Werror -Wextra -I $(INCL) -I $(INCL1) -I $(INCL2) $(SRCS) -L$(LIBFOL) -l$(LIB) -ltermcap -o $(NAME)
 clean:
-	#make -C libftprintf/ clean
+	make -C libftprintf/ clean
 
 fclean: clean
-	#make -C libftprintf/ fclean
+	make -C libftprintf/ fclean
 	rm -f $(NAME)
 
 re: fclean all

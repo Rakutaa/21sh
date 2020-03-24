@@ -1,22 +1,20 @@
 #include "halfsh.h"
-#include "get_next_line.h"
 
-static void	display_prompt(void)
+int		main(int argc, char **argv, char **env)
 {
-	write(1, "$>", 2);
-}
+	t_terminal *term;
 
-int		main(void)
-{
-	char	*input;
-
-	while (1)
-	{
-		display_prompt();
-		if (get_next_line(1, &input) == 0)
-			break ;
-		ft_printf("%s\n", input);
-		free(input);
-	}
+	(void)argc;
+	(void)argv;
+	term = (t_terminal *)malloc(sizeof(t_terminal));
+	if (!term)
+		return (1);
+	tcgetattr(1, &term->original);
+	term->shell = term->original;
+	term->env = env;
+	config_terminal(0, term);
+	user_input(term);
+	config_terminal(1, term);
+	free(term);
 	return (0);
 }
