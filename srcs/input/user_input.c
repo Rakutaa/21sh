@@ -35,8 +35,11 @@ static void	display_input(t_terminal *term, char *input)
 			return ;
 		if (ft_isprint(sum))
 		{
-			input[count] = sum;	
-			ft_putchar(sum);
+			input[count] = sum;
+			tputs(tgetstr("cr", NULL), 1, print_char);
+			tputs(tgetstr("ce", NULL), 1, print_char);
+			display_prompt();
+			ft_putstr(input);
 			count++;
 		}
 	}

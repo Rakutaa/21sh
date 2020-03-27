@@ -20,6 +20,7 @@ typedef struct		s_terminal
 
 int			print_char(int c);
 int			config_terminal(int reset, t_terminal *term);
+void			config_signal(t_terminal *term);
 void			user_input(t_terminal *term);
 
 #endif
