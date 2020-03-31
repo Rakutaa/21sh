@@ -22,12 +22,10 @@ static int	listen_keys(void)
 	return (sum);
 }
 
-static void	display_input(t_terminal *term, char *input)
+static void	display_input(t_terminal *term)
 {
-	size_t	count;
 	int	sum;
 
-	count = 0;
 	while (term)
 	{
 		sum = listen_keys();
@@ -35,25 +33,25 @@ static void	display_input(t_terminal *term, char *input)
 			return ;
 		if (ft_isprint(sum))
 		{
-			input[count] = sum;
-			tputs(tgetstr("cr", NULL), 1, print_char);
+			term->in->string[term->in->index] = sum;
 			tputs(tgetstr("ce", NULL), 1, print_char);
-			display_prompt();
-			ft_putstr(input);
-			count++;
+			ft_putstr(term->in->string + term->in->index);
+			term->in->index++;
 		}
 	}
 }
 
 void		user_input(t_terminal *term)
 {
-	char 	input[ARG_MAX];
-
+	term->in = (t_input *)malloc(sizeof(t_input));
+	if (!term->in)
+		return ;
 	while (term)
 	{	
-		ft_bzero(input, ARG_MAX);
+		ft_bzero(term->in->string, ARG_MAX);
+		term->in->index = 0;
 		display_prompt();
-		display_input(term, input);
+		display_input(term);
 		// TODO Execution.
 		ft_printf("\nUNDER CONSTRUCTION\n");
 	}

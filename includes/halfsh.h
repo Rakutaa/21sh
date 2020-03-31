@@ -10,13 +10,19 @@
 
 # define ARG_MAX 2097152
 
+typedef struct		s_input
+{
+	char		string[ARG_MAX];
+	size_t		index;
+}			t_input;
+
 typedef struct		s_terminal
 {
 	struct termios	original;
 	struct termios	shell;
 	char		**env;
+	t_input		*in;
 }			t_terminal;
-
 
 int			print_char(int c);
 int			config_terminal(int reset, t_terminal *term);
