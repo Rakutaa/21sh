@@ -38,6 +38,8 @@ static void	display_input(t_terminal *term)
 			ft_putstr(term->in->string + term->in->index);
 			term->in->index++;
 		}
+		else
+			check_other(term, sum);
 	}
 }
 
@@ -53,6 +55,6 @@ void		user_input(t_terminal *term)
 		display_prompt();
 		display_input(term);
 		// TODO Execution.
-		ft_printf("\nUNDER CONSTRUCTION\n");
+		ft_printf("\nInput: %s\n", term->in->string);
 	}
 }
