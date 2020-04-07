@@ -29,5 +29,6 @@ int			config_terminal(int reset, t_terminal *term);
 void			config_signal(t_terminal *term);
 void			user_input(t_terminal *term);
 void			check_other(t_terminal *term, int sum);
+void			print_section(t_input *in);
 
 #endif

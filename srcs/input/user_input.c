@@ -34,9 +34,8 @@ static void	display_input(t_terminal *term)
 		if (ft_isprint(sum))
 		{
 			term->in->string[term->in->index] = sum;
-			tputs(tgetstr("ce", NULL), 1, print_char);
-			ft_putstr(term->in->string + term->in->index);
 			term->in->index++;
+			print_section(term->in);
 		}
 		else
 			check_other(term, sum);
