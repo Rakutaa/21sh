@@ -6,8 +6,7 @@ static void	signal_resize(int signum)
 {
 	if (signum == SIGWINCH)
 	{
-		tputs(tgetstr("cl", NULL), 1, print_char);
-		tputs(tgetstr("cd", NULL), 1, print_char);
+		ioctl(1, TIOCGWINSZ, &g_term->size);
 		ioctl(1, TIOCSTI, "");
 	}
 }
@@ -27,6 +26,7 @@ static void	signal_continue(int signum)
 	if (signum == SIGCONT)
 	{
 		config_terminal(0, g_term);
+		print_input(g_term->in);
 		ioctl(1, TIOCSTI, "");
 	}
 }

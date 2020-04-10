@@ -1,11 +1,6 @@
 #include "halfsh.h"
 #include "keyboard.h"
 
-static void	display_prompt(void)
-{
-	write(1, "$>", 2);
-}
-
 static int	listen_keys(void)
 {
 	char	key[KEY_SIZE + 1];
@@ -35,7 +30,7 @@ static void	display_input(t_terminal *term)
 		{
 			term->in->string[term->in->index] = sum;
 			term->in->index++;
-			print_section(term->in);
+			print_input(term->in);
 		}
 		else
 			check_other(term, sum);

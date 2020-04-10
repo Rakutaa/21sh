@@ -30,7 +30,7 @@ void		check_other(t_terminal *term, int sum)
 		term->in->string + term->in->index + 1, \
 		ft_strlen(term->in->string + term->in->index + 1));
 		term->in->string[len - 1] = 0;
-		print_section(term->in);
+		print_input(term->in);
 	}
 	else
 		check_arrows(term, sum);

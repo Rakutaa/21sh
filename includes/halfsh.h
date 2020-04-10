@@ -20,6 +20,7 @@ typedef struct		s_terminal
 {
 	struct termios	original;
 	struct termios	shell;
+	struct winsize	size;
 	char		**env;
 	t_input		*in;
 }			t_terminal;
@@ -29,6 +30,7 @@ int			config_terminal(int reset, t_terminal *term);
 void			config_signal(t_terminal *term);
 void			user_input(t_terminal *term);
 void			check_other(t_terminal *term, int sum);
-void			print_section(t_input *in);
+void			display_prompt();
+void			print_input(t_input *in);
 
 #endif
