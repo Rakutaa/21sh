@@ -14,6 +14,7 @@ typedef struct		s_input
 {
 	char		string[ARG_MAX];
 	size_t		index;
+	size_t		rows;
 }			t_input;
 
 typedef struct		s_terminal

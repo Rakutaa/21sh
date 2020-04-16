@@ -13,7 +13,8 @@ int		main(int argc, char **argv, char **env)
 	term->shell = term->original;
 	term->env = env;
 	config_terminal(0, term);
-	config_signal(term);
+	config_signal(term);	
+	ioctl(1, TIOCGWINSZ, &term->size);
 	user_input(term);
 	config_terminal(1, term);
 	free(term);
