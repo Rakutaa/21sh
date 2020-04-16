@@ -31,6 +31,6 @@ void			config_signal(t_terminal *term);
 void			user_input(t_terminal *term);
 void			check_other(t_terminal *term, int sum);
 void			display_prompt();
-void			print_input(t_input *in);
+void			print_input(t_terminal *term);
 
 #endif

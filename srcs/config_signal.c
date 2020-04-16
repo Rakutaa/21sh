@@ -26,7 +26,7 @@ static void	signal_continue(int signum)
 	if (signum == SIGCONT)
 	{
 		config_terminal(0, g_term);
-		print_input(g_term->in);
+		print_input(g_term);
 		ioctl(1, TIOCSTI, "");
 	}
 }

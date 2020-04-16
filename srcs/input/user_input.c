@@ -30,7 +30,7 @@ static void	display_input(t_terminal *term)
 		{
 			term->in->string[term->in->index] = sum;
 			term->in->index++;
-			print_input(term->in);
+			print_input(term);
 		}
 		else
 			check_other(term, sum);
