@@ -1,10 +1,5 @@
 #include "halfsh.h"
 
-void	display_prompt(void)
-{
-	write(1, "$>", 2);
-}
-
 static void	cursor_position(t_terminal *term)
 {
 	size_t	cursor;
@@ -14,11 +9,8 @@ static void	cursor_position(t_terminal *term)
 	tputs(tgetstr("cr", NULL), 1, print_char);
 	while (count--)
 		tputs(tgetstr("up", NULL), 1, print_char);
-	/* next two rows are used to jump over the prompt. */
-	//tputs(tgetstr("nd", NULL), 1, print_char);
-	//tputs(tgetstr("nd", NULL), 1, print_char);
 	cursor = -1;
-	while (++cursor != term->in->index)
+	while (++cursor != term->in->index + ft_strlen(PROMPT))
 	{
 		if (cursor / term->size.ws_col && !(cursor % term->size.ws_col))
 			tputs(tgetstr("do", NULL), 1, print_char);
@@ -33,14 +25,14 @@ void		print_input(t_terminal *term)
 	size_t	count;
 	size_t	len;
 
-	len = ft_strlen(term->in->string) - 1;
+	len = ft_strlen(term->in->string) + ft_strlen(PROMPT) - 1;
 	term->in->rows = len / term->size.ws_col;
 	count = term->in->rows;
 	tputs(tgetstr("cr", NULL), 1, print_char);
 	while (count-- && len > term->size.ws_col * count)
 		tputs(tgetstr("up", NULL), 1, print_char);
 	tputs(tgetstr("cd", NULL), 1, print_char);
-	//display_prompt();
+	ft_putstr(PROMPT);
 	ft_putstr(term->in->string);
 	cursor_position(term);
 }

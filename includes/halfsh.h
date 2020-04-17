@@ -9,6 +9,7 @@
 # include <signal.h>
 
 # define ARG_MAX 2097152
+# define PROMPT "$>"
 
 typedef struct		s_input
 {
@@ -31,7 +32,6 @@ int			config_terminal(int reset, t_terminal *term);
 void			config_signal(t_terminal *term);
 void			user_input(t_terminal *term);
 void			check_other(t_terminal *term, int sum);
-void			display_prompt();
 void			print_input(t_terminal *term);
 
 #endif

@@ -47,7 +47,7 @@ void		user_input(t_terminal *term)
 		ft_bzero(term->in->string, ARG_MAX);
 		term->in->index = 0;
 		term->in->rows = 0;
-		//display_prompt();
+		ft_putstr(PROMPT);
 		display_input(term);
 		// TODO Execution.
 		ft_printf("\nInput: %s\n", term->in->string);
