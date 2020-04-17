@@ -18,7 +18,6 @@ SRCS = srcs/main.c \
        srcs/utils.c \
        srcs/input/user_input.c \
        srcs/input/check_other.c \
-       srcs/input/utils.c \
 
 INCL =	includes/
 INCL1 = libftprintf/includes
