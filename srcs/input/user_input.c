@@ -17,25 +17,6 @@ static int	listen_keys(void)
 	return (sum);
 }
 
-static void	display_input(t_terminal *term)
-{
-	int	sum;
-
-	while (term)
-	{
-		sum = listen_keys();
-		if (sum == ENTER)
-			return ;
-		if (ft_isprint(sum))
-		{
-			term->in->string[term->in->index] = sum;
-			term->in->index++;
-			print_input(term);
-		}
-		else
-			check_other(term, sum);
-	}
-}
 
 static void	cursor_position(t_terminal *term)
 {
@@ -72,6 +53,30 @@ void		print_input(t_terminal *term)
 	ft_putstr(PROMPT);
 	ft_putstr(term->in->string);
 	cursor_position(term);
+}
+
+static void	display_input(t_terminal *term)
+{
+	int	sum;
+
+	while (term)
+	{
+		sum = listen_keys();
+		if (sum == ENTER)
+			return ;
+		if (ft_isprint(sum))
+		{
+			if (term->in->string[term->in->index])		
+				ft_memmove(term->in->string + term->in->index + 1, \
+				term->in->string + term->in->index, \
+				ft_strlen(term->in->string + term->in->index));
+			term->in->string[term->in->index] = sum;
+			term->in->index++;
+			print_input(term);
+		}
+		else
+			check_other(term, sum);
+	}
 }
 
 void		user_input(t_terminal *term)
