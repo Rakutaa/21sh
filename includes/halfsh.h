@@ -33,5 +33,6 @@ void			config_signal(t_terminal *term);
 void			user_input(t_terminal *term);
 void			check_other(t_terminal *term, int sum);
 void			print_input(t_terminal *term);
+void			arrow_navigation(t_terminal *term, int sum);
 
 #endif
