@@ -18,12 +18,12 @@ static int	listen_keys(void)
 }
 
 
-static void	cursor_position(t_terminal *term)
+static void	cursor_position(t_terminal *term, size_t len)
 {
 	size_t	cursor;
 	size_t	count;
 
-	count = term->in->rows;
+	count = len / term->size.ws_col;
 	tputs(tgetstr("cr", NULL), 1, print_char);
 	while (count--)
 		tputs(tgetstr("up", NULL), 1, print_char);
@@ -44,15 +44,15 @@ void		print_input(t_terminal *term)
 	size_t	len;
 
 	len = ft_strlen(term->in->string) + ft_strlen(PROMPT) - 1;
-	term->in->rows = len / term->size.ws_col;
-	count = term->in->rows;
+	count = term->in->line;//len / term->size.ws_col;
 	tputs(tgetstr("cr", NULL), 1, print_char);
 	while (count-- && len > term->size.ws_col * count)
 		tputs(tgetstr("up", NULL), 1, print_char);
 	tputs(tgetstr("cd", NULL), 1, print_char);
 	ft_putstr(PROMPT);
 	ft_putstr(term->in->string);
-	cursor_position(term);
+	cursor_position(term, len);
+	term->in->line = (term->in->index + ft_strlen(PROMPT)) / term->size.ws_col;
 }
 
 static void	display_input(t_terminal *term)
@@ -88,7 +88,7 @@ void		user_input(t_terminal *term)
 	{	
 		ft_bzero(term->in->string, ARG_MAX);
 		term->in->index = 0;
-		term->in->rows = 0;
+		term->in->line = 0;
 		ft_putstr(PROMPT);
 		display_input(term);
 		// TODO Execution.

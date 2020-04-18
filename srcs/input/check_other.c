@@ -3,9 +3,20 @@
 
 static void	check_arrows(t_terminal *term, int sum)
 {
+	size_t	cols;
+
+	cols = term->size.ws_col;
 	if (sum == LEFT && term->in->index > 0)
 	{
-		tputs(tgetstr("le", NULL), 1, print_char);
+		if ((term->in->index + ft_strlen(PROMPT)) / cols && !((term->in->index + ft_strlen(PROMPT)) % cols))
+		{
+			tputs(tgetstr("up", NULL), 1, print_char);
+			term->in->line--;
+			while (cols--)
+				tputs(tgetstr("nd", NULL), 1, print_char);
+		}
+		else
+			tputs(tgetstr("le", NULL), 1, print_char);
 		term->in->index--;
 	}
 	else if (sum == RIGHT && term->in->string[term->in->index])
