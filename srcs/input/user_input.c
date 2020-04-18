@@ -44,7 +44,7 @@ void		print_input(t_terminal *term)
 	size_t	len;
 
 	len = ft_strlen(term->in->string) + ft_strlen(PROMPT) - 1;
-	count = term->in->line;//len / term->size.ws_col;
+	count = term->in->line;
 	tputs(tgetstr("cr", NULL), 1, print_char);
 	while (count-- && len > term->size.ws_col * count)
 		tputs(tgetstr("up", NULL), 1, print_char);
@@ -75,7 +75,8 @@ static void	display_input(t_terminal *term)
 			print_input(term);
 		}
 		else
-			check_other(term, sum);
+			if (special_keys(term, sum))
+				print_input(term);
 	}
 }
 

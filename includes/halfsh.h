@@ -14,7 +14,7 @@
 typedef struct		s_input
 {
 	char		string[ARG_MAX];
-	size_t		index;
+	int		index;
 	size_t		line;
 }			t_input;
 
@@ -31,7 +31,7 @@ int			print_char(int c);
 int			config_terminal(int reset, t_terminal *term);
 void			config_signal(t_terminal *term);
 void			user_input(t_terminal *term);
-void			check_other(t_terminal *term, int sum);
+int			special_keys(t_terminal *term, int sum);
 void			print_input(t_terminal *term);
 void			arrow_navigation(t_terminal *term, int sum);
 

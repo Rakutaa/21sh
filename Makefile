@@ -17,7 +17,7 @@ SRCS = srcs/main.c \
        srcs/config_signal.c \
        srcs/utils.c \
        srcs/input/user_input.c \
-       srcs/input/check_other.c \
+       srcs/input/special_keys.c \
        srcs/input/arrow_navigation.c \
 
 INCL =	includes/

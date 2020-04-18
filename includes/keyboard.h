@@ -12,6 +12,8 @@
 # define DOWN 184
 # define RIGHT 185
 # define LEFT 186
+# define END 188
+# define HOME 190
 # define DEL 295
 
 #endif
