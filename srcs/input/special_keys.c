@@ -1,7 +1,7 @@
 #include "halfsh.h"
 #include "keyboard.h"
 
-static int	delete_char(t_terminal *term)
+static void	delete_char(t_terminal *term)
 {
 	size_t	len;
 
@@ -14,20 +14,17 @@ static int	delete_char(t_terminal *term)
 		term->in->string + term->in->index + 1, \
 		ft_strlen(term->in->string + term->in->index + 1));
 		term->in->string[len - 1] = 0;
-		return (1);
 	}
-	return (0);
 }
 
-int		special_keys(t_terminal *term, int sum)
+void		special_keys(t_terminal *term, int sum)
 {
 	if (sum == LEFT || sum == RIGHT)
 		arrow_navigation(term, sum);
 	else if (sum == BACK)
-		return (delete_char(term));
+		delete_char(term);
 	else if (sum == HOME)
 		term->in->index = 0;
 	else if (sum == END)
 		term->in->index = ft_strlen(term->in->string);
-	return (0);
 }

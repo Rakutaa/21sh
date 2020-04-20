@@ -72,11 +72,10 @@ static void	display_input(t_terminal *term)
 				ft_strlen(term->in->string + term->in->index));
 			term->in->string[term->in->index] = sum;
 			term->in->index++;
-			print_input(term);
 		}
 		else
-			if (special_keys(term, sum))
-				print_input(term);
+			special_keys(term, sum);
+		print_input(term);
 	}
 }
 

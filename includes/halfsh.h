@@ -31,7 +31,7 @@ int			print_char(int c);
 int			config_terminal(int reset, t_terminal *term);
 void			config_signal(t_terminal *term);
 void			user_input(t_terminal *term);
-int			special_keys(t_terminal *term, int sum);
+void			special_keys(t_terminal *term, int sum);
 void			print_input(t_terminal *term);
 void			arrow_navigation(t_terminal *term, int sum);
 
