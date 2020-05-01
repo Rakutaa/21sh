@@ -17,7 +17,6 @@ static int	listen_keys(void)
 	return (sum);
 }
 
-
 static void	cursor_position(t_terminal *term, size_t len)
 {
 	size_t	cursor;
@@ -82,15 +81,19 @@ static void	display_input(t_terminal *term)
 void		user_input(t_terminal *term)
 {
 	term->in = (t_input *)malloc(sizeof(t_input));
+
 	if (!term->in)
 		return ;
 	while (term)
-	{	
+	{
 		ft_bzero(term->in->string, ARG_MAX);
 		term->in->index = 0;
 		term->in->line = 0;
+		term->h_index = -1;
 		ft_putstr(PROMPT);
 		display_input(term);
+		if (term->in->string[0])
+			ft_lstadd(&term->history, ft_lstnew(term->in->string, ft_strlen(term->in->string)));
 		// TODO Execution.
 		ft_printf("\nInput: %s\n", term->in->string);
 	}

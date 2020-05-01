@@ -21,6 +21,8 @@ void		special_keys(t_terminal *term, int sum)
 {
 	if (sum == LEFT || sum == RIGHT)
 		arrow_navigation(term, sum);
+	else if (sum == UP || sum == DOWN)
+		history_navigation(term, sum);
 	else if (sum == BACK)
 		delete_char(term);
 	else if (sum == HOME)

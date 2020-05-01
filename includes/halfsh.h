@@ -25,6 +25,8 @@ typedef struct		s_terminal
 	struct winsize	size;
 	char		**env;
 	t_input		*in;
+	t_list		*history;
+	int		h_index;
 }			t_terminal;
 
 int			print_char(int c);
@@ -34,5 +36,6 @@ void			user_input(t_terminal *term);
 void			special_keys(t_terminal *term, int sum);
 void			print_input(t_terminal *term);
 void			arrow_navigation(t_terminal *term, int sum);
+void			history_navigation(t_terminal *term, int sum);
 
 #endif
