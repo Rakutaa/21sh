@@ -16,6 +16,7 @@ static int	init_shell(struct termios shell)
 	if (success > 0)
 	{
 		tputs(tgetstr("ti", NULL), 1, print_char);
+		tputs(tgetstr("ho", NULL), 1, print_char);
 		shell.c_lflag &= ~(ICANON | ECHO);
 		tcsetattr(1, TCSAFLUSH, &shell);
 		return (0);

@@ -1,6 +1,6 @@
 #include "halfsh.h"
 
-t_terminal *g_term;
+static t_terminal *g_term;
 
 static void	signal_resize(int signum)
 {

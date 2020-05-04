@@ -51,5 +51,4 @@ void	history_navigation(t_terminal *term, int sum)
 		navigate_up(term);
 	else if (sum == DOWN)
 		navigate_down(term);
-	ft_putnbr(term->h_index);
 }
