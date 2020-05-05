@@ -1,7 +1,7 @@
 #include "halfsh.h"
 #include "keyboard.h"
 
-static void	navigate_left(t_terminal *term, size_t len, size_t cols)
+void	navigate_left(t_terminal *term, size_t len, size_t cols)
 {
 	if (term->in->index > 0)
 	{
@@ -18,7 +18,7 @@ static void	navigate_left(t_terminal *term, size_t len, size_t cols)
 	}
 }
 
-static void	navigate_right(t_terminal *term, size_t len, size_t cols)
+void	navigate_right(t_terminal *term, size_t len, size_t cols)
 {
 	if (term->in->string[term->in->index])
 	{

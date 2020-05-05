@@ -38,5 +38,7 @@ void			print_input(t_terminal *term);
 void			arrow_navigation(t_terminal *term, int sum);
 void			history_navigation(t_terminal *term, int sum);
 void			ctrl_arrow_navigation(t_terminal *term, int sum);
+void			navigate_right(t_terminal *term, size_t len, size_t cols);
+void			navigate_left(t_terminal *term, size_t len, size_t cols);
 
 #endif

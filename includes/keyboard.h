@@ -17,5 +17,7 @@
 # define DEL 295
 # define CTRL_UP 344
 # define CTRL_DOWN 345
+# define CTRL_RIGHT 346
+# define CTRL_LEFT 347
 
 #endif
