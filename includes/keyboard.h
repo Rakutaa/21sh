@@ -2,7 +2,7 @@
 
 # define KEYBOARD_H
 
-# define KEY_SIZE 4
+# define KEY_SIZE 8
 
 # define ENTER 10
 # define ESC 27
@@ -15,5 +15,7 @@
 # define END 188
 # define HOME 190
 # define DEL 295
+# define CTRL_UP 344
+# define CTRL_DOWN 345
 
 #endif

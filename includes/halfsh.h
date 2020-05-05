@@ -37,5 +37,6 @@ void			special_keys(t_terminal *term, int sum);
 void			print_input(t_terminal *term);
 void			arrow_navigation(t_terminal *term, int sum);
 void			history_navigation(t_terminal *term, int sum);
+void			ctrl_arrow_navigation(t_terminal *term, int sum);
 
 #endif

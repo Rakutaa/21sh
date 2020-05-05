@@ -20,6 +20,7 @@ SRCS = srcs/main.c \
        srcs/input/special_keys.c \
        srcs/input/arrow_navigation.c \
        srcs/input/history_navigation.c \
+       srcs/input/ctrl_arrow_navigation.c \
 
 INCL =	includes/
 INCL1 = libftprintf/includes

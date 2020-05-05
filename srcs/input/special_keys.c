@@ -23,6 +23,8 @@ void		special_keys(t_terminal *term, int sum)
 		arrow_navigation(term, sum);
 	else if (sum == UP || sum == DOWN)
 		history_navigation(term, sum);
+	else if (sum == CTRL_UP || sum == CTRL_DOWN)
+		ctrl_arrow_navigation(term, sum);
 	else if (sum == BACK)
 		delete_char(term);
 	else if (sum == HOME)
