@@ -35,10 +35,10 @@ void			config_signal(t_terminal *term);
 void			user_input(t_terminal *term);
 void			special_keys(t_terminal *term, int sum);
 void			print_input(t_terminal *term);
-void			arrow_navigation(t_terminal *term, int sum);
-void			history_navigation(t_terminal *term, int sum);
-void			ctrl_arrow_navigation(t_terminal *term, int sum);
-void			navigate_right(t_terminal *term, size_t len, size_t cols);
-void			navigate_left(t_terminal *term, size_t len, size_t cols);
+void			cursor_movement_1(t_terminal *term, int sum);
+void			cursor_movement_2(t_terminal *term, int sum);
+void			browse_history(t_terminal *term, int sum);
+void			search_action(t_terminal *term, int sum);
+void			init_input(t_terminal *term);
 
 #endif

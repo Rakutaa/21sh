@@ -16,11 +16,12 @@ SRCS = srcs/main.c \
        srcs/config_terminal.c \
        srcs/config_signal.c \
        srcs/utils.c \
-       srcs/input/user_input.c \
-       srcs/input/special_keys.c \
-       srcs/input/arrow_navigation.c \
-       srcs/input/history_navigation.c \
-       srcs/input/ctrl_arrow_navigation.c \
+       srcs/input/init_input.c \
+       srcs/input/print_input.c \
+       srcs/input/search_action.c \
+       srcs/input/cursor_movement_1.c \
+       srcs/input/cursor_movement_2.c \
+       srcs/input/browse_history.c \
 
 INCL =	includes/
 INCL1 = libftprintf/includes

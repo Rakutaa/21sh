@@ -1,7 +1,7 @@
 #include "halfsh.h"
 #include "keyboard.h"
 
-static void	navigate_up(t_terminal *term)
+static void	browse_up(t_terminal *term)
 {
 	t_list	*current;
 	int	count;
@@ -23,13 +23,20 @@ static void	navigate_up(t_terminal *term)
 	term->in->index = current->content_size;
 }
 
-static void	navigate_down(t_terminal *term)
+static void	browse_down(t_terminal *term)
 {
 	t_list	*current;
-	int	count;
+	int		count;
 
-	if (term->h_index <= 0)
+	if (term->h_index < 0)
 		return ;
+	else if (term->h_index == 0)
+	{
+		ft_bzero(term->in->string, ARG_MAX);
+		term->in->index = 0;
+		term->h_index--;
+		return ;
+	}
 	term->h_index--;
 	current = term->history;
 	count = 0;
@@ -45,10 +52,10 @@ static void	navigate_down(t_terminal *term)
 	term->in->index = current->content_size;
 }
 
-void	history_navigation(t_terminal *term, int sum)
+void	browse_history(t_terminal *term, int sum)
 {
 	if (sum == UP)
-		navigate_up(term);
+		browse_up(term);
 	else if (sum == DOWN)
-		navigate_down(term);
+		browse_down(term);
 }

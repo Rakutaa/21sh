@@ -17,19 +17,16 @@ static void	delete_char(t_terminal *term)
 	}
 }
 
-void		special_keys(t_terminal *term, int sum)
+void		search_action(t_terminal *term, int sum)
 {
-	if (sum == LEFT || sum == RIGHT)
-		arrow_navigation(term, sum);
+	if (sum == LEFT || sum == RIGHT \
+	|| sum == CTRL_LEFT || sum == CTRL_RIGHT)
+		cursor_movement_1(term, sum);
+	else if (sum == CTRL_UP || sum == CTRL_DOWN \
+	|| sum == HOME || sum == END)
+		cursor_movement_2(term, sum);
 	else if (sum == UP || sum == DOWN)
-		history_navigation(term, sum);
-	else if (sum == CTRL_UP || sum == CTRL_DOWN
-		|| sum == CTRL_RIGHT || sum == CTRL_LEFT)
-		ctrl_arrow_navigation(term, sum);
+		browse_history(term, sum);
 	else if (sum == BACK)
 		delete_char(term);
-	else if (sum == HOME)
-		term->in->index = 0;
-	else if (sum == END)
-		term->in->index = ft_strlen(term->in->string);
 }
