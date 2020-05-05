@@ -1,31 +1,25 @@
 #include "halfsh.h"
 
-static int	init_shell(struct termios shell)
+static void	init_shell(t_terminal *term)
 {
 	char	*type;
 	char	buffer[2048];
 	int		success;
 
 	type = getenv("TERM");
-	if (!type)
-	{
-		ft_fprintf(2, "ft_select: TERM not set\n");
-		return (1);
-	}
+	!type ? program_exit(term, 2) : 0;
 	success = tgetent(buffer, type);
 	if (success > 0)
 	{
 		tputs(tgetstr("ti", NULL), 1, print_char);
 		tputs(tgetstr("ho", NULL), 1, print_char);
-		shell.c_lflag &= ~(ICANON | ECHO);
-		tcsetattr(1, TCSAFLUSH, &shell);
-		return (0);
+		term->shell.c_lflag &= ~(ICANON | ECHO);
+		tcsetattr(1, TCSAFLUSH, &term->shell);
 	}
 	else if (success < 0)
-		ft_fprintf(2, "ft_select: Could not access the termcap database\n");
+		program_exit(term, 3);
 	else if (success == 0)
-		ft_fprintf(2, "ft_select: Terminal type %s is not defined\n", type);
-	return (1);
+		program_exit(term, 4);
 }
 
 static void	init_original(struct termios original)
@@ -34,11 +28,10 @@ static void	init_original(struct termios original)
 	tcsetattr(1, TCSAFLUSH, &original);
 }
 
-int			config_terminal(int reset, t_terminal *term)
+void			config_terminal(int reset, t_terminal *term)
 {
 	if (reset)
 		init_original(term->original);
-	else if (init_shell(term->shell))
-		return (1);
-	return (0);
+	else
+		init_shell(term);
 }

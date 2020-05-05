@@ -31,10 +31,10 @@ static void move_cursor_left_word(t_terminal *term)
 
 void		cursor_movement_1(t_terminal *term, int sum)
 {
-	if (sum == LEFT)
-		move_cursor_left(term);
-	else if (sum == RIGHT)
+	if (sum == RIGHT)
 		move_cursor_right(term);
+	else if (sum == LEFT)
+		move_cursor_left(term);
 	else if (sum == CTRL_RIGHT)
         move_cursor_right_word(term);
     else if (sum == CTRL_LEFT)

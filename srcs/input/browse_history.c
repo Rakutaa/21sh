@@ -6,12 +6,12 @@ static void	browse_up(t_terminal *term)
 	t_list	*current;
 	int	count;
 
-	if (term->h_index >= (int)ft_lstlen(&term->history) - 1)
+	if (term->in->h_index >= (int)ft_lstlen(&term->in->history) - 1)
 		return ;
-	term->h_index++;
-	current = term->history;
+	term->in->h_index++;
+	current = term->in->history;
 	count = 0;
-	while (count != term->h_index)
+	while (count != term->in->h_index)
 	{
 		if (!current->next)
 			return ;
@@ -28,19 +28,19 @@ static void	browse_down(t_terminal *term)
 	t_list	*current;
 	int		count;
 
-	if (term->h_index < 0)
+	if (term->in->h_index < 0)
 		return ;
-	else if (term->h_index == 0)
+	else if (term->in->h_index == 0)
 	{
 		ft_bzero(term->in->string, ARG_MAX);
 		term->in->index = 0;
-		term->h_index--;
+		term->in->h_index--;
 		return ;
 	}
-	term->h_index--;
-	current = term->history;
+	term->in->h_index--;
+	current = term->in->history;
 	count = 0;
-	while (count != term->h_index)
+	while (count != term->in->h_index)
 	{
 		if (!current->next)
 			return ;

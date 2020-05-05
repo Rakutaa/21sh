@@ -36,8 +36,7 @@ static void	signal_kill(int signum)
 	if (signum)
 	{
 		config_terminal(1, g_term);
-		free(g_term);
-		exit(0);
+		program_exit(g_term, 0);
 	}
 }
 

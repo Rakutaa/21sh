@@ -22,6 +22,7 @@ SRCS = srcs/main.c \
        srcs/input/cursor_movement_1.c \
        srcs/input/cursor_movement_2.c \
        srcs/input/browse_history.c \
+       srcs/program_exit.c \
 
 INCL =	includes/
 INCL1 = libftprintf/includes
