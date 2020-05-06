@@ -17,7 +17,6 @@ typedef struct		s_input
 	int				h_index;
 	char			string[ARG_MAX];
 	int				index;
-	int				line;
 }					t_input;
 
 typedef struct		s_terminal

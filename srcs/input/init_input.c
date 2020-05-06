@@ -53,8 +53,8 @@ void		init_input(t_terminal *term)
 	{
 		ft_bzero(term->in->string, ARG_MAX);
 		term->in->index = 0;
-		term->in->line = 0;
 		ft_putstr(PROMPT);
+		tputs(tgetstr("sc", NULL), 1, print_char);
 		loop_input(term);
 		if (term->in->string[0])
 			ft_lstadd(&term->in->history, ft_lstnew(term->in->string, ft_strlen(term->in->string)));
