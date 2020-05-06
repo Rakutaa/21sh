@@ -4,7 +4,7 @@
 static void	browse_up(t_terminal *term)
 {
 	t_list	*current;
-	int	count;
+	int		count;
 
 	if (term->in->h_index >= (int)ft_lstlen(&term->in->history) - 1)
 		return ;
@@ -52,7 +52,7 @@ static void	browse_down(t_terminal *term)
 	term->in->index = current->content_size;
 }
 
-void	browse_history(t_terminal *term, int sum)
+void		browse_history(t_terminal *term, int sum)
 {
 	if (sum == UP)
 		browse_up(term);

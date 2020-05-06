@@ -48,9 +48,9 @@ void		init_input(t_terminal *term)
 	term->in = (t_input *)malloc(sizeof(t_input));
 	!term->in ? program_exit(term, 1) : 0;
 	term->in->history = NULL;
-	term->in->h_index = -1;
 	while (term)
 	{
+		term->in->h_index = -1;
 		ft_bzero(term->in->string, ARG_MAX);
 		term->in->index = 0;
 		ft_putstr(PROMPT);

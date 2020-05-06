@@ -26,6 +26,9 @@ static void	signal_continue(int signum)
 	if (signum == SIGCONT)
 	{
 		config_terminal(0, g_term);
+		tputs(tgetstr("rc", NULL), 1, print_char);
+		tputs(tgetstr("cr", NULL), 1, print_char);
+		ft_putstr(PROMPT);
 		print_input(g_term);
 		ioctl(1, TIOCSTI, "");
 	}
@@ -35,8 +38,11 @@ static void	signal_kill(int signum)
 {
 	if (signum)
 	{
-		config_terminal(1, g_term);
-		program_exit(g_term, 0);
+		ft_bzero(g_term->in->string, ft_strlen(g_term->in->string));
+		g_term->in->index = 0;
+		write(1, "\n", 1);
+		ft_putstr(PROMPT);
+		tputs(tgetstr("sc", NULL), 1, print_char);
 	}
 }
 
