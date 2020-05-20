@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_input.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
+/*   Updated: 2020/05/16 12:08:16 by vkuokka          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "halfsh.h"
 #include "keyboard.h"
 
@@ -45,22 +57,7 @@ static void	loop_input(t_terminal *term)
 
 void		init_input(t_terminal *term)
 {
-	term->in = (t_input *)malloc(sizeof(t_input));
-	!term->in ? program_exit(term, 1) : 0;
-	term->in->history = NULL;
-	while (term)
-	{
-		term->in->h_index = -1;
-		ft_bzero(term->in->string, ARG_MAX);
-		term->in->index = 0;
-		ft_putstr(PROMPT);
-		tputs(tgetstr("sc", NULL), 1, print_char);
-		loop_input(term);
-		if (term->in->string[0])
-			ft_lstadd(&term->in->history, ft_lstnew(term->in->string, ft_strlen(term->in->string)));
-		// TODO Execution.
-		// if (ft_strequ(term->in->string, "EXIT"))
-		//	return ;
-		ft_printf("\nInput: %s\n", term->in->string);
-	}
+	tputs(tgetstr("sc", NULL), 1, print_char);
+	print_input(term);
+	loop_input(term);
 }

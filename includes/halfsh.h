@@ -24,7 +24,7 @@ typedef struct		s_terminal
 	struct termios	original;
 	struct termios	shell;
 	struct winsize	size;
-	char			**env;
+	t_list			*env;
 	t_input			*in;
 }					t_terminal;
 

@@ -1,8 +1,63 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
+/*   Updated: 2020/05/20 20:57:44 by vkuokka          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "halfsh.h"
 
-int		main(int argc, char **argv, char **env)
+static t_list	*copy_enviroment(t_terminal *term, char **env)
 {
-	t_terminal *term;
+	size_t		i;
+	size_t		len;
+	t_list		*start;
+	t_list		*node;
+
+	i = 0;
+	start = NULL;
+	while (env[i])
+	{
+		len = ft_strlen(env[i]);
+		node = ft_lstnew(env[i], len + 1);
+		!node ? program_exit(term, 1) : 0;
+		*ft_strchr(node->content, '=') = '\0';
+		!start ? start = node : ft_lstaddback(&start, node);
+		i++;
+	}
+	return (start);
+}
+
+static void		command_line(t_terminal *term)
+{
+	term->in = (t_input *)malloc(sizeof(t_input));
+	!term->in ? program_exit(term, 1) : 0;
+	term->in->history = NULL;
+	while (term)
+	{
+		term->in->h_index = -1;
+		ft_bzero(term->in->string, ARG_MAX);
+		term->in->index = 0;
+		ft_putstr(PROMPT);
+		init_input(term);
+		if (term->in->string[0])
+			ft_lstadd(&term->in->history, ft_lstnew(term->in->string, \
+			ft_strlen(term->in->string)));
+		if (ft_strequ(term->in->string, "exit"))	//DELETE
+			return ;								//DELETE
+		ft_putendl("");								//DELETE
+		ft_putendl(term->in->string);				//DELETE
+	}
+}
+
+int				main(int argc, char **argv, char **env)
+{
+	t_terminal	*term;
 
 	(void)argc;
 	(void)argv;
@@ -11,11 +66,10 @@ int		main(int argc, char **argv, char **env)
 	tcgetattr(1, &term->original);
 	term->shell = term->original;
 	ioctl(1, TIOCGWINSZ, &term->size);
-	term->env = env;
 	term->in = NULL;
+	term->env = copy_enviroment(term, env);
 	config_terminal(0, term);
 	config_signal(term);
-	init_input(term);
-	config_terminal(1, term);
+	command_line(term);
 	program_exit(term, 0);
 }
