@@ -6,7 +6,7 @@
 #    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/05/26 09:48:28 by vkuokka          ###   ########.fr        #
+#    Updated: 2020/05/26 11:20:12 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS = srcs/main.c \
        srcs/input/print_input.c \
        srcs/input/search_action.c \
        srcs/interpreter/init_lexer.c \
+       srcs/interpreter/parse_tokens.c \
 
 INCL =	includes/
 INCL1 = libftprintf/includes

@@ -28,6 +28,6 @@ typedef struct		s_lexer
 }					t_lexer;
 
 void				init_lexer(t_terminal *term);
-void				init_parser(t_list *tokens);
+void				parse_tokens(t_terminal *term, t_list *tokens);
 
 #endif
