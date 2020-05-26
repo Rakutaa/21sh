@@ -6,11 +6,12 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/20 20:57:44 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/05/26 09:54:06 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
+#include "lexer.h"
 
 static t_list	*copy_enviroment(t_terminal *term, char **env)
 {
@@ -46,12 +47,13 @@ static void		command_line(t_terminal *term)
 		ft_putstr(PROMPT);
 		init_input(term);
 		if (term->in->string[0])
+		{
 			ft_lstadd(&term->in->history, ft_lstnew(term->in->string, \
 			ft_strlen(term->in->string)));
+			init_lexer(term);
+		}
 		if (ft_strequ(term->in->string, "exit"))	//DELETE
 			return ;								//DELETE
-		ft_putendl("");								//DELETE
-		ft_putendl(term->in->string);				//DELETE
 	}
 }
 
