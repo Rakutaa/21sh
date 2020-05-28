@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/05/28 13:08:11 by vkuokka           #+#    #+#             */
+/*   Updated: 2020/05/28 13:08:58 by vkuokka          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LEXER_H
 
 # define LEXER_H
@@ -10,12 +22,12 @@
 typedef struct		s_token
 {
 	enum {
-					TOKEN_WORD,
-					TOKEN_DQUOTE,
-					TOKEN_SQUOTE,
-					TOKEN_PIPE,
-					TOKEN_REDIRECT,
-					TOKEN_SEMI
+		TOKEN_WORD,
+		TOKEN_DQUOTE,
+		TOKEN_SQUOTE,
+		TOKEN_PIPE,
+		TOKEN_REDIRECT,
+		TOKEN_SEMI
 	}				e_type;
 	char			*value;
 }					t_token;

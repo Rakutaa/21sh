@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/27 11:03:47 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/05/28 13:29:34 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	listen_keys(void)
 	char	key[KEY_SIZE + 1];
 	ssize_t	bytes;
 	size_t	i;
-	int	sum;
+	int		sum;
 
 	bytes = read(1, key, KEY_SIZE);
 	key[bytes] = '\0';
@@ -29,9 +29,21 @@ static int	listen_keys(void)
 	return (sum);
 }
 
+static void	add_character(t_terminal *term, int sum)
+{
+	if (ft_strlen(term->in->string) >= ARG_MAX)
+		return ;
+	if (term->in->string[term->in->index])
+		ft_memmove(term->in->string + term->in->index + 1, \
+		term->in->string + term->in->index, \
+		ft_strlen(term->in->string + term->in->index));
+	term->in->string[term->in->index] = sum;
+	term->in->index++;
+}
+
 static void	loop_input(t_terminal *term)
 {
-	int	sum;
+	int		sum;
 
 	while (term)
 	{
@@ -43,16 +55,7 @@ static void	loop_input(t_terminal *term)
 			break ;
 		}
 		else if (ft_isprint(sum))
-		{
-			if (ft_strlen(term->in->string) >= ARG_MAX)
-				continue ;
-			if (term->in->string[term->in->index])	
-				ft_memmove(term->in->string + term->in->index + 1, \
-				term->in->string + term->in->index, \
-				ft_strlen(term->in->string + term->in->index));
-			term->in->string[term->in->index] = sum;
-			term->in->index++;
-		}
+			add_character(term, sum);
 		else
 			search_action(term, sum);
 		print_input(term);

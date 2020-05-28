@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:26 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/21 11:09:27 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/05/28 13:23:57 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	cursor_position(t_terminal *term, size_t len)
 		tputs(tgetstr("do", NULL), 1, print_char);
 }
 
-void	print_input(t_terminal *term)
+void		print_input(t_terminal *term)
 {
 	size_t	len;
 

@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:04 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/21 11:10:05 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/05/28 13:12:29 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	init_original(struct termios original)
 	tcsetattr(1, TCSAFLUSH, &original);
 }
 
-void			config_terminal(int reset, t_terminal *term)
+void		config_terminal(int reset, t_terminal *term)
 {
 	if (reset)
 		init_original(term->original);
