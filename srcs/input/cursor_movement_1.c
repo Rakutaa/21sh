@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:56 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/21 11:08:57 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/05/27 10:52:25 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ static void move_cursor_right_word(t_terminal *term)
 
 static void move_cursor_left_word(t_terminal *term)
 {
-    while (term->in->string[term->in->index - 1] && term->in->string[term->in->index - 1] == ' ')
+    while (term->in->index > 0 && term->in->string[term->in->index - 1] == ' ')
         move_cursor_left(term);
-    while (term->in->string[term->in->index - 1] && term->in->string[term->in->index - 1] != ' ')
+    while (term->in->index > 0 && term->in->string[term->in->index - 1] != ' ')
         move_cursor_left(term);
 }
 

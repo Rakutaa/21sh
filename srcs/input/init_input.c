@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/21 11:09:11 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/05/27 11:03:47 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,12 @@ static void	loop_input(t_terminal *term)
 	{
 		sum = listen_keys();
 		if (sum == ENTER)
-			return ;
-		if (ft_isprint(sum))
+		{
+			term->in->index = ft_strlen(term->in->string);
+			print_input(term);
+			break ;
+		}
+		else if (ft_isprint(sum))
 		{
 			if (ft_strlen(term->in->string) >= ARG_MAX)
 				continue ;
