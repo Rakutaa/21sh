@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:43 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/21 11:09:45 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/05/29 12:19:40 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static void	signal_suspend(int signum)
 {
 	if (signum == SIGTSTP)
 	{
-		signal(SIGTSTP, SIG_DFL);
 		config_terminal(1, g_term);
+		signal(SIGTSTP, SIG_DFL);
 		ioctl(1, TIOCSTI, "\x1a");
 	}
 }
@@ -38,6 +38,7 @@ static void	signal_continue(int signum)
 	if (signum == SIGCONT)
 	{
 		config_terminal(0, g_term);
+		config_signal(g_term);
 		tputs(tgetstr("rc", NULL), 1, print_char);
 		tputs(tgetstr("cr", NULL), 1, print_char);
 		ft_putstr(PROMPT);
