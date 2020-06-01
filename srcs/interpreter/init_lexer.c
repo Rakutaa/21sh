@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/28 13:22:46 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/01 13:18:32 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static t_token		*get_token(t_lexer *lexer, t_terminal *term)
 {
 	t_token			*token;
 
+	token = NULL;
 	if (ft_strchr(OPERATORS, lexer->data[lexer->i]))
 	{
 		if (lexer->data[lexer->i] == '|')
