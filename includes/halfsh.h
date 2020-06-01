@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/26 10:08:02 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/01 14:57:37 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct		s_terminal
 
 int					print_char(int c);
 char				*search_env(t_list *enviroment, char *key);
+char				**update_enviroment(t_list *enviroment);
 void				config_terminal(int reset, t_terminal *term);
 void				config_signal(t_terminal *term);
 void				program_exit(t_terminal *term, int num);

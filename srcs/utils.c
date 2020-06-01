@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:28 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/28 13:11:38 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/01 14:57:18 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,27 @@ char	*search_env(t_list *enviroment, char *key)
 		enviroment = enviroment->next;
 	}
 	return (NULL);
+}
+
+char		**update_enviroment(t_list *enviroment)
+{
+	char		**env;
+	size_t		len;
+	size_t		i;
+
+	len = ft_lstlen(&enviroment);
+	env = (char **)malloc(sizeof(char **) * len + 1);
+	if (!env)
+		return (NULL);
+	i = 0;
+	while (enviroment)
+	{
+		env[i] = ft_strnew(enviroment->content_size);
+		ft_memmove(env[i], enviroment->content, enviroment->content_size);
+		*ft_strchr(env[i], '\0') = '=';
+		i++;
+		enviroment = enviroment->next;
+	}
+	env[i] = NULL;
+	return (env);
 }
