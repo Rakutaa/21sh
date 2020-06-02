@@ -46,6 +46,8 @@ int			helper_create_file(char *file)
 	pid_t	pid;
 	char	*touch[] = {"touch", file, NULL};
 
+	ft_printf("taal");
+
 	if (access(file, F_OK ) != -1 ) 
     // file exists
 		return (open(file, O_WRONLY));

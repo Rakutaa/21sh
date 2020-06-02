@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 09:59:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/02 14:26:22 by vtran            ###   ########.fr       */
+/*   Updated: 2020/06/02 16:14:16 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static char	*check_dollar(t_list *enviroment, char *str)
 //muista exit jos ei oo filee
 //file = check file exit if not
 
-t_redirection	*make_redir(t_list *head)
+t_redirection	*make_redir(t_list *head, t_list *cur_list)
 {
 	t_token	*sign;
 	t_token *file;
@@ -85,8 +85,10 @@ t_redirection	*make_redir(t_list *head)
 	file = head->next->content;
 	rhead = mkredir(file->value, sign->value);
 	rtmp = rhead->next;
-	while(head)
+	head = head->next->next;
+	while(head != cur_list->next)
 	{
+
 		sign = head->content;
 		file = head->next->content;
 		rtmp = mkredir(file->value, sign->value);
@@ -112,11 +114,6 @@ t_nodeobj	*list_to_factor(t_list *head, int i, t_redirection *redir)
 		head = head->next;
 	}
 	count = -1;
-	while (cmd[++count])
-	{
-		ft_printf("%s \n", cmd[count]);
-	}
-	ft_printf("\n");
 	return (mkfactor(cmd, redir));
 }
 
@@ -135,10 +132,11 @@ t_nodeobj		*make_simple(t_list *head, t_list *cur_list)
 		token = tmp->content;
 		if (token->e_type == TOKEN_REDIRECT)
 		{
-			redir = make_redir(tmp);
+			redir = make_redir(tmp, cur_list);
 			break ;
 		}
-		if (tmp == cur_list)
+		
+		if (cur_list && tmp == cur_list)
 		{
 			i++;
 			break ;
