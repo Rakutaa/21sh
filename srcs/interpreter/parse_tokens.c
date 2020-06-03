@@ -79,7 +79,7 @@ t_token			*get_t_list_token(t_list *node)
 
 t_list			*move_t_list_n_times(t_list *list, int n)
 {
-	int	count;
+	int					count;
 
 	count = -1;
 	while (++count < n)
@@ -96,9 +96,9 @@ void			add_node_to_redirection_list(t_redirection *list, t_redirection *node)
 
 t_redirection	*tokens_to_redirection(t_list *head, t_list *until)
 {
-	t_token	*sign;
-	t_token *file;
-	t_redirection *rhead;
+	t_token				*sign;
+	t_token				*file;
+	t_redirection		*rhead;
 
 	sign = get_t_list_token(head);
 	file = get_t_list_token(head->next);
@@ -116,9 +116,9 @@ t_redirection	*tokens_to_redirection(t_list *head, t_list *until)
 
 t_ast_nodeobj	*tokens_to_factor(t_list *head, int i, t_redirection *redir)
 {
-	char		**cmd;
-	int			count;
-	t_token		*token;
+	char				**cmd;
+	int					count;
+	t_token				*token;
 
 	count = -1;
 	cmd = malloc(sizeof(char *) * i + 1);
@@ -133,19 +133,19 @@ t_ast_nodeobj	*tokens_to_factor(t_list *head, int i, t_redirection *redir)
 	return (create_factor(cmd, redir));
 }
 
-t_ast_nodeobj		*tokens_to_simple_cmd(t_list *head, t_list *until)
+t_ast_nodeobj		*tokens_to_ast_node(t_list *head, t_list *until)
 {
-	t_list	*tmp;
-	t_token	*token;
-	t_redirection	*redir;
-	int		i;
+	t_list				*tmp;
+	t_token				*token;
+	t_redirection		*redir;
+	int					i;
 
 	redir = NULL;
 	tmp = head;
 	i = 0;
 	while (tmp)
 	{
-		token = get_t_list_token(tmp);;
+		token = get_t_list_token(tmp);
 		if (token->e_type == TOKEN_REDIRECT)
 		{
 			redir = tokens_to_redirection(tmp, until);
@@ -159,9 +159,9 @@ t_ast_nodeobj		*tokens_to_simple_cmd(t_list *head, t_list *until)
 	return (tokens_to_factor(head, i, redir));
 }
 
-t_parser_node_list *init_nodelist()
+t_parser_node_list		*init_nodelist()
 {
-	t_parser_node_list *list;
+	t_parser_node_list	*list;
 
 	list = malloc(sizeof(t_parser_node_list));
 	list->parser_nodeobj = NULL;
@@ -169,9 +169,9 @@ t_parser_node_list *init_nodelist()
 	return list;
 }
 
-void		add_node_to_nodelist(t_parser_node_list **list, t_parser_nodeobj *ast_nodeobj, t_parser_nodeobj *token_nodeobj)
+void					add_node_to_nodelist(t_parser_node_list **list, t_parser_nodeobj *ast_nodeobj, t_parser_nodeobj *token_nodeobj)
 {
-	t_parser_node_list *tmp;
+	t_parser_node_list	*tmp;
 
 	if (!*list)
 	{
@@ -195,9 +195,9 @@ void		add_node_to_nodelist(t_parser_node_list **list, t_parser_nodeobj *ast_node
 	}
 }
 
-t_ast	*init_ast()
+t_ast					*init_ast()
 {
-	t_ast	*ast;
+	t_ast				*ast;
 
 	ast = malloc(sizeof(t_ast));
 	ast->in = 0;
@@ -208,7 +208,7 @@ t_ast	*init_ast()
 	return ast;
 }
 
-t_ast	*create_ast_node(t_ast *ast, t_parser_node_list **list)
+t_ast					*create_ast_node(t_ast *ast, t_parser_node_list **list)
 {
 	if (!ast)
 	{
@@ -230,7 +230,7 @@ t_ast	*create_ast_node(t_ast *ast, t_parser_node_list **list)
 //ehkä vois ajatella niin, et jos toi node on 
 //token niin do smth ja jos on ast_nodeobj do smth
 
-t_ast	*create_ast_list(t_parser_node_list *list)
+t_ast					*create_ast_list(t_parser_node_list *list)
 {
 	t_ast	*ast;
 	t_ast	*tmp;
@@ -258,7 +258,7 @@ t_ast	*create_ast_list(t_parser_node_list *list)
 //token quoten ja token_wordin vois tehda muualla
 //mm. check quotes
 
-void		check_dollar_tilde(t_list *env, t_token *token)
+void					check_dollar_tilde(t_list *env, t_token *token)
 {
 	if (token->e_type == TOKEN_DQUOTE || token->e_type == TOKEN_WORD)
 	{
@@ -267,7 +267,7 @@ void		check_dollar_tilde(t_list *env, t_token *token)
 	}
 }
 
-void		add_to_token_node_list(t_parser_node_list **list, t_list *head, t_list *cur_list, int type)
+void					add_to_token_node_list(t_parser_node_list **list, t_list *head, t_list *cur_list, int type)
 {
 	t_parser_nodeobj *ast_nodeobj;
 	t_parser_nodeobj *token_nodeobj;
@@ -275,7 +275,7 @@ void		add_to_token_node_list(t_parser_node_list **list, t_list *head, t_list *cu
 	ast_nodeobj = malloc(sizeof(t_parser_nodeobj));
 	token_nodeobj = NULL;
 	ast_nodeobj->tn = node;
-	ast_nodeobj->nodes.node.ast_nodeobj = tokens_to_simple_cmd(head, cur_list);
+	ast_nodeobj->nodes.node.ast_nodeobj = tokens_to_ast_node(head, cur_list);
 	if (type == 3 || type == 5)
 	{
 		token_nodeobj = malloc(sizeof(t_parser_nodeobj));
@@ -285,7 +285,7 @@ void		add_to_token_node_list(t_parser_node_list **list, t_list *head, t_list *cu
 	add_node_to_nodelist(list, ast_nodeobj, token_nodeobj);
 }
 
-void		execute_ast(t_ast *ast)
+void					execute_ast(t_ast *ast)
 {
 	while (ast)
 	{
@@ -297,7 +297,7 @@ void		execute_ast(t_ast *ast)
 	}
 }
 
-void		parse_tokens(t_terminal *term, t_list *tokens)
+void					parse_tokens(t_terminal *term, t_list *tokens)
 {
 	t_list	*cur_list;
 	t_list	*head;
