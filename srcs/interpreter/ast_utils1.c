@@ -33,57 +33,6 @@ t_ast_node		*create_expression(t_ast_node *left, t_ast_node *right)
 	return express;
 }
 
-//helper aggreagation ?
-
-// void			helper_aggregation(t_ast **ast)
-// {
-
-// }
-
-void			helper_dup(t_ast **ast, t_ast_node *obj, int pipe_in)
-{
-	dup2((*ast)->in, 0);
-	if ((*ast)->parent->node == 1 && obj
-	!= (*ast)->parent->nodes.expr.right)
-		dup2(pipe_in, 1);
-	else
-		dup2((*ast)->out, 1);
-}
-
-//lisää vaihtoehtoja..
-
-void			helper_close(t_ast_node *obj, t_ast **ast)
-{
-	if (obj->nodes.factor.redirection)
-	{
-		if (obj->nodes.factor.redirection->redir[0] == '<')
-			close((*ast)->in);
-	}
-}
-
-void			exec_factor(t_ast_node *obj, t_ast **ast)
-{
-	int			p[2];
-	pid_t		pid;
-		
-	pipe(p);
-	pid = fork();
-	if (pid == 0)
-	{
-		helper_dup(ast, obj, p[1]);
-		close(p[0]);
-		execvp(obj->nodes.factor.cmds[0], obj->nodes.factor.cmds);
-		exit(1);
-	}
-	else
-	{
-		wait(NULL);
-		close(p[1]);
-		helper_close(obj, ast);
-		(*ast)->in = p[0];
-	}
-}
-
 //suljen avatun fd:n exec_factorissa 
 //puuttuu myös aggregation.. tää oikeestaan = close fd kait :D
 
