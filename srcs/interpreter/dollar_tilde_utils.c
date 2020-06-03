@@ -56,7 +56,7 @@ static char	*check_dollar(t_list *enviroment, char *str)
 	return (str);
 }
 
-void					check_dollar_tilde(t_list *env, t_token *token)
+void		check_dollar_tilde(t_list *env, t_token *token)
 {
 	if (token->e_type == TOKEN_DQUOTE || token->e_type == TOKEN_WORD)
 	{

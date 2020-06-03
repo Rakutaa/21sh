@@ -1,6 +1,6 @@
 #include "parser_ast.h"
 
-void					execute_ast(t_ast *ast)
+void		execute_ast(t_ast *ast)
 {
 	while (ast)
 	{
@@ -12,9 +12,9 @@ void					execute_ast(t_ast *ast)
 	}
 }
 
-t_ast					*init_ast()
+t_ast		*init_ast()
 {
-	t_ast				*ast;
+	t_ast	*ast;
 
 	ast = malloc(sizeof(t_ast));
 	ast->in = 0;
@@ -28,7 +28,7 @@ t_ast					*init_ast()
 //need to check ast token grammar here! esim ;;
 //huom. täällä voi olla myös ; ensimmäisenä. jolloin syntax error
 
-t_ast					*create_ast_node(t_ast *ast, t_parser_node_list **list)
+t_ast		*create_ast_node(t_ast *ast, t_parser_node_list **list)
 {
 	if (!ast)
 	{
@@ -48,12 +48,12 @@ t_ast					*create_ast_node(t_ast *ast, t_parser_node_list **list)
 
 //ks. onko kaksi pipea peräkkäin 
 
-t_ast_node				*update_ast_parent(t_ast_node *left, t_ast_node *right)
+t_ast_node	*update_ast_parent(t_ast_node *left, t_ast_node *right)
 {
 	return create_expression(left, right);
 }
 
-t_ast					*create_ast_list(t_parser_node_list *list)
+t_ast		*create_ast_list(t_parser_node_list *list)
 {
 	t_ast	*ast;
 	t_ast	*tmp;

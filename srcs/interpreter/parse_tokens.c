@@ -33,7 +33,7 @@ t_redirection	*tokens_to_redirection(t_list *head, t_list *last)
 	return (rhead);
 }
 
-t_ast_node	*tokens_to_factor(t_list *head, int i, t_redirection *redir)
+t_ast_node		*tokens_to_factor(t_list *head, int i, t_redirection *redir)
 {
 	char				**cmd;
 	int					count;
@@ -82,10 +82,10 @@ t_ast_node		*tokens_to_ast_node(t_list *head, t_list *last)
 //e_type 0 or 1 means pipe or semi
 //enums in two different structs
 
-void					tokens_to_parser_node(t_parser_node_list **list, t_list *head, t_list *last, int type)
+void			tokens_to_parser_node(t_parser_node_list **list, t_list *head, t_list *last, int type)
 {
-	t_parser_node *ast_nodeobj;
-	t_parser_node *token_nodeobj;
+	t_parser_node 		*ast_nodeobj;
+	t_parser_node 		*token_nodeobj;
 
 	ast_nodeobj = malloc(sizeof(t_parser_node));
 	token_nodeobj = NULL;
@@ -100,13 +100,13 @@ void					tokens_to_parser_node(t_parser_node_list **list, t_list *head, t_list *
 	add_node_to_parser_node_list(list, ast_nodeobj, token_nodeobj);
 }
 
-void					parse_tokens(t_terminal *term, t_list *tokens)
+void			parse_tokens(t_terminal *term, t_list *tokens)
 {
-	t_list	*current;
-	t_list	*head;
-	t_token	*content;
+	t_list				*current;
+	t_list				*head;
+	t_token				*content;
 	t_parser_node_list	*nhead;
-	t_ast		*ast;
+	t_ast				*ast;
 
 	head = tokens;
 	current = tokens;

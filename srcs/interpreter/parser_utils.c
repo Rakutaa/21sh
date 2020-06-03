@@ -1,7 +1,7 @@
 #include "lexer.h"
 #include "parser_ast.h"
 
-static t_parser_node_list   *init_parser_node_list()
+static t_parser_node_list	*init_parser_node_list()
 {
 	t_parser_node_list	*list;
 
@@ -11,7 +11,7 @@ static t_parser_node_list   *init_parser_node_list()
 	return list;
 }
 
-void					    add_node_to_parser_node_list(t_parser_node_list **list, t_parser_node *ast_nodeobj, t_parser_node *token_nodeobj)
+void						add_node_to_parser_node_list(t_parser_node_list **list, t_parser_node *ast_nodeobj, t_parser_node *token_nodeobj)
 {
 	t_parser_node_list	*tmp;
 
