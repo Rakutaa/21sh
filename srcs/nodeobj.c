@@ -1,4 +1,4 @@
-#include "header.h"
+#include "parser_ast.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -39,25 +39,6 @@ t_ast_nodeobj		*create_expression(t_ast_nodeobj *left, t_ast_nodeobj *right)
 	express->nodes.expr.left = left;
 	express->nodes.expr.right = right;
 	return express;
-}
-
-//>>
-
-int			helper_create_file(char *file)
-{
-	pid_t	pid;
-	char	*touch[] = {"touch", file, NULL};
-
-	if (access(file, F_OK ) != -1 ) 
-		return (open(file, O_WRONLY));
-	else
-	{
-		pid = fork();
-		if (pid == 0)
-			execvp(touch[0], touch);
-		wait(NULL);
-		return (open(file, O_WRONLY));
-	}
 }
 
 //helper aggreagation ?
@@ -145,67 +126,3 @@ void			visit_expression(t_ast_nodeobj *obj, t_ast **ast)
 	left->node == 0 ? visit_factor(left, ast) : visit_expression(left, ast);
 	right->node == 0 ? visit_factor(right, ast) : visit_expression(right, ast);
 }
-
-/*
-**Usage:
-**cobj = factor, pobj = pipe. 
-**cobj sisältää t_redirectionin.
-**jos on pipe niin se on vasen node. 
-*/
-
-// int main()
-// {
-//     t_ast_nodeobj *cobj;
-//     t_ast_nodeobj *cobj2;
-//     t_ast_nodeobj *cobj3;
-
-//     t_redirection *redir;
-
-//     t_ast_nodeobj *pobj;
-//     t_ast_nodeobj *pobj2;
-    
-//     t_ast     *ast;
-
-//     char *ls[] = {"ls", "-al", NULL};
-//     char *cat[] = {"cat", "-e", NULL};
-//     char *nl[] = {"nl", NULL};
-//     //char *grep[] = {"grep", "kakka", NULL};
-
-//     redir = mkredir(strdup("file1"), strdup("<"));
-//     t_redirection *redir2 = mkredir(strdup("kakka"), strdup(">>"));
-
-//     cobj = mkfactor(ls, NULL);
-//     cobj2 = mkfactor(nl, NULL);
-//     cobj3 = mkfactor(cat, redir2);
-//     //t_ast_nodeobj *cobj4 = mkfactor(grep, redir);
-//     //t_ast_nodeobj *pobj3 = mkexpr(cobj4, cobj2);
-
-//     pobj = mkexpr(cobj, cobj2);
-//     pobj2 = mkexpr(pobj, cobj3);    
-    
-//     ast = malloc(sizeof(t_ast));
-//     ast->parent = pobj2;
-//     ast->in = 0;
-//     ast->out = 1;
-//     ast->err = 2;
-//     ast->next = NULL;
-
-//     while (ast)
-//     {
-//         switch(ast->parent->node) {
-//             case factor:
-//                 visit_factor(ast->parent, &ast);
-//                 break;
-//             case expr:
-//                 visit_expression(ast->parent, &ast);
-//                 break;
-//         }
-//     // ast->parent = cobj;
-//     // ast->in= 0;
-//     // ast->out = 1;
-//     // ast->err = 2;
-//     // exec_factor(cobj, &ast);
-//         ast = ast->next;
-//     }
-//     return 0;
-// }

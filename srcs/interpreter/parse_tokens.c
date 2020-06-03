@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "lexer.h"
-#include "header.h"
+#include "parser_ast.h"
 #include "../nodeobj.c"
 
 static char	*check_tilde(t_list *enviroment, char *str)
@@ -125,7 +125,7 @@ t_ast_nodeobj	*tokens_to_factor(t_list *head, int i, t_redirection *redir)
 	cmd[i] = NULL;
 	while (++count < i)
 	{
-		token = head->content;
+		token = get_t_list_token(head);
 		cmd[count] = token->value;
 		head = move_t_list_n_times(head, 1);
 	}
@@ -145,7 +145,7 @@ t_ast_nodeobj		*tokens_to_simple_cmd(t_list *head, t_list *until)
 	i = 0;
 	while (tmp)
 	{
-		token = tmp->content;
+		token = get_t_list_token(tmp);;
 		if (token->e_type == TOKEN_REDIRECT)
 		{
 			redir = tokens_to_redirection(tmp, until);
@@ -154,7 +154,7 @@ t_ast_nodeobj		*tokens_to_simple_cmd(t_list *head, t_list *until)
 		if (tmp == until && tmp->next)
 			break ;
 		i++;
-		tmp = tmp->next;
+		tmp = move_t_list_n_times(tmp, 1);
 	}
 	return (tokens_to_factor(head, i, redir));
 }
