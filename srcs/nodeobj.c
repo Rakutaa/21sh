@@ -5,19 +5,21 @@
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
-t_nodeobj		*mkfactor(char **cmnd, t_redirection *redirection)
+t_ast_nodeobj		*create_factor(char **cmnd, t_redirection *redirection)
 {
-	t_nodeobj		*facto;
+	t_ast_nodeobj		*facto;
 	
-	facto = malloc(sizeof(t_nodeobj));
+	facto = malloc(sizeof(t_ast_nodeobj));
 	facto->node = factor;
 	facto->nodes.factor.cmds = cmnd;
 	facto->nodes.factor.redirection = redirection;
 	return facto;
 }
 
-t_redirection	*mkredir(char *file, char *sign)
+t_redirection	*create_redirection(char *file, char *sign)
 {
 	t_redirection	*redir;
 
@@ -28,11 +30,11 @@ t_redirection	*mkredir(char *file, char *sign)
 	return redir;
 }
 
-t_nodeobj		*mkexpr(t_nodeobj *left, struct nodeobj *right)
+t_ast_nodeobj		*create_expression(t_ast_nodeobj *left, t_ast_nodeobj *right)
 {
-	t_nodeobj *express;
+	t_ast_nodeobj *express;
 
-	express = malloc(sizeof(t_nodeobj));
+	express = malloc(sizeof(t_ast_nodeobj));
 	express->node = expr;
 	express->nodes.expr.left = left;
 	express->nodes.expr.right = right;
@@ -46,14 +48,10 @@ int			helper_create_file(char *file)
 	pid_t	pid;
 	char	*touch[] = {"touch", file, NULL};
 
-	ft_printf("taal");
-
 	if (access(file, F_OK ) != -1 ) 
-    // file exists
 		return (open(file, O_WRONLY));
 	else
 	{
-		// file doesn't exist
 		pid = fork();
 		if (pid == 0)
 			execvp(touch[0], touch);
@@ -69,7 +67,7 @@ int			helper_create_file(char *file)
 
 // }
 
-void			helper_dup(t_ast **ast, t_nodeobj *obj, int pipe_in)
+void			helper_dup(t_ast **ast, t_ast_nodeobj *obj, int pipe_in)
 {
 	dup2((*ast)->in, 0);
 	if ((*ast)->parent->node == 1 && obj
@@ -81,7 +79,7 @@ void			helper_dup(t_ast **ast, t_nodeobj *obj, int pipe_in)
 
 //lisää vaihtoehtoja..
 
-void			helper_close(t_nodeobj *obj, t_ast **ast)
+void			helper_close(t_ast_nodeobj *obj, t_ast **ast)
 {
 	if (obj->nodes.factor.redirection)
 	{
@@ -90,7 +88,7 @@ void			helper_close(t_nodeobj *obj, t_ast **ast)
 	}
 }
 
-void			exec_factor(t_nodeobj *obj, t_ast **ast)
+void			exec_factor(t_ast_nodeobj *obj, t_ast **ast)
 {
 	int			p[2];
 	pid_t		pid;
@@ -116,7 +114,7 @@ void			exec_factor(t_nodeobj *obj, t_ast **ast)
 //suljen avatun fd:n exec_factorissa 
 //puuttuu myös aggregation.. tää oikeestaan = close fd kait :D
 
-void			visit_f(t_nodeobj *obj, t_ast **ast)
+void			visit_factor(t_ast_nodeobj *obj, t_ast **ast)
 {
 	char			*file;
 	char			*redir;
@@ -128,9 +126,8 @@ void			visit_f(t_nodeobj *obj, t_ast **ast)
 		file = obj->nodes.factor.redirection->file;
 		redir = obj->nodes.factor.redirection->redir;
 		if (redir[0] == '>')
-			(*ast)->out = redir[1] == '\0' ? 
-			 open(file, O_WRONLY) : helper_create_file(file);
-			 //make another rule if >>
+			(*ast)->out = open(file, O_WRONLY | O_CREAT | (redir[1] == '\0' ?
+			O_TRUNC : O_APPEND), S_IRUSR | S_IRGRP | S_IROTH | S_IWGRP | S_IWUSR);
 		if (redir[0] == '<')
 			(*ast)->in = open(file, O_RDONLY); //make another rule if <<
 		head = head->next;
@@ -138,15 +135,15 @@ void			visit_f(t_nodeobj *obj, t_ast **ast)
 	exec_factor(obj, ast);
 }
 
-void			visit_e(t_nodeobj *obj, t_ast **ast)
+void			visit_expression(t_ast_nodeobj *obj, t_ast **ast)
 {
-	t_nodeobj		*left;
-	t_nodeobj		*right;
+	t_ast_nodeobj		*left;
+	t_ast_nodeobj		*right;
 
 	left = obj->nodes.expr.left;
 	right = obj->nodes.expr.right;
-	left->node == 0 ? visit_f(left, ast) : visit_e(left, ast);
-	right->node == 0 ? visit_f(right, ast) : visit_e(right, ast);
+	left->node == 0 ? visit_factor(left, ast) : visit_expression(left, ast);
+	right->node == 0 ? visit_factor(right, ast) : visit_expression(right, ast);
 }
 
 /*
@@ -158,14 +155,14 @@ void			visit_e(t_nodeobj *obj, t_ast **ast)
 
 // int main()
 // {
-//     t_nodeobj *cobj;
-//     t_nodeobj *cobj2;
-//     t_nodeobj *cobj3;
+//     t_ast_nodeobj *cobj;
+//     t_ast_nodeobj *cobj2;
+//     t_ast_nodeobj *cobj3;
 
 //     t_redirection *redir;
 
-//     t_nodeobj *pobj;
-//     t_nodeobj *pobj2;
+//     t_ast_nodeobj *pobj;
+//     t_ast_nodeobj *pobj2;
     
 //     t_ast     *ast;
 
@@ -180,8 +177,8 @@ void			visit_e(t_nodeobj *obj, t_ast **ast)
 //     cobj = mkfactor(ls, NULL);
 //     cobj2 = mkfactor(nl, NULL);
 //     cobj3 = mkfactor(cat, redir2);
-//     //t_nodeobj *cobj4 = mkfactor(grep, redir);
-//     //t_nodeobj *pobj3 = mkexpr(cobj4, cobj2);
+//     //t_ast_nodeobj *cobj4 = mkfactor(grep, redir);
+//     //t_ast_nodeobj *pobj3 = mkexpr(cobj4, cobj2);
 
 //     pobj = mkexpr(cobj, cobj2);
 //     pobj2 = mkexpr(pobj, cobj3);    
@@ -197,10 +194,10 @@ void			visit_e(t_nodeobj *obj, t_ast **ast)
 //     {
 //         switch(ast->parent->node) {
 //             case factor:
-//                 visit_f(ast->parent, &ast);
+//                 visit_factor(ast->parent, &ast);
 //                 break;
 //             case expr:
-//                 visit_e(ast->parent, &ast);
+//                 visit_expression(ast->parent, &ast);
 //                 break;
 //         }
 //     // ast->parent = cobj;

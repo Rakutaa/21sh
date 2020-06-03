@@ -70,35 +70,51 @@ static char	*check_dollar(t_list *enviroment, char *str)
 	return (str);
 }
 
-// ks onko redirectioneita
-//muista exit jos ei oo filee
-//file = check file exit if not
+t_token			*get_t_list_token(t_list *node)
+{
+	if (node)
+		return (node->content);
+	return NULL;
+}
 
-t_redirection	*make_redir(t_list *head, t_list *cur_list)
+t_list			*move_t_list_n_times(t_list *list, int n)
+{
+	int	count;
+
+	count = -1;
+	while (++count < n)
+		list = list->next;
+	return (list);
+}
+
+void			add_node_to_redirection_list(t_redirection *list, t_redirection *node)
+{
+	while (list->next)
+		list = list->next;
+	list->next = node;
+}
+
+t_redirection	*tokens_to_redirection(t_list *head, t_list *until)
 {
 	t_token	*sign;
 	t_token *file;
 	t_redirection *rhead;
-	t_redirection *rtmp;
 
-	sign = head->content;
-	file = head->next->content;
-	rhead = mkredir(file->value, sign->value);
-	rtmp = rhead->next;
-	head = head->next->next;
-	while(head != cur_list->next)
+	sign = get_t_list_token(head);
+	file = get_t_list_token(head->next);
+	rhead = create_redirection(file->value, sign->value);
+	head = move_t_list_n_times(head, 2);
+	while(head && head != until)
 	{
-
-		sign = head->content;
-		file = head->next->content;
-		rtmp = mkredir(file->value, sign->value);
-		head = head->next->next;
-		rtmp = rtmp->next;
+		sign = get_t_list_token(head);
+		file = get_t_list_token(head->next);
+		add_node_to_redirection_list(rhead, create_redirection(file->value, sign->value));
+		head = move_t_list_n_times(head, 2);
 	}
 	return (rhead);
 }
 
-t_nodeobj	*list_to_factor(t_list *head, int i, t_redirection *redir)
+t_ast_nodeobj	*tokens_to_factor(t_list *head, int i, t_redirection *redir)
 {
 	char		**cmd;
 	int			count;
@@ -111,13 +127,13 @@ t_nodeobj	*list_to_factor(t_list *head, int i, t_redirection *redir)
 	{
 		token = head->content;
 		cmd[count] = token->value;
-		head = head->next;
+		head = move_t_list_n_times(head, 1);
 	}
 	count = -1;
-	return (mkfactor(cmd, redir));
+	return (create_factor(cmd, redir));
 }
 
-t_nodeobj		*make_simple(t_list *head, t_list *cur_list)
+t_ast_nodeobj		*tokens_to_simple_cmd(t_list *head, t_list *until)
 {
 	t_list	*tmp;
 	t_token	*token;
@@ -132,64 +148,89 @@ t_nodeobj		*make_simple(t_list *head, t_list *cur_list)
 		token = tmp->content;
 		if (token->e_type == TOKEN_REDIRECT)
 		{
-			redir = make_redir(tmp, cur_list);
+			redir = tokens_to_redirection(tmp, until);
 			break ;
 		}
-		
-		if (cur_list && tmp == cur_list)
-		{
-			i++;
+		if (tmp == until && tmp->next)
 			break ;
-		}
 		i++;
 		tmp = tmp->next;
 	}
-	return (list_to_factor(head, i, redir));
+	return (tokens_to_factor(head, i, redir));
 }
 
-t_nodelist *init_nodelist()
+t_token_node_list *init_nodelist()
 {
-	t_nodelist *nodelist;
+	t_token_node_list *token_node_list;
 
-	nodelist = malloc(sizeof(t_nodelist));
-	nodelist->e_type = TOKEN_N;
-	nodelist->nodeobj = NULL;
-	nodelist->next = NULL;
-	return nodelist;
+	token_node_list = malloc(sizeof(t_token_node_list));
+	token_node_list->parser_nodeobj = NULL;
+	token_node_list->next = NULL;
+	return token_node_list;
 }
 
-void		add_to_nodelist(t_nodelist **head, t_nodeobj *nobj, int i)
+void		add_node_to_nodelist(t_token_node_list **list, t_parser_nodeobj *ast_nodeobj, t_parser_nodeobj *token_nodeobj)
 {
-	t_nodelist *tmp;
-	t_nodelist *print;
+	t_token_node_list *tmp;
 
-	if (!*head)
+	if (!*list)
 	{
-		// ft_printf("kakka");
-		// ft_printf("%d ", i);
-		*head = init_nodelist();
-		tmp = *head;
-		tmp->e_type = i; 
-		tmp->nodeobj = nobj;
-		tmp->next = NULL;
+		(*list) = init_nodelist();
+		(*list)->parser_nodeobj = ast_nodeobj;
+		tmp = (*list);
 	}
 	else
 	{
-		// ft_printf("yo");
-		// ft_printf("%d ", i);
-//		ft_printf("%d yoyoy", (*head)->e_type);
-		tmp = *head;
+		tmp = (*list);
 		while (tmp->next)
 			tmp = tmp->next;
-		print = init_nodelist();
-		print->e_type = i; 
-		print->nodeobj = nobj;
-		print->next = NULL;
-		tmp->next = print;
+		tmp->next = init_nodelist();
+		tmp->next->parser_nodeobj = ast_nodeobj;
+		tmp = tmp->next;
+	}
+	if (token_nodeobj)
+	{
+		tmp->next = init_nodelist();
+		tmp->next->parser_nodeobj = token_nodeobj;
 	}
 }
 
-t_ast	*create_ast(t_nodelist *list)
+t_ast	*init_ast()
+{
+	t_ast	*ast;
+
+	ast = malloc(sizeof(t_ast));
+	ast->in = 0;
+	ast->out = 1;
+	ast->err = 2;
+	ast->parent = NULL;
+	ast->next = NULL;
+	return ast;
+}
+
+t_ast	*create_ast_node(t_ast *ast, t_token_node_list **list)
+{
+	if (!ast)
+	{
+		ast = init_ast();
+		ast->parent = (*list)->parser_nodeobj->nodes.node.ast_nodeobj;
+	}
+	else
+	{
+		ast->next = init_ast();
+		ast->next->parent = (*list)->next->parser_nodeobj->nodes.node.ast_nodeobj;
+		ast = ast->next;
+		*list = (*list)->next;
+	}
+	*list = (*list)->next;
+	return (ast);
+}
+
+//ajattele tama viela uusiks
+//ehkä vois ajatella niin, et jos toi node on 
+//token niin do smth ja jos on ast_nodeobj do smth
+
+t_ast	*create_ast_list(t_token_node_list *list)
 {
 	t_ast	*ast;
 	t_ast	*tmp;
@@ -198,28 +239,18 @@ t_ast	*create_ast(t_nodelist *list)
 	tmp = ast;
 	while (list)
 	{
-		if (!tmp)
+		if (list->parser_nodeobj->tn != token || 
+		list->parser_nodeobj->nodes.token.e_type != TOKEN_P)
 		{
-			tmp = malloc(sizeof(t_ast));
-			tmp->parent = list->nodeobj;
-			tmp->in= 0;
-			tmp->out = 1;
-			tmp->err = 2;
+			tmp = create_ast_node(tmp, &list);
 			if (!ast)
 				ast = tmp;
 		}
-		if (list->e_type == TOKEN_P)
+		else
 		{
-			tmp->parent = mkexpr(tmp->parent, list->next->nodeobj);
-			list = list->next;
+			tmp->parent = create_expression(tmp->parent, list->next->parser_nodeobj->nodes.node.ast_nodeobj);
+			list = list->next->next;
 		}
-		else if (list->e_type == TOKEN_S)
-			tmp = tmp->next;
-		else if (list->e_type == TOKEN_N)
-		{
-			return ast;
-		}
-			
 	}
 	return (ast);
 }
@@ -236,46 +267,58 @@ void		check_dollar_tilde(t_list *env, t_token *token)
 	}
 }
 
+void		add_to_token_node_list(t_token_node_list **list, t_list *head, t_list *cur_list, int type)
+{
+	t_parser_nodeobj *ast_nodeobj;
+	t_parser_nodeobj *token_nodeobj;
+
+	ast_nodeobj = malloc(sizeof(t_parser_nodeobj));
+	token_nodeobj = NULL;
+	ast_nodeobj->tn = node;
+	ast_nodeobj->nodes.node.ast_nodeobj = tokens_to_simple_cmd(head, cur_list);
+	if (type == 3 || type == 5)
+	{
+		token_nodeobj = malloc(sizeof(t_parser_nodeobj));
+		token_nodeobj->tn = token;
+		token_nodeobj->nodes.token.e_type = type == 3 ? 0 : 1;
+	}
+	add_node_to_nodelist(list, ast_nodeobj, token_nodeobj);
+}
+
+void		execute_ast(t_ast *ast)
+{
+	while (ast)
+	{
+		if (ast->parent->node == factor)
+			visit_factor(ast->parent, &ast);
+		else
+			visit_expression(ast->parent, &ast);
+		ast = ast->next;
+	}
+}
+
 void		parse_tokens(t_terminal *term, t_list *tokens)
 {
 	t_list	*cur_list;
 	t_list	*head;
 	t_token	*content;
-	t_nodelist	*nhead;
+	t_token_node_list	*nhead;
 	t_ast		*ast;
-	t_list	*prev;
 
 	head = tokens;
 	cur_list = tokens;
 	nhead = NULL;
-	ast = NULL;
 	while (cur_list)
 	{
-		content = cur_list->content;
+		content = get_t_list_token(cur_list);
 		check_dollar_tilde(term->env, content);
 		if (content->e_type == TOKEN_PIPE || content->e_type == TOKEN_SEMI || !cur_list->next)
 		{
-			if (!cur_list->next)
-				add_to_nodelist(&nhead, make_simple(head, cur_list), 0);
-			else
-				add_to_nodelist(&nhead, make_simple(head, prev), content->e_type == TOKEN_PIPE ? 1 : 2);
+			add_to_token_node_list(&nhead, head, cur_list, content->e_type);
 			head = cur_list->next;
 		}
-		prev = cur_list;
-		cur_list = cur_list->next;
+		cur_list = move_t_list_n_times(cur_list, 1);
 	}
-	ast = create_ast(nhead);
-	while (ast)
-    {
-        switch(ast->parent->node)
-		{
-            case factor:
-                visit_f(ast->parent, &ast);
-                break;
-            case expr:
-                visit_e(ast->parent, &ast);
-                break;
-        }
-		ast = ast->next;
-	}
+	ast = create_ast_list(nhead);
+	execute_ast(ast);
 }

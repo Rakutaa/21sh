@@ -20,7 +20,7 @@ typedef struct s_redirection
 **käsiteltävä data on.
 */
 
-typedef struct nodeobj {
+typedef struct ast_nodeobj {
 	enum node { factor, expr } node;
 	union {
 		struct {
@@ -28,57 +28,41 @@ typedef struct nodeobj {
 			t_redirection *redirection;
 		} factor;
 		struct {
-			struct nodeobj *left;
-			struct nodeobj *right;
+			struct ast_nodeobj *left;
+			struct ast_nodeobj *right;
 		} expr;
 	} nodes;
-} t_nodeobj;
+} t_ast_nodeobj;
 
-typedef struct nodelist {
-	enum { TOKEN_N, TOKEN_P, TOKEN_S } e_type;
-	t_nodeobj	*nodeobj;
-	struct nodelist	*next;
-} t_nodelist;
-/*
-**execve tyyppinen cmnd ja redirection kertoo
-**tuleeko tähän cmnd infoa jostain filestä
-**tai meneekö tulostus johonkin fileen
-**lisäks redirection kumoaa pipen, mikäli input tulee,
-**sekä pipestä, että redirection filestä.
-*/
+typedef struct parser_nodeobj {
+	enum { token, node } tn;
+	union {
+		struct {
+			enum { TOKEN_P, TOKEN_S } e_type;
+		} token;
+		struct {
+			t_ast_nodeobj *ast_nodeobj;
+		} node;
+	} nodes;
+} t_parser_nodeobj;
 
-// typedef struct s_node_cmnd
-// {
-//     char					**cmnd;
-//     t_redirection			*redirection;
-// } t_node_cmnd;
-
-/*
-**tässä left ja right voi olla joko node_cmnd tai node_pipe
-*/
-
-// typedef struct s_node_pipe
-// {
-//     void            *left;
-//     void            *right;
-// } t_node_pipe;
-
-/*
-**parent voi olla, joko node_cmnd tai node_pipe
-**next tapahtuu, kun komentorivillä löytyy ;
-*/
+typedef struct token_node_list
+{
+	t_parser_nodeobj			*parser_nodeobj;
+	struct token_node_list	*next;
+} t_token_node_list;
 
 typedef struct s_ast
 {
-    t_nodeobj       *parent;
+    t_ast_nodeobj       *parent;
 	int in, out, err;
     struct s_ast    *next;
 } t_ast;
 
-t_nodeobj		*mkfactor(char **cmnd, t_redirection *redirection);
-t_redirection	*mkredir(char *file, char *sign);
-t_nodeobj		*mkexpr(t_nodeobj *left, struct nodeobj *right);
+t_ast_nodeobj		*create_factor(char **cmnd, t_redirection *redirection);
+t_redirection	*create_redirection(char *file, char *sign);
+t_ast_nodeobj		*create_expression(t_ast_nodeobj *left, t_ast_nodeobj *right);
 
-// t_nodeobj *mkcmnd(char **cmnd, t_redirection *redirection);
-// t_nodeobj *mkpipe(t_nodeobj *left, t_nodeobj *right);
+// t_ast_nodeobj *mkcmnd(char **cmnd, t_redirection *redirection);
+// t_ast_nodeobj *mkpipe(t_ast_nodeobj *left, t_ast_nodeobj *right);
 #endif
