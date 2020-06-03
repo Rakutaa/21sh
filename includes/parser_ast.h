@@ -44,7 +44,7 @@ typedef struct s_ast_node {
 } 										t_ast_node;
 
 typedef struct s_parser_node {
-	enum { token, ast }				token_or_ast;
+	enum { token, ast }				node;
 	union {
 		struct {
 			enum { TOKEN_P, TOKEN_S }	e_type;

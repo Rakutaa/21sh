@@ -89,12 +89,12 @@ void			tokens_to_parser_node(t_parser_node_list **list, t_list *head, t_list *la
 
 	ast_nodeobj = malloc(sizeof(t_parser_node));
 	token_nodeobj = NULL;
-	ast_nodeobj->token_or_ast = ast;
+	ast_nodeobj->node = ast;
 	ast_nodeobj->nodes.ast.ast_nodeobj = tokens_to_ast_node(head, last);
 	if (type == 3 || type == 5)
 	{
 		token_nodeobj = malloc(sizeof(t_parser_node));
-		token_nodeobj->token_or_ast = token;
+		token_nodeobj->node = token;
 		token_nodeobj->nodes.token.e_type = type == 3 ? 0 : 1;
 	}
 	add_node_to_parser_node_list(list, ast_nodeobj, token_nodeobj);
