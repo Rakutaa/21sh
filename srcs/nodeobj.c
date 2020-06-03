@@ -8,11 +8,11 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-t_ast_nodeobj		*create_factor(char **cmnd, t_redirection *redirection)
+t_ast_node		*create_factor(char **cmnd, t_redirection *redirection)
 {
-	t_ast_nodeobj		*facto;
+	t_ast_node		*facto;
 	
-	facto = malloc(sizeof(t_ast_nodeobj));
+	facto = malloc(sizeof(t_ast_node));
 	facto->node = factor;
 	facto->nodes.factor.cmds = cmnd;
 	facto->nodes.factor.redirection = redirection;
@@ -30,11 +30,11 @@ t_redirection	*create_redirection(char *file, char *sign)
 	return redir;
 }
 
-t_ast_nodeobj		*create_expression(t_ast_nodeobj *left, t_ast_nodeobj *right)
+t_ast_node		*create_expression(t_ast_node *left, t_ast_node *right)
 {
-	t_ast_nodeobj *express;
+	t_ast_node *express;
 
-	express = malloc(sizeof(t_ast_nodeobj));
+	express = malloc(sizeof(t_ast_node));
 	express->node = expr;
 	express->nodes.expr.left = left;
 	express->nodes.expr.right = right;
@@ -48,7 +48,7 @@ t_ast_nodeobj		*create_expression(t_ast_nodeobj *left, t_ast_nodeobj *right)
 
 // }
 
-void			helper_dup(t_ast **ast, t_ast_nodeobj *obj, int pipe_in)
+void			helper_dup(t_ast **ast, t_ast_node *obj, int pipe_in)
 {
 	dup2((*ast)->in, 0);
 	if ((*ast)->parent->node == 1 && obj
@@ -60,7 +60,7 @@ void			helper_dup(t_ast **ast, t_ast_nodeobj *obj, int pipe_in)
 
 //lisää vaihtoehtoja..
 
-void			helper_close(t_ast_nodeobj *obj, t_ast **ast)
+void			helper_close(t_ast_node *obj, t_ast **ast)
 {
 	if (obj->nodes.factor.redirection)
 	{
@@ -69,7 +69,7 @@ void			helper_close(t_ast_nodeobj *obj, t_ast **ast)
 	}
 }
 
-void			exec_factor(t_ast_nodeobj *obj, t_ast **ast)
+void			exec_factor(t_ast_node *obj, t_ast **ast)
 {
 	int			p[2];
 	pid_t		pid;
@@ -95,7 +95,7 @@ void			exec_factor(t_ast_nodeobj *obj, t_ast **ast)
 //suljen avatun fd:n exec_factorissa 
 //puuttuu myös aggregation.. tää oikeestaan = close fd kait :D
 
-void			visit_factor(t_ast_nodeobj *obj, t_ast **ast)
+void			visit_factor(t_ast_node *obj, t_ast **ast)
 {
 	char			*file;
 	char			*redir;
@@ -116,10 +116,10 @@ void			visit_factor(t_ast_nodeobj *obj, t_ast **ast)
 	exec_factor(obj, ast);
 }
 
-void			visit_expression(t_ast_nodeobj *obj, t_ast **ast)
+void			visit_expression(t_ast_node *obj, t_ast **ast)
 {
-	t_ast_nodeobj		*left;
-	t_ast_nodeobj		*right;
+	t_ast_node		*left;
+	t_ast_node		*right;
 
 	left = obj->nodes.expr.left;
 	right = obj->nodes.expr.right;

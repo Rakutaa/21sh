@@ -1,0 +1,11 @@
+all: $(NAME)
+	gcc -Wall -Werror -Wextra -I $(INCL) -I $(INCL1) -I $(INCL2) $(SRCS) -L$(LIBFOL) -l$(LIB) -ltermcap -o $(NAME)
+re: fclean all
+all: $(NAME)
+	gcc -Wall -Werror -Wextra -I $(INCL) -I $(INCL1) -I $(INCL2) $(SRCS) -L$(LIBFOL) -l$(LIB) -ltermcap -o $(NAME)
+re: fclean all
+clean:
+	#make -C libftprintf/ clean
+fclean: clean
+	#make -C libftprintf/ fclean
+re: fclean all

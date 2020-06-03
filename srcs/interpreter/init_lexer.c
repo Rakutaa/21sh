@@ -57,6 +57,28 @@ static t_token		*create_token(int type, char *value)
 	return (token);
 }
 
+t_token				*redirection(t_lexer *lexer)
+{
+	if (lexer->data[lexer->i] == '>')
+	{
+		if (lexer->data[lexer->i + 1] == '>')
+		{
+			lexer->i = lexer->i + 1;
+			return create_token(TOKEN_REDIRECT, ft_strdup(">>"));
+		}
+		return create_token(TOKEN_REDIRECT, ft_strdup(">"));
+	}
+	else
+	{
+		if (lexer->data[lexer->i + 1] == '<')
+		{
+			lexer->i = lexer->i + 1;
+			return create_token(TOKEN_REDIRECT, ft_strdup("<<"));
+		}
+		return create_token(TOKEN_REDIRECT, ft_strdup("<"));
+	}
+}
+
 static t_token		*get_token(t_lexer *lexer, t_terminal *term)
 {
 	t_token			*token;
@@ -66,10 +88,8 @@ static t_token		*get_token(t_lexer *lexer, t_terminal *term)
 	{
 		if (lexer->data[lexer->i] == '|')
 			token = create_token(TOKEN_PIPE, ft_strdup("|"));
-		else if (lexer->data[lexer->i] == '>')
-			token = create_token(TOKEN_REDIRECT, ft_strdup(">"));
-		else if (lexer->data[lexer->i] == '<')
-			token = create_token(TOKEN_REDIRECT, ft_strdup("<"));
+		else if (lexer->data[lexer->i] == '>' || lexer->data[lexer->i] == '<')
+			token = redirection(lexer);
 		else if (lexer->data[lexer->i] == ';')
 			token = create_token(TOKEN_SEMI, ft_strdup(";"));
 		lexer->i++;
