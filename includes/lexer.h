@@ -41,5 +41,7 @@ typedef struct		s_lexer
 
 void				init_lexer(t_terminal *term);
 void				parse_tokens(t_terminal *term, t_list *tokens);
-
+t_token				*get_t_list_token(t_list *node);
+t_list				*move_t_list_n_times(t_list *list, int n);
+void				check_dollar_tilde(t_list *env, t_token *token);
 #endif

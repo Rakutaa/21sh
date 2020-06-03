@@ -1,6 +1,15 @@
 #ifndef PARSER_AST
 # define PARSER_AST
 
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+#include <fcntl.h>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
 /*
 **tämä ratkaisu, koska nyt yhdellä nodella voi olla monta redirectionia
 **mm. cat << EOF >> file1
@@ -64,4 +73,15 @@ typedef struct s_ast
 t_ast_node								*create_factor(char **cmnd, t_redirection *redirection);
 t_redirection							*create_redirection(char *file, char *sign);
 t_ast_node								*create_expression(t_ast_node *left, t_ast_node *right);
+void			helper_dup(t_ast **ast, t_ast_node *obj, int pipe_in);
+void			helper_close(t_ast_node *obj, t_ast **ast);
+void			exec_factor(t_ast_node *obj, t_ast **ast);
+void			visit_factor(t_ast_node *obj, t_ast **ast);
+void			visit_expression(t_ast_node *obj, t_ast **ast);
+
+void									add_node_to_redirection_list(t_redirection *list, t_redirection *node);
+void					    			add_node_to_parser_node_list(t_parser_node_list **list, t_parser_node *ast_node, t_parser_node *token_node);
+t_ast									*create_ast_list(t_parser_node_list *list);
+void									execute_ast(t_ast *ast);
+
 #endif

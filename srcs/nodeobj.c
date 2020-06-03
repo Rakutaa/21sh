@@ -1,12 +1,4 @@
 #include "parser_ast.h"
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <sys/wait.h>
-#include <fcntl.h>
-#include <string.h>
-#include <sys/types.h>
-#include <sys/stat.h>
 
 t_ast_node		*create_factor(char **cmnd, t_redirection *redirection)
 {

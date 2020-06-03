@@ -17,6 +17,7 @@ SRCS = srcs/main.c \
        srcs/config_terminal.c \
        srcs/program_exit.c \
        srcs/utils.c \
+       srcs/nodeobj.c \
        srcs/input/browse_history.c \
        srcs/input/cursor_movement_1.c \
        srcs/input/cursor_movement_2.c \
@@ -25,6 +26,11 @@ SRCS = srcs/main.c \
        srcs/input/search_action.c \
        srcs/interpreter/init_lexer.c \
        srcs/interpreter/parse_tokens.c \
+       srcs/interpreter/ast_utils.c \
+       srcs/interpreter/dollar_tilde_utils.c \
+       srcs/interpreter/helpers.c \
+       srcs/interpreter/parser_utils.c \
+       srcs/interpreter/redirection_utils.c
 
 
 INCL =	includes/
