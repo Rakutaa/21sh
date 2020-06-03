@@ -159,19 +159,19 @@ t_ast_nodeobj		*tokens_to_simple_cmd(t_list *head, t_list *until)
 	return (tokens_to_factor(head, i, redir));
 }
 
-t_token_node_list *init_nodelist()
+t_parser_node_list *init_nodelist()
 {
-	t_token_node_list *token_node_list;
+	t_parser_node_list *list;
 
-	token_node_list = malloc(sizeof(t_token_node_list));
-	token_node_list->parser_nodeobj = NULL;
-	token_node_list->next = NULL;
-	return token_node_list;
+	list = malloc(sizeof(t_parser_node_list));
+	list->parser_nodeobj = NULL;
+	list->next = NULL;
+	return list;
 }
 
-void		add_node_to_nodelist(t_token_node_list **list, t_parser_nodeobj *ast_nodeobj, t_parser_nodeobj *token_nodeobj)
+void		add_node_to_nodelist(t_parser_node_list **list, t_parser_nodeobj *ast_nodeobj, t_parser_nodeobj *token_nodeobj)
 {
-	t_token_node_list *tmp;
+	t_parser_node_list *tmp;
 
 	if (!*list)
 	{
@@ -208,7 +208,7 @@ t_ast	*init_ast()
 	return ast;
 }
 
-t_ast	*create_ast_node(t_ast *ast, t_token_node_list **list)
+t_ast	*create_ast_node(t_ast *ast, t_parser_node_list **list)
 {
 	if (!ast)
 	{
@@ -230,7 +230,7 @@ t_ast	*create_ast_node(t_ast *ast, t_token_node_list **list)
 //ehkä vois ajatella niin, et jos toi node on 
 //token niin do smth ja jos on ast_nodeobj do smth
 
-t_ast	*create_ast_list(t_token_node_list *list)
+t_ast	*create_ast_list(t_parser_node_list *list)
 {
 	t_ast	*ast;
 	t_ast	*tmp;
@@ -267,7 +267,7 @@ void		check_dollar_tilde(t_list *env, t_token *token)
 	}
 }
 
-void		add_to_token_node_list(t_token_node_list **list, t_list *head, t_list *cur_list, int type)
+void		add_to_token_node_list(t_parser_node_list **list, t_list *head, t_list *cur_list, int type)
 {
 	t_parser_nodeobj *ast_nodeobj;
 	t_parser_nodeobj *token_nodeobj;
@@ -302,7 +302,7 @@ void		parse_tokens(t_terminal *term, t_list *tokens)
 	t_list	*cur_list;
 	t_list	*head;
 	t_token	*content;
-	t_token_node_list	*nhead;
+	t_parser_node_list	*nhead;
 	t_ast		*ast;
 
 	head = tokens;

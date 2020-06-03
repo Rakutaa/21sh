@@ -46,11 +46,11 @@ typedef struct parser_nodeobj {
 	} nodes;
 } t_parser_nodeobj;
 
-typedef struct token_node_list
+typedef struct parser_node_list
 {
 	t_parser_nodeobj			*parser_nodeobj;
-	struct token_node_list	*next;
-} t_token_node_list;
+	struct parser_node_list	*next;
+} t_parser_node_list;
 
 typedef struct s_ast
 {
