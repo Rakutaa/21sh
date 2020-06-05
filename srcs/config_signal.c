@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:43 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/05 14:50:01 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/05 15:28:30 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	signal_kill(int signum)
 		g_term->in->index = 0;
 		g_term->in->line = 0;
 		write(1, "\n", 1);
-		ft_putstr(PROMPT);
+		ft_putstr(g_term->in->prompt);
 	}
 }
 

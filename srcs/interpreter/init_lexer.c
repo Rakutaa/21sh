@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_lexer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/01 14:55:51 by vtran            ###   ########.fr       */
+/*   Updated: 2020/06/05 15:27:03 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 	{
 		if (!lexer->data[lexer->i])
 		{
-			ft_putstr("\n> ");
+			ft_memmove(term->in->prompt, FILL, 3);
+			ft_putendl("");
 			init_input(term);
 			continue ;
 		}

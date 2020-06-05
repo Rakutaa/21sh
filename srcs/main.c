@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/05 14:46:35 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/05 15:21:54 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void		command_line(t_terminal *term)
 	while (term)
 	{
 		term->in->h_index = -1;
+		ft_memmove(term->in->prompt, INIT, 3);
 		ft_bzero(term->in->string, ARG_MAX);
 		term->in->index = 0;
 		term->in->line = 0;
