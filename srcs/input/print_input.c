@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:26 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/28 13:23:57 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/05 14:51:12 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,19 @@ static void	cursor_position(t_terminal *term, size_t len)
 		tputs(tgetstr("do", NULL), 1, print_char);
 }
 
-void		print_input(t_terminal *term)
+void	print_input(t_terminal *term)
 {
+	size_t	count;
 	size_t	len;
 
 	len = ft_strlen(term->in->string) + ft_strlen(PROMPT) - 1;
-	tputs(tgetstr("rc", NULL), 1, print_char);
+	count = term->in->line;
+	tputs(tgetstr("cr", NULL), 1, print_char);
+	while (count-- && len > term->size.ws_col * count)
+		tputs(tgetstr("up", NULL), 1, print_char);
 	tputs(tgetstr("cd", NULL), 1, print_char);
+	ft_putstr(PROMPT);
 	ft_putstr(term->in->string);
 	cursor_position(term, len);
+	term->in->line = (term->in->index + ft_strlen(PROMPT)) / term->size.ws_col;
 }

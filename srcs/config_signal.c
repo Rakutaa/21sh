@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:43 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/29 12:19:40 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/05 14:50:01 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ static void	signal_continue(int signum)
 	{
 		config_terminal(0, g_term);
 		config_signal(g_term);
-		tputs(tgetstr("rc", NULL), 1, print_char);
-		tputs(tgetstr("cr", NULL), 1, print_char);
-		ft_putstr(PROMPT);
+		ioctl(1, TIOCGWINSZ, &g_term->size);
 		print_input(g_term);
 		ioctl(1, TIOCSTI, "");
 	}
@@ -51,11 +49,13 @@ static void	signal_kill(int signum)
 {
 	if (signum)
 	{
+		g_term->in->index = ft_strlen(g_term->in->string);
+		print_input(g_term);
 		ft_bzero(g_term->in->string, ft_strlen(g_term->in->string));
 		g_term->in->index = 0;
+		g_term->in->line = 0;
 		write(1, "\n", 1);
 		ft_putstr(PROMPT);
-		tputs(tgetstr("sc", NULL), 1, print_char);
 	}
 }
 
