@@ -11,26 +11,6 @@
 #include <sys/stat.h>
 #include "lexer.h"
 
-/*
-**tämä ratkaisu, koska nyt yhdellä nodella voi olla monta redirectionia
-**mm. cat << EOF >> file1
-**en tiedä mitä muita hyötyä tästä vois olla
-*/
-
-typedef struct s_redirection
-{
-    char								*redir;
-    char								*file;
-    struct s_redirection				*next;
-} 										t_redirection;
-
-typedef struct s_aggregation
-{
-	t_token								*aggre;
-	struct s_aggregation				*next;
-}										t_aggregation;
-
-
 //atoi n and word, but if no numbers will return 0.
 typedef struct s_redirection_aggregation
 {
@@ -97,14 +77,12 @@ typedef struct s_ast
 }										t_ast;
 
 t_ast_node								*create_factor(char **cmnd, t_redirection_aggregation *list);
-t_redirection							*create_redirection(char *file, char *sign);
 t_ast_node								*create_expression(t_ast_node *left, t_ast_node *right);
 void									helper_dup(t_ast **ast, t_ast_node *obj, int pipe_in);
 void									helper_close(t_ast_node *obj, t_ast **ast);
 void									exec_factor(t_ast_node *obj, t_ast **ast);
 void									visit_factor(t_ast_node *obj, t_ast **ast);
 void									visit_expression(t_ast_node *obj, t_ast **ast);
-void									add_node_to_redirection_list(t_redirection **list, t_redirection *node);
 void					    			add_node_to_parser_node_list(t_parser_node_list **list, t_parser_node *ast_node, t_parser_node *token_node);
 t_ast									*create_ast_list(t_parser_node_list *list);
 void									execute_ast(t_ast *ast);

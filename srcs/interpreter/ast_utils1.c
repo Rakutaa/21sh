@@ -11,17 +11,6 @@ t_ast_node		*create_factor(char **cmnd, t_redirection_aggregation *list)
 	return facto;
 }
 
-t_redirection	*create_redirection(char *file, char *sign)
-{
-	t_redirection	*redir;
-
-	redir = malloc(sizeof(t_redirection));
-	redir->redir = sign;
-	redir->file = file;
-	redir->next = NULL;
-	return redir;
-}
-
 t_ast_node		*create_expression(t_ast_node *left, t_ast_node *right)
 {
 	t_ast_node *express;

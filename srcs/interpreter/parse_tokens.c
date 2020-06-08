@@ -13,28 +13,6 @@
 #include "lexer.h"
 #include "parser_ast.h"
 
-void			add_node_to_aggregation_list(t_aggregation **agg, t_token *token)
-{
-	t_aggregation *tmp;
-
-	if (!*agg)
-	{
-		tmp = malloc(sizeof(t_aggregation));
-		tmp->aggre = token;
-		tmp->next = NULL;
-		*agg = tmp;
-	}
-	else
-	{
-		tmp = *agg;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = malloc(sizeof(t_aggregation));
-		tmp->next->aggre = token;
-		tmp->next->next = NULL;
-	}
-}
-
 void	add_redir_aggre_list(t_redirection_aggregation **list, t_redirection_aggregation *node)
 {
 	t_redirection_aggregation *tmp;
