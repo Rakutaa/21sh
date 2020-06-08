@@ -27,7 +27,8 @@ typedef struct		s_token
 		TOKEN_SQUOTE,
 		TOKEN_PIPE,
 		TOKEN_REDIRECT,
-		TOKEN_SEMI
+		TOKEN_SEMI,
+		TOKEN_AGGRE
 	}				e_type;
 	char			*value;
 }					t_token;

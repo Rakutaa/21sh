@@ -1,13 +1,13 @@
 #include "parser_ast.h"
 
-t_ast_node		*create_factor(char **cmnd, t_redirection *redirection)
+t_ast_node		*create_factor(char **cmnd, t_redirection_aggregation *list)
 {
 	t_ast_node		*facto;
 	
 	facto = malloc(sizeof(t_ast_node));
 	facto->node = factor;
 	facto->nodes.factor.cmds = cmnd;
-	facto->nodes.factor.redirection = redirection;
+	facto->nodes.factor.list = list;
 	return facto;
 }
 
@@ -40,18 +40,21 @@ void			visit_factor(t_ast_node *obj, t_ast **ast)
 {
 	char			*file;
 	char			*redir;
-	t_redirection	*head;
+	t_redirection_aggregation	*head;
 
-	head = obj->nodes.factor.redirection;
+	head = obj->nodes.factor.list;
 	while (head)
 	{
-		file = obj->nodes.factor.redirection->file;
-		redir = obj->nodes.factor.redirection->redir;
-		if (redir[0] == '>')
-			(*ast)->out = open(file, O_WRONLY | O_CREAT | (redir[1] == '\0' ?
-			O_TRUNC : O_APPEND), S_IRUSR | S_IRGRP | S_IROTH | S_IWGRP | S_IWUSR);
-		if (redir[0] == '<')
-			(*ast)->in = open(file, O_RDONLY); //make another rule if <<
+		if (head->flag == 0)
+		{
+			file = head->token.redirection.file;
+			redir = head->token.redirection.redir;
+			if (redir[0] == '>')
+				(*ast)->out = open(file, O_WRONLY | O_CREAT | (redir[1] == '\0' ?
+				O_TRUNC : O_APPEND), S_IRUSR | S_IRGRP | S_IROTH | S_IWGRP | S_IWUSR);
+			if (redir[0] == '<')
+				(*ast)->in = open(file, O_RDONLY); //make another rule if <<
+		}
 		head = head->next;
 	}
 	exec_factor(obj, ast);

@@ -14,9 +14,12 @@ void			helper_dup(t_ast **ast, t_ast_node *obj, int pipe_in)
 
 void			helper_close(t_ast_node *obj, t_ast **ast)
 {
-	if (obj->nodes.factor.redirection)
+	t_redirection_aggregation *node;
+	
+	node = obj->nodes.factor.list;
+	if (node && node->flag == 0)
 	{
-		if (obj->nodes.factor.redirection->redir[0] == '<')
+		if (node->token.redirection.redir[0] == '<')
 			close((*ast)->in);
 	}
 }
