@@ -31,9 +31,7 @@ SRCS = srcs/main.c \
        srcs/interpreter/ast_helpers.c \
        srcs/interpreter/dollar_tilde_utils.c \
        srcs/interpreter/helpers.c \
-       srcs/interpreter/parser_utils.c \
-       srcs/interpreter/redirection_utils.c
-
+       srcs/interpreter/parser_utils.c 
 
 INCL =	includes/
 INCL1 = libftprintf/includes

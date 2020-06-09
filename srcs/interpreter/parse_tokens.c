@@ -116,7 +116,7 @@ t_ast_node		*tokens_to_ast_node(t_list *head, t_list *last)
 	while (tmp)
 	{
 		token = get_t_list_token(tmp);
-		if (token->e_type == TOKEN_REDIRECT)
+		if (token->e_type == TOKEN_REDIRECT || token->e_type == TOKEN_AGGRE)
 		{
 			redir = tokens_to_redirection(tmp, last);
 			break ;

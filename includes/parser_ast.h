@@ -21,9 +21,9 @@ typedef struct s_redirection_aggregation
     		char								*file;
 		}										redirection;
 		struct {
-			void								*n;
+			char								*n;
 			char								*sign;
-			void								*word;
+			char								*word;
 		}										aggregation;
 	}	token;
 	struct s_redirection_aggregation			*next;	

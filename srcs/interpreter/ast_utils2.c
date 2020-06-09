@@ -5,7 +5,7 @@ void		execute_ast(t_ast *ast)
 	while (ast)
 	{
 		if (ast->parent->node == factor)
-			visit_factor(ast->parent, &ast);
+			exec_factor(ast->parent, &ast);
 		else
 			visit_expression(ast->parent, &ast);
 		ast = ast->next;
