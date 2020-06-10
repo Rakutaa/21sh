@@ -6,13 +6,18 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:43 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/05 15:28:30 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/10 18:21:41 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 
 static t_terminal *g_term;
+
+/*
+** Updates term struct information about the window size and pushes
+** empty string into device stream to activate read in listen_keys.
+*/
 
 static void	signal_resize(int signum)
 {
@@ -22,6 +27,11 @@ static void	signal_resize(int signum)
 		ioctl(1, TIOCSTI, "");
 	}
 }
+
+/*
+** Configurates terminal and signals into original state before pushing
+** suspend signal into device stream.
+*/
 
 static void	signal_suspend(int signum)
 {
@@ -33,17 +43,24 @@ static void	signal_suspend(int signum)
 	}
 }
 
+/*
+** Configurates terminal and signals back into "shell" mode before
+** printing current command and updating cursor position.
+*/
+
 static void	signal_continue(int signum)
 {
 	if (signum == SIGCONT)
 	{
 		config_terminal(0, g_term);
 		config_signal(g_term);
-		ioctl(1, TIOCGWINSZ, &g_term->size);
 		print_input(g_term);
-		ioctl(1, TIOCSTI, "");
 	}
 }
+
+/*
+** Clears the current command and prints out a prompt on a empty line.
+*/
 
 static void	signal_kill(int signum)
 {
@@ -54,10 +71,16 @@ static void	signal_kill(int signum)
 		ft_bzero(g_term->in->string, ft_strlen(g_term->in->string));
 		g_term->in->index = 0;
 		g_term->in->line = 0;
-		write(1, "\n", 1);
+		ft_putchar('\n');
 		ft_putstr(g_term->in->prompt);
 	}
 }
+
+/*
+** Goes through the available signals and sets them into "shell" mode.
+** Global variable is used because the second parameter of the signal
+** function has to take only one parameter.
+*/
 
 void		config_signal(t_terminal *term)
 {

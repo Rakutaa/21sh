@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/10 14:24:26 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/10 18:13:20 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,17 @@ static t_list	*copy_enviroment(t_terminal *term, char **env)
 	return (start);
 }
 
+/*
+** This is the "core" part of the program. It allocates memory for the input
+** struct which keeps the information about the current command and cursor
+** positon. The while loop takes care of multiple essential things:
+** 1. Clears the current command.
+** 2. Starts the "command input".
+** 3. In case of the command being empty string, skips lexing and history.
+** 3. Starts the lexer.
+** 4. Pushes the command into command history.
+*/
+
 static void		command_line(t_terminal *term)
 {
 	term->in = (t_input *)malloc(sizeof(t_input));
@@ -65,11 +76,17 @@ static void		command_line(t_terminal *term)
 			ft_strlen(term->in->string)));
 		}
 		else
-			ft_putendl("");
+			ft_putchar('\n');
 		if (ft_strequ(term->in->string, "exit"))	//DELETE
 			return ;								//DELETE
 	}
 }
+
+/*
+** Allocates memory for the terminal struct and gathers information about
+** current terminal configurations before changing them. The program should
+** always return to main function if the exit is done without errors.
+*/
 
 int				main(int argc, char **argv, char **env)
 {
@@ -81,7 +98,6 @@ int				main(int argc, char **argv, char **env)
 	!term ? program_exit(term, 1) : 0;
 	tcgetattr(1, &term->original);
 	term->shell = term->original;
-	ioctl(1, TIOCGWINSZ, &term->size);
 	term->in = NULL;
 	term->env = copy_enviroment(term, env);
 	config_terminal(0, term);
