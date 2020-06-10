@@ -18,7 +18,7 @@ void			exec_factor(t_ast_node *obj, t_ast **ast)
 	{
 		wait(NULL);
 		close(p[1]);
-		helper_close(obj, ast);
 		(*ast)->in = p[0];
+		helper_close(obj, ast);
 	}
 }

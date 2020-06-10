@@ -13,27 +13,79 @@
 #include "lexer.h"
 #include "parser_ast.h"
 
-t_redirection	*tokens_to_redirection(t_list *head, t_list *last)
+void	add_redir_aggre_list(t_redirection_aggregation **list, t_redirection_aggregation *node)
 {
-	t_token				*sign;
-	t_token				*file;
-	t_redirection		*rhead;
+	t_redirection_aggregation *tmp;
 
-	sign = get_t_list_token(head);
-	file = get_t_list_token(head->next);
-	rhead = create_redirection(file->value, sign->value);
-	head = move_t_list_n_times(head, 2);
+	if (!*list)
+		*list = node;
+	else
+	{
+		tmp = *list;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = node;
+	}
+}
+
+t_redirection_aggregation	*create_redir_aggre_node(int type, t_token *file, t_token *sign)
+{
+	t_redirection_aggregation	*node;
+	char						*str;
+	int							i;
+
+	node = malloc(sizeof(t_redirection_aggregation));
+	if (type == 0)
+	{
+		node->flag = 0;
+		node->token.redirection.file = file->value;
+		node->token.redirection.redir = sign->value;
+		node->next = NULL;
+	}
+	else 
+	{
+		node->flag = 1;
+		str = sign->value;
+		i = 0;
+		while (str[i] != '<' && str[i] != '>')
+			i++;
+		node->token.aggregation.n = i == 0 ? NULL : ft_strsub(str, 0, i);
+		node->token.aggregation.sign = ft_strsub(str, i, 2);
+		i = i + 2;
+		node->token.aggregation.word = str[i] == '-' ? ft_strdup("-") : ft_strdup(&str[i]);
+	}
+	return node;
+}
+
+t_redirection_aggregation	*tokens_to_redirection(t_list *head, t_list *last)
+{
+	t_token							*sign;
+	t_redirection_aggregation		*rhead;
+
+	rhead = NULL;
 	while(head && head != last)
 	{
 		sign = get_t_list_token(head);
-		file = get_t_list_token(head->next);
-		add_node_to_redirection_list(rhead, create_redirection(file->value, sign->value));
-		head = move_t_list_n_times(head, 2);
+		if (sign->e_type == TOKEN_REDIRECT)
+		{
+			add_redir_aggre_list(&rhead, create_redir_aggre_node(0, get_t_list_token(head->next), sign));
+			head = move_t_list_n_times(head, 2);
+		}
+		else
+		{
+			add_redir_aggre_list(&rhead, create_redir_aggre_node(1, NULL, sign));
+			head = move_t_list_n_times(head, 1);
+		}
 	}
+	sign = NULL;
+	if (last)
+		sign = last->content;
+	if (sign && sign->e_type == TOKEN_AGGRE)
+		add_redir_aggre_list(&rhead, create_redir_aggre_node(1, NULL, sign));
 	return (rhead);
 }
 
-t_ast_node		*tokens_to_factor(t_list *head, int i, t_redirection *redir)
+t_ast_node		*tokens_to_factor(t_list *head, int i, t_redirection_aggregation *redir)
 {
 	char				**cmd;
 	int					count;
@@ -48,7 +100,6 @@ t_ast_node		*tokens_to_factor(t_list *head, int i, t_redirection *redir)
 		cmd[count] = token->value;
 		head = move_t_list_n_times(head, 1);
 	}
-	count = -1;
 	return (create_factor(cmd, redir));
 }
 
@@ -56,7 +107,7 @@ t_ast_node		*tokens_to_ast_node(t_list *head, t_list *last)
 {
 	t_list				*tmp;
 	t_token				*token;
-	t_redirection		*redir;
+	t_redirection_aggregation		*redir;
 	int					i;
 
 	redir = NULL;
@@ -65,7 +116,7 @@ t_ast_node		*tokens_to_ast_node(t_list *head, t_list *last)
 	while (tmp)
 	{
 		token = get_t_list_token(tmp);
-		if (token->e_type == TOKEN_REDIRECT)
+		if (token->e_type == TOKEN_REDIRECT || token->e_type == TOKEN_AGGRE)
 		{
 			redir = tokens_to_redirection(tmp, last);
 			break ;
@@ -124,4 +175,4 @@ void			parse_tokens(t_terminal *term, t_list *tokens)
 	}
 	ast = create_ast_list(nhead);
 	execute_ast(ast);
-}
+	}
