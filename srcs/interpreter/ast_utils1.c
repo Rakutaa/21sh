@@ -49,7 +49,7 @@ void			visit_factor(t_ast_node *obj, t_ast **ast)
 			if (redir[0] == '<')
 			{
 				close((*ast)->in);
-				(*ast)->in = open(file, O_RDONLY, __O_CLOEXEC); //make another rule if <<
+				(*ast)->in = open(file, O_RDONLY, O_CLOEXEC); //make another rule if <<
 				dup2((*ast)->in, 0);
 			}
 		}
