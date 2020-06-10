@@ -6,12 +6,23 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/05 15:21:54 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/10 14:24:26 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 #include "lexer.h"
+
+static void		print_banner(void)
+{
+	ft_putendl(" _____  __      _          _ _");
+	ft_putendl("/ __  \\/  |    | |        | | |");
+	ft_putendl("   / /  | | ___| |__   ___| | |");
+	ft_putendl("  / /   | |/ __|  _ \\ / _ \\ | |");
+	ft_putendl(" / /____| |\\__ \\ | | |  __/ | |");
+	ft_putendl("\\_____/\\___/___/_| |_|\\___|_|_|");
+	ft_putendl("Use at your own risk!");
+}
 
 static t_list	*copy_enviroment(t_terminal *term, char **env)
 {
@@ -75,6 +86,7 @@ int				main(int argc, char **argv, char **env)
 	term->env = copy_enviroment(term, env);
 	config_terminal(0, term);
 	config_signal(term);
+	print_banner();
 	command_line(term);
 	program_exit(term, 0);
 }
