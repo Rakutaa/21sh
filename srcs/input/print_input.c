@@ -6,14 +6,14 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:26 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/05 15:25:32 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/12 17:27:08 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 #include "keyboard.h"
 
-static void	cursor_position(t_terminal *term, size_t len)
+static void		cursor_position(t_terminal *term, size_t len)
 {
 	size_t	cursor;
 	size_t	count;
@@ -33,10 +33,10 @@ static void	cursor_position(t_terminal *term, size_t len)
 		tputs(tgetstr("do", NULL), 1, print_char);
 }
 
-void	print_input(t_terminal *term)
+void			print_input(t_terminal *term)
 {
-	size_t	count;
-	size_t	len;
+	size_t		count;
+	size_t		len;
 
 	len = ft_strlen(term->in->string) + ft_strlen(term->in->prompt) - 1;
 	count = term->in->line;
@@ -47,5 +47,6 @@ void	print_input(t_terminal *term)
 	ft_putstr(term->in->prompt);
 	ft_putstr(term->in->string);
 	cursor_position(term, len);
-	term->in->line = (term->in->index + ft_strlen(term->in->prompt)) / term->size.ws_col;
+	term->in->line = (term->in->index + ft_strlen(term->in->prompt)) \
+	/ term->size.ws_col;
 }
