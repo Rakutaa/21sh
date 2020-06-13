@@ -6,12 +6,18 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:26 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/12 17:27:08 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/13 12:31:02 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 #include "keyboard.h"
+
+/*
+** Moves cursor to the beginning of the line where prompt is located.
+** After this the function moves cursor one by one until the position
+** matches term->in->index. May not be the most effective way, but it works.
+*/
 
 static void		cursor_position(t_terminal *term, size_t len)
 {
@@ -33,6 +39,14 @@ static void		cursor_position(t_terminal *term, size_t len)
 		tputs(tgetstr("do", NULL), 1, print_char);
 }
 
+/*
+** Moves cursor to the beginning of the line where prompt is located.
+** After this the function prints out prompt and current command overwriting
+** older text in the same process. Uses termcaps `sc' command to save cursor
+** location before calling cursor_position function. Amount of lines used in
+** printing is saved to the term->in->line variable.
+*/
+
 void			print_input(t_terminal *term)
 {
 	size_t		count;
@@ -46,6 +60,7 @@ void			print_input(t_terminal *term)
 	tputs(tgetstr("cd", NULL), 1, print_char);
 	ft_putstr(term->in->prompt);
 	ft_putstr(term->in->string);
+	tputs(tgetstr("sc", NULL), 1, print_char);
 	cursor_position(term, len);
 	term->in->line = (term->in->index + ft_strlen(term->in->prompt)) \
 	/ term->size.ws_col;
