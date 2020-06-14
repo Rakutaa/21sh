@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:21 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/10 16:51:03 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/14 13:51:00 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,16 @@
 ** 4 = Terminal type is not defined.
 */
 
+/*
+** Returns terminal into state it was before entering
+** the program and exits special modes set by `ti' command.
+** Frees the memory allocated in the main.c file.
+*/
+
 void	program_exit(t_terminal *term, int num)
 {
 	term ? config_terminal(1, term) : 0;
+	tputs(tgetstr("te", NULL), 1, print_char);
 	num == 0 ? ft_putendl_fd("21sh: Exit without errors.", 1) : 0;
 	num == 1 ? ft_putendl_fd("21sh: Could not allocate memory.", 2) : 0;
 	num == 2 ? ft_putendl_fd("21sh: TERM not set.", 2) : 0;

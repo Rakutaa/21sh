@@ -6,17 +6,14 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:04 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/10 17:33:42 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/14 13:49:21 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 
 /*
-** Configurates termcaps, puts the terminal into whatever special
-** modes are needed or appropriate for programs that move the cursor
-** nonsequentially around the screen and moves the cursor to
-** the upper left corner of the screen. Also gathers information about
+** Configurates termcaps. Also gathers information about
 ** the window size for term struct and turns off ICANON and ECHO.
 */
 
@@ -31,11 +28,10 @@ static void	init_shell(t_terminal *term)
 	success = tgetent(buffer, type);
 	if (success > 0)
 	{
-		tputs(tgetstr("ti", NULL), 1, print_char);
-		tputs(tgetstr("ho", NULL), 1, print_char);
 		ioctl(1, TIOCGWINSZ, &term->size);
 		term->shell.c_lflag &= ~(ICANON | ECHO);
 		tcsetattr(1, TCSAFLUSH, &term->shell);
+		config_signal(term);
 	}
 	else if (success < 0)
 		program_exit(term, 3);
@@ -44,13 +40,13 @@ static void	init_shell(t_terminal *term)
 }
 
 /*
-** Simply undoes what is done by the termcap `ti' string and
-** sets the terminal config as it was when program started.
+** Configurates the terminal and SIGSTP as they were
+** before the program started.
 */
 
 static void	init_original(struct termios original)
 {
-	tputs(tgetstr("te", NULL), 1, print_char);
+	signal(SIGTSTP, SIG_DFL);
 	tcsetattr(1, TCSAFLUSH, &original);
 }
 

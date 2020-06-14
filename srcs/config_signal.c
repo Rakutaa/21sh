@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:43 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/13 14:49:44 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/14 13:25:40 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	signal_resize(int signum)
 }
 
 /*
-** Configurates terminal and signals into original state before pushing
+** Configurates terminal into original state before pushing
 ** suspend signal into device stream.
 */
 
@@ -38,13 +38,13 @@ static void	signal_suspend(int signum)
 	if (signum == SIGTSTP)
 	{
 		config_terminal(1, g_term);
-		signal(SIGTSTP, SIG_DFL);
+		tputs(tgetstr("te", NULL), 1, print_char);
 		ioctl(1, TIOCSTI, "\x1a");
 	}
 }
 
 /*
-** Configurates terminal and signals back into "shell" mode before
+** Configurates terminal back into "shell" mode before
 ** printing current command and updating cursor position.
 */
 
@@ -53,7 +53,8 @@ static void	signal_continue(int signum)
 	if (signum == SIGCONT)
 	{
 		config_terminal(0, g_term);
-		config_signal(g_term);
+		tputs(tgetstr("ti", NULL), 1, print_char);
+		tputs(tgetstr("ho", NULL), 1, print_char);
 		print_input(g_term);
 	}
 }

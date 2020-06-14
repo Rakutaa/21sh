@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/13 12:33:23 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/14 13:49:45 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static t_list	*copy_enviroment(t_terminal *term, char **env)
 ** 1. Clears the current command.
 ** 2. Starts the "command input".
 ** 3. In case of the command being empty string, skips lexing and history.
-** 3. Starts the lexer.
 ** 4. Pushes the command into command history.
+** 5. Configurates terminal before staring lexer.
 */
 
 static void		command_line(t_terminal *term)
@@ -73,7 +73,9 @@ static void		command_line(t_terminal *term)
 		{
 			ft_lstadd(&term->in->history, ft_lstnew(term->in->string, \
 			ft_strlen(term->in->string)));
+			config_terminal(1, term);
 			init_lexer(term);
+			config_terminal(0, term);
 		}
 		else
 			ft_putchar('\n');
@@ -86,6 +88,10 @@ static void		command_line(t_terminal *term)
 ** Allocates memory for the terminal struct and gathers information about
 ** current terminal configurations before changing them. The program should
 ** always return to main function if the exit is done without errors.
+** Termcaps `ti' command puts the terminal into whatever special
+** modes are needed or appropriate for programs that move the cursor
+** nonsequentially around the screen and `te' moves the cursor to
+** the upper left corner of the screen.
 */
 
 int				main(int argc, char **argv, char **env)
@@ -101,7 +107,8 @@ int				main(int argc, char **argv, char **env)
 	term->in = NULL;
 	term->env = copy_enviroment(term, env);
 	config_terminal(0, term);
-	config_signal(term);
+	tputs(tgetstr("ti", NULL), 1, print_char);
+	tputs(tgetstr("ho", NULL), 1, print_char);
 	print_banner();
 	command_line(term);
 	program_exit(term, 0);
