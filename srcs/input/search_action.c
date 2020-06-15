@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   search_action.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/21 11:09:35 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/15 18:35:53 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 #include "keyboard.h"
+#include "parser_ast.h"
 
 static void	delete_char(t_terminal *term)
 {
@@ -29,6 +30,19 @@ static void	delete_char(t_terminal *term)
 	}
 }
 
+static void	copy_clipboard(t_terminal *term)
+{
+	t_ast_node	*ex;
+	t_ast		*head;
+	char		*echon[] = {"echo", term->in->string, NULL};
+	char	*copyn[] = {"pbcopy", NULL};
+
+	head = init_ast();
+	ex = create_expression(create_factor(echon, NULL), create_factor(copyn, NULL));
+	head->parent = ex;
+	execute_ast(head);
+}
+
 void		search_action(t_terminal *term, int sum)
 {
 	if (sum == LEFT || sum == RIGHT \
@@ -37,8 +51,11 @@ void		search_action(t_terminal *term, int sum)
 	else if (sum == CTRL_UP || sum == CTRL_DOWN \
 	|| sum == HOME || sum == END)
 		cursor_movement_2(term, sum);
-	else if (sum == UP || sum == DOWN)
+	else if (sum == DOWN)
 		browse_history(term, sum);
 	else if (sum == BACK)
 		delete_char(term);
+	else if (sum == COPY)
+		copy_clipboard(term);
+		
 }

@@ -86,5 +86,5 @@ void									visit_expression(t_ast_node *obj, t_ast **ast);
 void					    			add_node_to_parser_node_list(t_parser_node_list **list, t_parser_node *ast_node, t_parser_node *token_node);
 t_ast									*create_ast_list(t_parser_node_list *list);
 void									execute_ast(t_ast *ast);
-
+t_ast									*init_ast();
 #endif

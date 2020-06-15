@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/21 11:08:34 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/15 18:35:47 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@
 # define CTRL_DOWN 345
 # define CTRL_RIGHT 346
 # define CTRL_LEFT 347
+# define COPY -150
 
 #endif
