@@ -61,7 +61,7 @@ void		search_action(t_terminal *term, int sum)
 	else if (sum == CTRL_UP || sum == CTRL_DOWN \
 	|| sum == HOME || sum == END)
 		cursor_movement_2(term, sum);
-	else if (sum == DOWN)
+	else if (sum == UP || sum == DOWN)
 		browse_history(term, sum);
 	else if (sum == BACK)
 		delete_char(term);
