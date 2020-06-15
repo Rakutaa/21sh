@@ -30,12 +30,14 @@ static void	delete_char(t_terminal *term)
 	}
 }
 
+//pitäis toimia, mutta ei.. 
+
 static void	paste_clipboard()
 {
 	t_ast	*head;
 	char	*paste[] = {"pbpaste", NULL};
 	
-	head = init();
+	head = init_ast();
 	head->parent = create_factor(paste, NULL);
 	execute_ast(head);
 }
