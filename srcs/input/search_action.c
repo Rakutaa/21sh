@@ -30,6 +30,16 @@ static void	delete_char(t_terminal *term)
 	}
 }
 
+static void	paste_clipboard()
+{
+	t_ast	*head;
+	char	*paste[] = {"pbpaste", NULL};
+	
+	head = init();
+	head->parent = create_factor(paste, NULL);
+	execute_ast(head);
+}
+
 static void	copy_clipboard(t_terminal *term)
 {
 	t_ast_node	*ex;
