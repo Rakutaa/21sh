@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/12 17:29:15 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/15 16:51:44 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ static void	loop_input(t_terminal *term)
 
 void		init_input(t_terminal *term)
 {
+	config_terminal(0, term);
 	print_input(term);
 	loop_input(term);
+	config_terminal(1, term);
 }

@@ -6,18 +6,19 @@
 #    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/05/26 11:20:12 by vkuokka          ###   ########.fr        #
+#    Updated: 2020/06/15 16:26:35 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
 
-SRCS = srcs/main.c \
-       srcs/config_signal.c \
-       srcs/config_terminal.c \
+SRCS = srcs/config_termcaps.c \
+       srcs/main.c \
        srcs/program_exit.c \
        srcs/utils.c \
        srcs/input/browse_history.c \
+       srcs/input/config_signal.c \
+       srcs/input/config_terminal.c \
        srcs/input/cursor_movement_1.c \
        srcs/input/cursor_movement_2.c \
        srcs/input/init_input.c \

@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:43 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/14 13:25:40 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/15 16:50:04 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ static void	signal_suspend(int signum)
 	{
 		config_terminal(1, g_term);
 		tputs(tgetstr("te", NULL), 1, print_char);
+		signal(SIGTSTP, SIG_DFL);
 		ioctl(1, TIOCSTI, "\x1a");
 	}
 }
 
 /*
-** Configurates terminal back into "shell" mode before
-** printing current command and updating cursor position.
+** Configurates terminal back into "shell" mode before pushing
+** empty string into device stream to activate read in listen_keys.
 */
 
 static void	signal_continue(int signum)
@@ -55,7 +56,7 @@ static void	signal_continue(int signum)
 		config_terminal(0, g_term);
 		tputs(tgetstr("ti", NULL), 1, print_char);
 		tputs(tgetstr("ho", NULL), 1, print_char);
-		print_input(g_term);
+		ioctl(1, TIOCSTI, "");
 	}
 }
 
