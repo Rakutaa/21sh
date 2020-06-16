@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:04 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/15 16:38:31 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/16 10:40:02 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ void		config_termcaps(void)
 
 	type = getenv("TERM");
 	if (type == 0)
-		ft_putendl_fd("Specify a terminal type with `setenv TERM <yourtype>'.", 2);
+		ft_putendl_fd("Specify a terminal type.", 2);
 	success = tgetent(buffer, type);
 	if (success > 0)
 		return ;
 	else if (success < 0)
 		ft_putendl_fd("Could not access the termcap data base.", 2);
 	else if (success == 0)
-		ft_fprintf(2, "Terminal type `%s' is not defined.", type);
+		ft_putendl_fd("Terminal type is not defined.", 2);
 	exit(1);
 }

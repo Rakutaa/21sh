@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/15 16:24:52 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/16 10:50:11 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void				cursor_movement_1(t_terminal *term, int sum);
 void				cursor_movement_2(t_terminal *term, int sum);
 void				browse_history(t_terminal *term, int sum);
 void				search_action(t_terminal *term, int sum);
-void				init_input(t_terminal *term);
+void				start_editor(t_terminal *term);
+void				init_input(t_input *input);
 
 #endif

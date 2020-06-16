@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/15 16:51:28 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/16 10:50:35 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static void		print_banner(void)
 	ft_putendl(" / /____| |\\__ \\ | | |  __/ | |");
 	ft_putendl("\\_____/\\___/___/_| |_|\\___|_|_|");
 	ft_putendl("Use at your own risk!");
+	ft_putchar('\n');
 }
 
 static t_list	*copy_enviroment(t_terminal *term, char **env)
@@ -49,8 +50,8 @@ static t_list	*copy_enviroment(t_terminal *term, char **env)
 ** This is the "core" part of the program. It allocates memory for the input
 ** struct which keeps the information about the current command and cursor
 ** positon. The while loop takes care of multiple essential things:
-** 1. Clears the current command.
-** 2. Starts the "command input".
+** 1. Initializes the input struct.
+** 2. Starts the line editor.
 ** 3. In case of the command being empty string, skips lexing and history.
 ** 4. Pushes the command into command history.
 ** 5. Configurates terminal before staring lexer.
@@ -63,12 +64,8 @@ static void		command_line(t_terminal *term)
 	term->in->history = NULL;
 	while (term)
 	{
-		term->in->h_index = -1;
-		ft_memmove(term->in->prompt, INIT, 3);
-		ft_bzero(term->in->string, ARG_MAX);
-		term->in->index = 0;
-		term->in->line = 0;
-		init_input(term);
+		init_input(term->in);
+		start_editor(term);
 		if (term->in->string[0])
 		{
 			ft_lstadd(&term->in->history, ft_lstnew(term->in->string, \
@@ -102,8 +99,6 @@ int				main(int argc, char **argv, char **env)
 	tputs(tgetstr("ho", NULL), 1, print_char);
 	term = (t_terminal *)malloc(sizeof(t_terminal));
 	!term ? program_exit(term, 1) : 0;
-	tcgetattr(1, &term->original);
-	term->shell = term->original;
 	term->in = NULL;
 	term->env = copy_enviroment(term, env);
 	print_banner();

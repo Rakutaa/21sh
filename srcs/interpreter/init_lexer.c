@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/12 17:29:34 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/16 10:48:36 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 		{
 			ft_memmove(term->in->prompt, FILL, 3);
 			ft_putchar('\n');
-			init_input(term);
+			start_editor(term);
 			continue ;
 		}
 		lexer->i++;
