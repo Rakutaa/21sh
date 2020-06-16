@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/02 11:58:30 by vtran            ###   ########.fr       */
+/*   Updated: 2020/06/05 15:21:54 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,19 @@ static void		command_line(t_terminal *term)
 	while (term)
 	{
 		term->in->h_index = -1;
+		ft_memmove(term->in->prompt, INIT, 3);
 		ft_bzero(term->in->string, ARG_MAX);
 		term->in->index = 0;
-		ft_putstr(PROMPT);
+		term->in->line = 0;
 		init_input(term);
 		if (term->in->string[0])
 		{
+			init_lexer(term);
 			ft_lstadd(&term->in->history, ft_lstnew(term->in->string, \
 			ft_strlen(term->in->string)));
-			init_lexer(term);
 		}
+		else
+			ft_putendl("");
 		if (ft_strequ(term->in->string, "exit"))	//DELETE
 			return ;								//DELETE
 	}

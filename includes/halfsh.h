@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/01 14:57:37 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/05 15:20:53 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,18 @@
 # include <term.h>
 # include <signal.h>
 
-# define ARG_MAX 2097152
-# define PROMPT "$>"
+# define ARG_MAX 262144
+# define INIT "$>"
+# define FILL "> "
 
 typedef struct		s_input
 {
 	t_list			*history;
 	int				h_index;
+	char			prompt[3];
 	char			string[ARG_MAX];
 	int				index;
+	int				line;
 }					t_input;
 
 typedef struct		s_terminal

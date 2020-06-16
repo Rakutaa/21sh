@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_action.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/15 18:35:53 by vtran            ###   ########.fr       */
+/*   Updated: 2020/05/21 11:09:35 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,28 @@ static void	delete_char(t_terminal *term)
 	}
 }
 
-static void	paste_clipboard()
+static void	paste_clipboard(t_terminal *term)
 {
-	t_ast	*head;
 	char	*paste[] = {"pbpaste", NULL};
-	
-	head = init();
-	head->parent = create_factor(paste, NULL);
-	execute_ast(head);
+	pid_t	pid;
+	int		p[2];
+	int		ret;
+
+	pipe(p);
+	if (!(pid = fork()))
+	{
+		dup2(p[1], 1);
+		close(p[0]);
+		execvp(paste[0], paste);
+	}
+	else
+	{
+		wait(&pid);
+		close(p[1]);
+		while ((ret = (read(p[0], term->in->string, 1))))
+			term->in->index++;
+		close(p[0]);
+	}
 }
 
 static void	copy_clipboard(t_terminal *term)
@@ -45,7 +59,7 @@ static void	copy_clipboard(t_terminal *term)
 	t_ast_node	*ex;
 	t_ast		*head;
 	char		*echon[] = {"echo", term->in->string, NULL};
-	char	*copyn[] = {"pbcopy", NULL};
+	char		*copyn[] = {"pbcopy", NULL};
 
 	head = init_ast();
 	ex = create_expression(create_factor(echon, NULL), create_factor(copyn, NULL));
@@ -61,11 +75,14 @@ void		search_action(t_terminal *term, int sum)
 	else if (sum == CTRL_UP || sum == CTRL_DOWN \
 	|| sum == HOME || sum == END)
 		cursor_movement_2(term, sum);
-	else if (sum == DOWN)
+	else if (sum == UP || sum == DOWN)
 		browse_history(term, sum);
 	else if (sum == BACK)
 		delete_char(term);
 	else if (sum == COPY)
 		copy_clipboard(term);
-		
+	else if (sum == DOWN)
+	{
+		paste_clipboard(term);
+	}
 }

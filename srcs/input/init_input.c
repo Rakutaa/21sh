@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/28 13:29:34 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/05 14:40:32 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static void	loop_input(t_terminal *term)
 
 void		init_input(t_terminal *term)
 {
-	tputs(tgetstr("sc", NULL), 1, print_char);
 	print_input(term);
 	loop_input(term);
 }

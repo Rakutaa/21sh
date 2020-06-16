@@ -1,10 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ast_utils2.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/06/10 17:39:26 by vtran             #+#    #+#             */
+/*   Updated: 2020/06/10 19:12:56 by vtran            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser_ast.h"
+
+/*
+**logic was to make as many AST as there is cmds. 
+**cmds was separated by ;
+**if node is factor, will just exec. 
+**else opens the tree recursively
+**and the return from recursion will start
+**when this parent node is Factor. 
+*/
 
 void		execute_ast(t_ast *ast)
 {
 	while (ast)
 	{
-		if (ast->parent->node == factor)
+		if (ast->parent->e_node == FACTOR)
 			exec_factor(ast->parent, &ast);
 		else
 			visit_expression(ast->parent, &ast);
@@ -12,7 +33,7 @@ void		execute_ast(t_ast *ast)
 	}
 }
 
-t_ast		*init_ast()
+t_ast		*init_ast(void)
 {
 	t_ast	*ast;
 
@@ -22,11 +43,12 @@ t_ast		*init_ast()
 	ast->err = 2;
 	ast->parent = NULL;
 	ast->next = NULL;
-	return ast;
+	return (ast);
 }
 
-//need to check ast token grammar here! esim ;;
-//huom. täällä voi olla myös ; ensimmäisenä. jolloin syntax error
+/*
+**either there is mulple cmds separated ; or first cmd
+*/
 
 t_ast		*create_ast_node(t_ast *ast, t_parser_node_list **list)
 {
@@ -35,10 +57,12 @@ t_ast		*create_ast_node(t_ast *ast, t_parser_node_list **list)
 		ast = init_ast();
 		ast->parent = (*list)->parser_nodeobj->nodes.ast.ast_nodeobj;
 	}
-	else
+	else if ((*list)->next) //tässä!!!!! HEUREKA!!
+	// else
 	{
 		ast->next = init_ast();
-		ast->next->parent = (*list)->next->parser_nodeobj->nodes.ast.ast_nodeobj;
+		ast->next->parent =
+		(*list)->next->parser_nodeobj->nodes.ast.ast_nodeobj;
 		ast = ast->next;
 		*list = (*list)->next;
 	}
@@ -46,11 +70,13 @@ t_ast		*create_ast_node(t_ast *ast, t_parser_node_list **list)
 	return (ast);
 }
 
-//ks. onko kaksi pipea peräkkäin 
+/*
+**ast->parent update. meaning that there is atleast one pipe
+*/
 
 t_ast_node	*update_ast_parent(t_ast_node *left, t_ast_node *right)
 {
-	return create_expression(left, right);
+	return (create_expression(left, right));
 }
 
 t_ast		*create_ast_list(t_parser_node_list *list)
@@ -70,7 +96,8 @@ t_ast		*create_ast_list(t_parser_node_list *list)
 		}
 		else
 		{
-			tmp->parent = update_ast_parent(tmp->parent, list->next->parser_nodeobj->nodes.ast.ast_nodeobj);
+			tmp->parent = update_ast_parent(tmp->parent,
+			list->next->parser_nodeobj->nodes.ast.ast_nodeobj);
 			list = list->next->next;
 		}
 	}

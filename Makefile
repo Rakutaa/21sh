@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
+#    By: vtran <vtran@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/05/26 11:20:12 by vkuokka          ###   ########.fr        #
+#    Updated: 2020/06/10 16:37:20 by vtran            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,11 @@ SRCS = srcs/main.c \
        srcs/interpreter/ast_helpers.c \
        srcs/interpreter/dollar_tilde_utils.c \
        srcs/interpreter/helpers.c \
-       srcs/interpreter/parser_utils.c 
+       srcs/interpreter/free_ast.c \
+       srcs/interpreter/free_parse.c \
+       srcs/interpreter/free_tokens.c \
+       srcs/interpreter/parser_utils.c \
+       srcs/interpreter/helper_parser_redir_aggre.c
 
 INCL =	includes/
 INCL1 = libftprintf/includes

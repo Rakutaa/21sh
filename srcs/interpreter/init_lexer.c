@@ -6,10 +6,11 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/01 14:55:51 by vtran            ###   ########.fr       */
+/*   Updated: 2020/06/10 16:31:17 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "parser_ast.h"
 #include "lexer.h"
 
 static char			*get_word(t_lexer *lexer)
@@ -34,7 +35,8 @@ static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 	{
 		if (!lexer->data[lexer->i])
 		{
-			ft_putstr("\n> ");
+			ft_memmove(term->in->prompt, FILL, 3);
+			ft_putendl("");
 			init_input(term);
 			continue ;
 		}
@@ -45,7 +47,7 @@ static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 	return (str);
 }
 
-static t_token		*create_token(int type, char *value)
+t_token				*create_token(int type, char *value)
 {
 	t_token			*token;
 
@@ -55,28 +57,6 @@ static t_token		*create_token(int type, char *value)
 	token->e_type = type;
 	token->value = value;
 	return (token);
-}
-
-t_token				*redirection(t_lexer *lexer)
-{
-	if (lexer->data[lexer->i] == '>')
-	{
-		if (lexer->data[lexer->i + 1] == '>')
-		{
-			lexer->i = lexer->i + 1;
-			return create_token(TOKEN_REDIRECT, ft_strdup(">>"));
-		}
-		return create_token(TOKEN_REDIRECT, ft_strdup(">"));
-	}
-	else
-	{
-		if (lexer->data[lexer->i + 1] == '<')
-		{
-			lexer->i = lexer->i + 1;
-			return create_token(TOKEN_REDIRECT, ft_strdup("<<"));
-		}
-		return create_token(TOKEN_REDIRECT, ft_strdup("<"));
-	}
 }
 
 static t_token		*get_token(t_lexer *lexer, t_terminal *term)
@@ -89,7 +69,7 @@ static t_token		*get_token(t_lexer *lexer, t_terminal *term)
 		if (lexer->data[lexer->i] == '|')
 			token = create_token(TOKEN_PIPE, ft_strdup("|"));
 		else if (lexer->data[lexer->i] == '>' || lexer->data[lexer->i] == '<')
-			token = redirection(lexer);
+			token = get_redirection(lexer);
 		else if (lexer->data[lexer->i] == ';')
 			token = create_token(TOKEN_SEMI, ft_strdup(";"));
 		lexer->i++;
@@ -102,54 +82,129 @@ static t_token		*get_token(t_lexer *lexer, t_terminal *term)
 	return (create_token(TOKEN_WORD, get_word(lexer)));
 }
 
-int is_aggre(t_lexer *lexer)
-{
-	int i;
-	char *str;
+//PIPE SEMI REDIR
 
-	i = lexer->i;
-	str = lexer->data;
-	while(ft_isdigit(str[i]))
-		i++;
-	if (str[i] != '<' && str[i] != '>')
-		return 0;
-	i++;
-	if (str[i] != '&')
-		return 0;
-	i++;
-	if (str[i] != '-' && !ft_isdigit(str[i]))
-		return 0;
-	if (str[i] == '-' && (!str[i + 1] || str[i + 1] == ' ' || str[i + 1] == ';' || str[i + 1] == '|'))
-		return 1;
-	while (ft_isdigit(str[i]))
-		i++;
-	if ((!str[i] || str[i] == ' ' || str[i] == ';' || str[i] == '|'))
-		return 1;
-	return 0;
+			// if((token_next->e_type == 5 || token->e_type == 5))
+			// {
+			// 	if(token_next->e_type == 5 && token->e_type == 5)
+			// 		return 0;
+			// 	if(token_next->e_type == 3 || token_next->e_type == 4 ||
+			// 	token->e_type == 3 || token->e_type == 4)
+			// 		return 0;
+			// }
+			// if(token_next->e_type == 3 || token->e_type == 3) //tässä ohjataan teksti null
+			// {
+			// 	if(token_next->e_type == 3 && token->e_type == 3)
+			// 		return 0;
+			// 	if(token_next->e_type == 4 || token->e_type == 4)
+			// 		return 0;
+			// }
+
+//tässä errorina exit.. en tiedä et miks tosin. check_syntax
+
+// int				check_tokens(t_list *tokens)
+// {
+// 	t_token *token;
+// 	t_token *token_next;
+
+// 	while (tokens->next)
+// 	{
+// 		token = tokens->content;
+// 		token_next = tokens->next->content;
+// 		if (token_next)
+// 		{
+// 			if ((token_next->e_type == 3 || token_next->e_type == 4 || token_next->e_type == 5) &&
+// 			(token->e_type == 3 || token->e_type == 4 || token->e_type == 5))
+// 				return (0);
+// 		}
+// 		tokens = tokens->next;
+// 	}
+// 	if (token->e_type == 5)
+// 		return (0);
+// 	return (1);
+// }
+
+void	add_null_redirection(t_list *tokens)
+{
+	t_list	*head;
+	t_list	*tail;
+	t_list	*prev;
+	t_token	*token;
+	t_list	*del;
+
+	head = ft_lstnew(create_token(TOKEN_WORD, ft_strdup("cat")), sizeof(t_token));
+	head->next = ft_lstnew(create_token(TOKEN_SEMI, ft_strdup(";")), sizeof(t_token));
+//	head->next->next = ft_lstnew(create_token(TOKEN_WORD, ft_strdup("echo")), sizeof(t_token));
+	// head->next->next->next = ft_lstnew(create_token(TOKEN_REDIRECT, ft_strdup(">")), sizeof(t_token));
+//	head->next->next->next = ft_lstnew(create_token(TOKEN_WORD, ft_strdup("")), sizeof(t_token));
+	// head = ft_lstnew(create_token(TOKEN_REDIRECT, ft_strdup(">")), sizeof(t_token));
+	// head->next = ft_lstnew(create_token(TOKEN_WORD, ft_strdup("/dev/null")), sizeof(t_token));
+	tail = tokens->next;
+	del = tail;
+	tokens->next = head;
+	while (tail)
+	{
+		token = tail->content;
+		if (token->e_type == TOKEN_SEMI)
+		{
+			head->next->next = tail->next;
+			prev->next->next = NULL;
+			break ;
+		}
+		prev = tail;
+		tail = tail->next;
+	}
+	free_tokens(del);
 }
 
-static t_token		*get_agr(t_lexer *lexer)
+int		check_syntax_error(int i, int j)
 {
-	int i;
-	int counter;
-	char *str;
+	if((j == 5 || i == 5))
+		if((j == 5 && i == 5) || j == 3 || j == 4 || i == 3 || i == 4)
+			return (1);
+	if((j == 3 || i == 3) && (j == 4 || i == 4))
+		return (1);
+	return (0);
+}
 
-	i = lexer->i;
-	counter = i;
-	str = lexer->data;
-	while(ft_isdigit(str[i]))
-		i++;
-	i = i + 2;
-	if (str[i] == '-')
+int		syntax_error(int i, int j)
+{
+	if (i == 5 && j == 5)
+		ft_printf("\n21: unexpected syntax error close to keyword \";;\"\n");
+	else if (j == 5)
+		ft_printf("\n21: unexpected syntax error close to keyword \";\"\n");
+	else if (j == 3)
+		ft_printf("\n21: unexpected syntax error close to keyword \"|\"\n");
+	else
+		ft_printf("\n21: unexpected syntax error close to keyword \"newline\"\n");
+	return (0);
+}
+
+int		fixable(t_list *tokens)
+{
+	t_token *token;
+	t_token *token_next;
+
+	token = NULL;
+	token_next = NULL;
+	while (tokens->next)
 	{
-		i++;
-		lexer->i = i;
-		return create_token(TOKEN_AGGRE, ft_strsub(str, counter, i - counter));
+		token = tokens->content;
+		token_next = tokens->next->content;
+		if (token_next)
+		{
+			if (check_syntax_error(token->e_type, token_next->e_type))
+				return (syntax_error(token->e_type, token_next->e_type));
+			if(token_next->e_type == 3 && token->e_type == 3)
+				add_null_redirection(tokens); //tässä ohjataan teksti /dev/null
+		}
+		tokens = tokens->next;
 	}
-	while (ft_isdigit(str[i]))
-		i++;
-	lexer->i = i;
-	return create_token(TOKEN_AGGRE, ft_strsub(str, counter, i - counter));
+	if (token_next && token_next->e_type == 5)
+		free_tokens(tokens);
+	if (token_next && token_next->e_type == 3)
+		ft_printf("get input");
+	return 1;
 }
 
 void				init_lexer(t_terminal *term)
@@ -175,6 +230,12 @@ void				init_lexer(t_terminal *term)
 			ft_lstaddback(&lexer->tokens, \
 			ft_lstnew(get_token(lexer, term), sizeof(t_token)));
 	}
-	ft_putendl("");
-	parse_tokens(term, lexer->tokens);
+	if (fixable(lexer->tokens)) //tässä
+	{
+		ft_putendl("");
+		parse_tokens(term, lexer->tokens);
+	}
+	free_tokens(lexer->tokens);
+	// ft_putendl("");
+	// parse_tokens(term, lexer->tokens);
 }
