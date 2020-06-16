@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/16 12:24:50 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/16 17:42:10 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	listen_keys(void)
 ** the character which is being inserted does not overwrite important data.
 */
 
-static void	add_character(t_terminal *term, int sum)
+static void	add_char(t_terminal *term, int sum)
 {
 	if (ft_strlen(term->in->string) >= ARG_MAX)
 		return ;
@@ -76,7 +76,7 @@ static void	loop_editor(t_terminal *term)
 			break ;
 		}
 		else if (ft_isprint(sum))
-			add_character(term, sum);
+			add_char(term, sum);
 		else
 			search_action(term, sum);
 		print_input(term);

@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/16 12:20:52 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/16 17:32:41 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static t_list	*copy_enviroment(t_terminal *term, char **env)
 ** 1. Initializes the input struct.
 ** 2. Starts the line editor.
 ** 3. In case of the command being empty string, skips lexing and history.
-** 4. Pushes the command into command history.
-** 5. Configurates terminal before staring lexer.
+** 4. Starts lexer.
+** 5. Pushes the command into history.
 */
 
 static void		command_line(t_terminal *term)
@@ -69,9 +69,9 @@ static void		command_line(t_terminal *term)
 		{
 			if (ft_strequ(term->in->string, "exit"))
 				return ;
+			init_lexer(term);
 			ft_lstadd(&term->history, ft_lstnew(term->in->string, \
 			ft_strlen(term->in->string)));
-			init_lexer(term);
 		}
 		else
 			ft_putchar('\n');
