@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/16 11:05:05 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/16 12:24:50 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "keyboard.h"
 
 /*
-** After being called by loop_input, This function waits input stream and sums
+** After being called by loop_editor, This function waits input stream and sums
 ** up the information received. The sum itself represents ascii value of
 ** a single keyboard key. The ascii values are defined in keyboard.h header.
 */
@@ -63,7 +63,7 @@ static void	add_character(t_terminal *term, int sum)
 ** a lot of computing.
 */
 
-static void	loop_input(t_terminal *term)
+static void	loop_editor(t_terminal *term)
 {
 	int		sum;
 
@@ -94,6 +94,6 @@ void		start_editor(t_terminal *term)
 {
 	config_terminal(0, term);
 	print_input(term);
-	loop_input(term);
+	loop_editor(term);
 	config_terminal(1, term);
 }

@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/16 11:13:59 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/16 12:20:52 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,20 @@ static void		command_line(t_terminal *term)
 {
 	term->in = (t_input *)malloc(sizeof(t_input));
 	!term->in ? program_exit(term, 1) : 0;
-	term->history = NULL;
 	while (term)
 	{
 		init_input(term->in);
 		start_editor(term);
 		if (term->in->string[0])
 		{
+			if (ft_strequ(term->in->string, "exit"))
+				return ;
 			ft_lstadd(&term->history, ft_lstnew(term->in->string, \
 			ft_strlen(term->in->string)));
 			init_lexer(term);
 		}
 		else
 			ft_putchar('\n');
-		if (ft_strequ(term->in->string, "exit"))	//DELETE
-			return ;								//DELETE
 	}
 }
 
@@ -99,8 +98,9 @@ int				main(int argc, char **argv, char **env)
 	tputs(tgetstr("ho", NULL), 1, print_char);
 	term = (t_terminal *)malloc(sizeof(t_terminal));
 	!term ? program_exit(term, 1) : 0;
-	term->in = NULL;
 	term->env = copy_enviroment(term, env);
+	term->in = NULL;
+	term->history = NULL;
 	print_banner();
 	command_line(term);
 	program_exit(term, 0);
