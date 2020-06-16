@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/16 10:43:56 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/16 11:05:05 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	listen_keys(void)
 ** does not exceed the limit set by ARG_MAX. If the character is being
 ** inserted somewhere between current command that already contains character,
 ** the program shifts bytes from that index to the right once. By doing this
-** the character which is being inserted does now overwrite important data.
+** the character which is being inserted does not overwrite important data.
 */
 
 static void	add_character(t_terminal *term, int sum)
@@ -72,8 +72,7 @@ static void	loop_input(t_terminal *term)
 		sum = listen_keys();
 		if (sum == ENTER)
 		{
-			term->in->index = ft_strlen(term->in->string);
-			print_input(term);
+			tputs(tgetstr("rc", NULL), 1, print_char);
 			break ;
 		}
 		else if (ft_isprint(sum))
