@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/16 10:50:11 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/16 11:13:02 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 
 typedef struct		s_input
 {
-	t_list			*history;
 	int				h_index;
 	char			prompt[3];
 	char			string[ARG_MAX];
@@ -41,6 +40,7 @@ typedef struct		s_terminal
 	struct winsize	size;
 	t_list			*env;
 	t_input			*in;
+	t_list			*history;
 }					t_terminal;
 
 int					print_char(int c);

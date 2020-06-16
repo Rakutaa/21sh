@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:46 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/21 11:08:49 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/16 11:13:32 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ static void	browse_up(t_terminal *term)
 	t_list	*current;
 	int		count;
 
-	if (term->in->h_index >= (int)ft_lstlen(&term->in->history) - 1)
+	if (term->in->h_index >= (int)ft_lstlen(&term->history) - 1)
 		return ;
 	term->in->h_index++;
-	current = term->in->history;
+	current = term->history;
 	count = 0;
 	while (count != term->in->h_index)
 	{
@@ -50,7 +50,7 @@ static void	browse_down(t_terminal *term)
 		return ;
 	}
 	term->in->h_index--;
-	current = term->in->history;
+	current = term->history;
 	count = 0;
 	while (count != term->in->h_index)
 	{
