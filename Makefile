@@ -6,23 +6,25 @@
 #    By: vtran <vtran@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/06/10 16:37:20 by vtran            ###   ########.fr        #
+#    Updated: 2020/06/17 13:25:41 by vtran            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
 
-SRCS = srcs/main.c \
-       srcs/config_signal.c \
-       srcs/config_terminal.c \
+SRCS = srcs/config_termcaps.c \
+       srcs/main.c \
        srcs/program_exit.c \
        srcs/utils.c \
        srcs/input/browse_history.c \
+       srcs/input/config_signal.c \
+       srcs/input/config_terminal.c \
        srcs/input/cursor_movement_1.c \
        srcs/input/cursor_movement_2.c \
        srcs/input/init_input.c \
        srcs/input/print_input.c \
        srcs/input/search_action.c \
+       srcs/input/start_editor.c \
        srcs/interpreter/init_lexer.c \
        srcs/interpreter/parse_tokens.c \
        srcs/interpreter/ast_utils1.c \

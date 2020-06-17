@@ -6,18 +6,18 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:28 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/10 18:10:47 by vtran            ###   ########.fr       */
+/*   Updated: 2020/06/17 13:25:01 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 
-int		print_char(int c)
+int			print_char(int c)
 {
 	return (write(0, &c, 1));
 }
 
-char	*search_env(t_list *enviroment, char *key)
+char		*search_env(t_list *enviroment, char *key)
 {
 	while (enviroment)
 	{
@@ -30,9 +30,9 @@ char	*search_env(t_list *enviroment, char *key)
 
 char	**update_enviroment(t_list *enviroment)
 {
-	char		**env;
-	size_t		len;
-	size_t		i;
+	char	**env;
+	size_t	len;
+	size_t	i;
 
 	len = ft_lstlen(&enviroment);
 	env = (char **)malloc(sizeof(char **) * len + 1);

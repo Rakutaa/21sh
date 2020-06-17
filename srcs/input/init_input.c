@@ -3,67 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   init_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/05 14:40:32 by vkuokka          ###   ########.fr       */
+/*   Created: 2020/06/16 10:43:42 by vkuokka           #+#    #+#             */
+/*   Updated: 2020/06/17 13:26:43 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
-#include "keyboard.h"
 
-static int	listen_keys(void)
+/*
+** Initializes values of the input struct.
+*/
+
+void	init_input(t_input *input)
 {
-	char	key[KEY_SIZE + 1];
-	ssize_t	bytes;
-	size_t	i;
-	int		sum;
-
-	bytes = read(1, key, KEY_SIZE);
-	key[bytes] = '\0';
-	i = -1;
-	sum = 0;
-	while (key[++i])
-		sum += key[i];
-	return (sum);
-}
-
-static void	add_character(t_terminal *term, int sum)
-{
-	if (ft_strlen(term->in->string) >= ARG_MAX)
-		return ;
-	if (term->in->string[term->in->index])
-		ft_memmove(term->in->string + term->in->index + 1, \
-		term->in->string + term->in->index, \
-		ft_strlen(term->in->string + term->in->index));
-	term->in->string[term->in->index] = sum;
-	term->in->index++;
-}
-
-static void	loop_input(t_terminal *term)
-{
-	int		sum;
-
-	while (term)
-	{
-		sum = listen_keys();
-		if (sum == ENTER)
-		{
-			term->in->index = ft_strlen(term->in->string);
-			print_input(term);
-			break ;
-		}
-		else if (ft_isprint(sum))
-			add_character(term, sum);
-		else
-			search_action(term, sum);
-		print_input(term);
-	}
-}
-
-void		init_input(t_terminal *term)
-{
-	print_input(term);
-	loop_input(term);
+	input->h_index = -1;
+	ft_memmove(input->prompt, INIT, 3);
+	ft_bzero(input->string, ARG_MAX);
+	input->index = 0;
+	input->line = 0;
 }

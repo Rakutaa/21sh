@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 09:59:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/10 19:27:51 by vtran            ###   ########.fr       */
+/*   Updated: 2020/06/17 13:45:53 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,15 +78,15 @@ t_list *head, t_list *last, int type)
 	add_node_to_parser_node_list(list, ast_nodeobj, token_nodeobj);
 }
 
-void			tiger_king_stealing_ur_loot(t_ast *ast, t_parser_node_list *head)
-{
-	free_ast(ast);
-//	(void)ast;
-	free_parser(head);
-//	(void)head;
-	// free_tokens(token);
-//	(void)token;
-}
+// void			tiger_king_stealing_ur_loot(t_ast *ast, t_parser_node_list *head)
+// {
+// 	free_ast(ast);
+// //	(void)ast;
+// 	free_parser(head);
+// //	(void)head;
+// 	// free_tokens(token);
+// //	(void)token;
+//}
 
 void			parse_tokens(t_terminal *term, t_list *tokens)
 {
@@ -113,5 +113,5 @@ void			parse_tokens(t_terminal *term, t_list *tokens)
 	}
 	ast = create_ast_list(nhead);
 	execute_ast(ast);
-	tiger_king_stealing_ur_loot(ast, nhead);
+//	tiger_king_stealing_ur_loot(ast, nhead);
 }

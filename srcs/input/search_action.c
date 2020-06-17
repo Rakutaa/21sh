@@ -6,13 +6,19 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/17 13:08:46 by vtran            ###   ########.fr       */
+/*   Updated: 2020/06/17 13:24:12 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 #include "keyboard.h"
 #include "parser_ast.h"
+
+/*
+** Deletes character from the command by shifting bytes after the index
+** to the left once. The byte after the last character is initialized
+** to zero after memmove.
+*/
 
 static void	delete_char(t_terminal *term)
 {
@@ -22,7 +28,6 @@ static void	delete_char(t_terminal *term)
 	{
 		len = ft_strlen(term->in->string);
 		term->in->index--;
-		term->in->string[term->in->index] = 0;
 		ft_memmove(term->in->string + term->in->index, \
 		term->in->string + term->in->index + 1, \
 		ft_strlen(term->in->string + term->in->index + 1));
@@ -54,6 +59,11 @@ static void	paste_clipboard(t_terminal *term)
 		close(p[0]);
 	}
 }
+
+/*
+** Chooses right action by comparing sum and different
+** definitions from keyboard.h file.
+*/
 
 static void	copy_clipboard(t_terminal *term)
 {

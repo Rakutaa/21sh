@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   halfsh.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/05 15:20:53 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/17 13:26:26 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 
 typedef struct		s_input
 {
-	t_list			*history;
 	int				h_index;
 	char			prompt[3];
 	char			string[ARG_MAX];
@@ -41,11 +40,13 @@ typedef struct		s_terminal
 	struct winsize	size;
 	t_list			*env;
 	t_input			*in;
+	t_list			*history;
 }					t_terminal;
 
 int					print_char(int c);
 char				*search_env(t_list *enviroment, char *key);
 char				**update_enviroment(t_list *enviroment);
+void				config_termcaps(void);
 void				config_terminal(int reset, t_terminal *term);
 void				config_signal(t_terminal *term);
 void				program_exit(t_terminal *term, int num);
@@ -55,6 +56,7 @@ void				cursor_movement_1(t_terminal *term, int sum);
 void				cursor_movement_2(t_terminal *term, int sum);
 void				browse_history(t_terminal *term, int sum);
 void				search_action(t_terminal *term, int sum);
-void				init_input(t_terminal *term);
+void				start_editor(t_terminal *term);
+void				init_input(t_input *input);
 
 #endif

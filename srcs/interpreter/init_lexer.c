@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/10 16:31:17 by vtran            ###   ########.fr       */
+/*   Updated: 2020/06/17 15:25:30 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 		if (!lexer->data[lexer->i])
 		{
 			ft_memmove(term->in->prompt, FILL, 3);
-			ft_putendl("");
-			init_input(term);
+			ft_putchar('\n');
+			start_editor(term);
 			continue ;
 		}
 		lexer->i++;
@@ -180,7 +180,7 @@ int		syntax_error(int i, int j)
 	return (0);
 }
 
-int		fixable(t_list *tokens)
+int		fixable(t_list *tokens, t_terminal *term)
 {
 	t_token *token;
 	t_token *token_next;
@@ -203,18 +203,29 @@ int		fixable(t_list *tokens)
 	if (token_next && token_next->e_type == 5)
 		free_tokens(tokens);
 	if (token_next && token_next->e_type == 3)
-		ft_printf("get input");
+	{
+		ft_memmove(term->in->prompt, FILL, 3);
+		ft_putchar('\n');
+		start_editor(term);
+//		free_tokens(tokens);
+		init_lexer(term);
+		return (9);
+	}
 	return 1;
 }
 
 void				init_lexer(t_terminal *term)
 {
 	t_lexer			*lexer;
+	int				ret;
 
 	lexer = (t_lexer *)malloc(sizeof(t_lexer));
 	!lexer ? program_exit(term, 1) : 0;
+
 	lexer->data = term->in->string;
 	lexer->i = 0;
+	while (lexer->data[lexer->i] && ft_isspace(lexer->data[lexer->i]))
+		lexer->i++;
 	lexer->tokens = ft_lstnew(get_token(lexer, term), sizeof(t_token));
 	while (lexer->data[lexer->i])
 	{
@@ -230,12 +241,12 @@ void				init_lexer(t_terminal *term)
 			ft_lstaddback(&lexer->tokens, \
 			ft_lstnew(get_token(lexer, term), sizeof(t_token)));
 	}
-	if (fixable(lexer->tokens)) //tässä
+	if ((ret = fixable(lexer->tokens, term))) //tässä
 	{
+		if (ret == 9)
+			return ;
 		ft_putendl("");
 		parse_tokens(term, lexer->tokens);
 	}
 	free_tokens(lexer->tokens);
-	// ft_putendl("");
-	// parse_tokens(term, lexer->tokens);
 }

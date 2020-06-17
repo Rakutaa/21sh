@@ -11,7 +11,7 @@ void			free_tokens(t_list *list)
 		free(token->value);
 		free(token);
 		free(list);
-		token->value = NULL;
+//		token->value = NULL;
 		token = NULL;
 		list = NULL;
 	}

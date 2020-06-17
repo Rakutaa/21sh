@@ -1,49 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   config_terminal.c                                  :+:      :+:    :+:   */
+/*   config_termcaps.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:04 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/28 13:12:29 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/16 10:40:02 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 
-static void	init_shell(t_terminal *term)
+/*
+** Termcaps is used for moving cursor position around the screen.
+** Program exits if it fails to configurate termcaps.
+*/
+
+void		config_termcaps(void)
 {
 	char	*type;
 	char	buffer[2048];
 	int		success;
 
 	type = getenv("TERM");
-	!type ? program_exit(term, 2) : 0;
+	if (type == 0)
+		ft_putendl_fd("Specify a terminal type.", 2);
 	success = tgetent(buffer, type);
 	if (success > 0)
-	{
-		tputs(tgetstr("ti", NULL), 1, print_char);
-		tputs(tgetstr("ho", NULL), 1, print_char);
-		term->shell.c_lflag &= ~(ICANON | ECHO);
-		tcsetattr(1, TCSAFLUSH, &term->shell);
-	}
+		return ;
 	else if (success < 0)
-		program_exit(term, 3);
+		ft_putendl_fd("Could not access the termcap data base.", 2);
 	else if (success == 0)
-		program_exit(term, 4);
-}
-
-static void	init_original(struct termios original)
-{
-	tputs(tgetstr("te", NULL), 1, print_char);
-	tcsetattr(1, TCSAFLUSH, &original);
-}
-
-void		config_terminal(int reset, t_terminal *term)
-{
-	if (reset)
-		init_original(term->original);
-	else
-		init_shell(term);
+		ft_putendl_fd("Terminal type is not defined.", 2);
+	exit(1);
 }
