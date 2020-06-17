@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/21 11:08:34 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/17 16:01:56 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@
 # define CTRL_RIGHT 346
 # define CTRL_LEFT 347
 # define COPY -150
+# define PASTE -252
 
 #endif

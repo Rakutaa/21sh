@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_action.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/17 13:24:12 by vtran            ###   ########.fr       */
+/*   Updated: 2020/06/17 17:25:24 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ static void	paste_clipboard(t_terminal *term)
 	char	*paste[] = {"pbpaste", NULL};
 	pid_t	pid;
 	int		p[2];
+	int		len;
 	int		ret;
 
 	pipe(p);
@@ -53,23 +54,18 @@ static void	paste_clipboard(t_terminal *term)
 	{
 		wait(&pid);
 		close(p[1]);
-		ret = read(p[0], term->in->string + ft_strlen(term->in->string), ARG_MAX);
-		term->in->string[ft_strlen(term->in->string) - 1] = 0;
-		term->in->index += ret - 1;
+		len =  ft_strlen(term->in->string);
+		ret = read(p[0], term->in->string + len, ARG_MAX - len);
+		term->in->index += ret;
 		close(p[0]);
 	}
 }
-
-/*
-** Chooses right action by comparing sum and different
-** definitions from keyboard.h file.
-*/
 
 static void	copy_clipboard(t_terminal *term)
 {
 	t_ast_node	*ex;
 	t_ast		*head;
-	char		*echon[] = {"echo", term->in->string, NULL};
+	char		*echon[] = {"echo", "-n", term->in->string, NULL};
 	char		*copyn[] = {"pbcopy", NULL};
 
 	head = init_ast();
@@ -77,6 +73,11 @@ static void	copy_clipboard(t_terminal *term)
 	head->parent = ex;
 	execute_ast(head);
 }
+
+/*
+** Chooses right action by comparing sum and different
+** definitions from keyboard.h file.
+*/
 
 void		search_action(t_terminal *term, int sum)
 {
@@ -86,14 +87,12 @@ void		search_action(t_terminal *term, int sum)
 	else if (sum == CTRL_UP || sum == CTRL_DOWN \
 	|| sum == HOME || sum == END)
 		cursor_movement_2(term, sum);
-	else if (sum == UP)
+	else if (sum == UP || sum == DOWN)
 		browse_history(term, sum);
 	else if (sum == BACK)
 		delete_char(term);
 	else if (sum == COPY)
 		copy_clipboard(term);
-	else if (sum == DOWN)
-	{
+	else if (sum == PASTE)
 		paste_clipboard(term);
-	}
 }
