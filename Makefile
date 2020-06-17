@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vtran <vtran@student.42.fr>                +#+  +:+       +#+         #
+#    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/06/17 13:25:41 by vtran            ###   ########.fr        #
+#    Updated: 2020/06/17 22:53:37 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRCS = srcs/config_termcaps.c \
        srcs/program_exit.c \
        srcs/utils.c \
        srcs/input/browse_history.c \
+       srcs/input/clipboard.c \
        srcs/input/config_signal.c \
        srcs/input/config_terminal.c \
        srcs/input/cursor_movement_1.c \
