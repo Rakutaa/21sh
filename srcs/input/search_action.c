@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_action.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/21 11:09:35 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/17 13:08:46 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ static void	paste_clipboard(t_terminal *term)
 	{
 		wait(&pid);
 		close(p[1]);
-		while ((ret = (read(p[0], term->in->string, 1))))
-			term->in->index++;
+		ret = read(p[0], term->in->string + ft_strlen(term->in->string), ARG_MAX);
+		term->in->string[ft_strlen(term->in->string) - 1] = 0;
+		term->in->index += ret - 1;
 		close(p[0]);
 	}
 }
@@ -75,7 +76,7 @@ void		search_action(t_terminal *term, int sum)
 	else if (sum == CTRL_UP || sum == CTRL_DOWN \
 	|| sum == HOME || sum == END)
 		cursor_movement_2(term, sum);
-	else if (sum == UP || sum == DOWN)
+	else if (sum == UP)
 		browse_history(term, sum);
 	else if (sum == BACK)
 		delete_char(term);
