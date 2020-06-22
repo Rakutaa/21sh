@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/17 22:58:48 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/22 11:47:54 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@
 # include <termios.h>
 # include <term.h>
 # include <signal.h>
+# include <fcntl.h>
 
+# define CMD_FILE ".history"
 # define ARG_MAX 262144
-# define INIT "$>"
-# define FILL "> "
+# define INIT "$> "
+# define QUOTE "q> "
+# define PIPE "p> "
 
 typedef struct		s_input
 {
 	int				h_index;
-	char			prompt[3];
+	char			prompt[4];
 	char			string[ARG_MAX];
 	int				index;
 	int				line;
@@ -59,5 +62,8 @@ void				search_action(t_terminal *term, int sum);
 void				start_editor(t_terminal *term);
 void				init_input(t_input *input);
 void				clipboard(t_terminal *term, int sum);
+void				init_history(t_terminal *term);
+void				save_history(t_terminal *term);
+
 
 #endif

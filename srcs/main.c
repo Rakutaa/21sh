@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/17 13:51:01 by vtran            ###   ########.fr       */
+/*   Updated: 2020/06/22 11:57:13 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static void		command_line(t_terminal *term)
 		start_editor(term);
 		if (term->in->string[0])
 		{
-			if (ft_strequ(term->in->string, "exit"))
-				return ;
+			if (ft_strequ(term->in->string, "exit"))	// DELETE
+				return ;								// DELETE
 			init_lexer(term);
 			ft_lstadd(&term->history, ft_lstnew(term->in->string, \
 			ft_strlen(term->in->string)));
@@ -84,7 +84,8 @@ static void		command_line(t_terminal *term)
 ** is done without errors. Termcaps `ti' command puts the terminal
 ** into whatever special modes are needed or appropriate for programs
 ** that move the cursor nonsequentially around the screen and `ho'
-** moves the cursor to the upper left corner of the screen.
+** moves the cursor to the upper left corner of the screen. Manages
+** command history initialization and saving.
 */
 
 int				main(int argc, char **argv, char **env)
@@ -101,7 +102,9 @@ int				main(int argc, char **argv, char **env)
 	term->env = copy_enviroment(term, env);
 	term->in = NULL;
 	term->history = NULL;
+	init_history(term);
 	print_banner();
 	command_line(term);
+	save_history(term);
 	program_exit(term, 0);
 }

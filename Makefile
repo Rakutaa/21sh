@@ -6,15 +6,18 @@
 #    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/06/17 22:53:37 by vkuokka          ###   ########.fr        #
+#    Updated: 2020/06/21 18:58:13 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
 
-SRCS = srcs/config_termcaps.c \
+SRCS = gnl/get_next_line.c \
+       srcs/config_termcaps.c \
+       srcs/init_history.c \
        srcs/main.c \
        srcs/program_exit.c \
+       srcs/save_history.c \
        srcs/utils.c \
        srcs/input/browse_history.c \
        srcs/input/clipboard.c \
@@ -43,6 +46,7 @@ SRCS = srcs/config_termcaps.c \
 INCL =	includes/
 INCL1 = libftprintf/includes
 INCL2 = libftprintf/libft/includes
+INCL3 =  gnl/
 
 LIB = ftprintf
 LIBFOL = libftprintf/
@@ -50,7 +54,7 @@ LIBFOL = libftprintf/
 all: $(NAME)
 $(NAME):
 	#make -C libftprintf/
-	gcc -Wall -Werror -Wextra -I $(INCL) -I $(INCL1) -I $(INCL2) $(SRCS) -L$(LIBFOL) -l$(LIB) -ltermcap -o $(NAME)
+	gcc -Wall -Werror -Wextra -I $(INCL) -I $(INCL1) -I $(INCL2) -I $(INCL3) $(SRCS) -L$(LIBFOL) -l$(LIB) -ltermcap -o $(NAME)
 clean:
 	#make -C libftprintf/ clean
 

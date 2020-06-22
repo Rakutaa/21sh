@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_lexer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/17 15:25:30 by vtran            ###   ########.fr       */
+/*   Updated: 2020/06/22 11:48:20 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 	{
 		if (!lexer->data[lexer->i])
 		{
-			ft_memmove(term->in->prompt, FILL, 3);
+			ft_memmove(term->in->prompt, QUOTE, 4);
 			ft_putchar('\n');
 			start_editor(term);
 			continue ;
@@ -204,7 +204,7 @@ int		fixable(t_list *tokens, t_terminal *term)
 		free_tokens(tokens);
 	if (token_next && token_next->e_type == 3)
 	{
-		ft_memmove(term->in->prompt, FILL, 3);
+		ft_memmove(term->in->prompt, PIPE, 4);
 		ft_putchar('\n');
 		start_editor(term);
 //		free_tokens(tokens);

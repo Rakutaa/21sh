@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/16 17:42:10 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/21 18:18:28 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,6 @@ static void	loop_editor(t_terminal *term)
 
 /*
 ** Acts as a "gateway" into the state where user can type current command.
-** This function is called by two functions: command_line function after
-** successful initialization or lexer's get_string function after it notices
-** that the current command contains unclosed single of double quotes.
 */
 
 void		start_editor(t_terminal *term)
