@@ -1,4 +1,6 @@
 .vscode
 .DS_store
 libftprintf/
+gnl
 21sh
+.history
