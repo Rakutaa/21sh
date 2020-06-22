@@ -6,7 +6,7 @@
 #    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/06/21 18:58:13 by vkuokka          ###   ########.fr        #
+#    Updated: 2020/06/22 12:22:28 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,25 +41,28 @@ SRCS = gnl/get_next_line.c \
        srcs/interpreter/free_parse.c \
        srcs/interpreter/free_tokens.c \
        srcs/interpreter/parser_utils.c \
-       srcs/interpreter/helper_parser_redir_aggre.c
+       srcs/interpreter/helper_parser_redir_aggre.c \
 
-INCL =	includes/
-INCL1 = libftprintf/includes
-INCL2 = libftprintf/libft/includes
-INCL3 =  gnl/
+INCL = -I includes/
+INCL1 = -I libftprintf/includes
+INCL2 = -I libftprintf/libft/includes
+INCL3 =  -I gnl/
 
-LIB = ftprintf
-LIBFOL = libftprintf/
+LIB = -lftprintf
+LIB1 = -ltermcap
+LIBFOL = -Llibftprintf/
+
+COMP = gcc -Wall -Wextra -Werror
 
 all: $(NAME)
 $(NAME):
-	#make -C libftprintf/
-	gcc -Wall -Werror -Wextra -I $(INCL) -I $(INCL1) -I $(INCL2) -I $(INCL3) $(SRCS) -L$(LIBFOL) -l$(LIB) -ltermcap -o $(NAME)
+	make -C libftprintf/
+	$(COMP) $(INCL) $(INCL1) $(INCL2) $(INCL3) $(SRCS) $(LIBFOL) $(LIB) $(LIB1) -o $(NAME)
 clean:
-	#make -C libftprintf/ clean
+	make -C libftprintf/ clean
 
 fclean: clean
-	#make -C libftprintf/ fclean
+	make -C libftprintf/ fclean
 	rm -f $(NAME)
 
 re: fclean all
