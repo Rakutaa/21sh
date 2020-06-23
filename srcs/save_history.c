@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 18:50:52 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/22 11:51:50 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/23 13:31:27 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		save_history(t_terminal *term)
 {
 	int		fd;
 
-	fd = open(CMD_FILE, O_WRONLY|O_CREAT, 0666, O_APPEND);
+	fd = open(CMD_FILE, O_WRONLY|O_CREAT|O_APPEND, 0666);
 	if (fd == -1)
 		return ;
 	add_history(fd, term->history);
