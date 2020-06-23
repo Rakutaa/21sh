@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 18:21:06 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/22 11:01:56 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/23 14:56:15 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ void		init_history(t_terminal *term)
 	if (fd == -1)
 		return ;
 	while (get_next_line(fd, &line))
+	{
 		ft_lstadd(&term->history, ft_lstnew(line, ft_strlen(line)));
+		free(line);
+	}
 	close(fd);
 }
