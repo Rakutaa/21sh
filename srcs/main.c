@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/24 15:00:58 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 17:40:40 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 static void		print_banner(void)
 {
+	tputs(tgetstr("cl", NULL), 1, print_char);
 	ft_putendl(" _____  __      _          _ _");
 	ft_putendl("/ __  \\/  |    | |        | | |");
 	ft_putendl("   / /  | | ___| |__   ___| | |");
@@ -79,13 +80,14 @@ static void		command_line(t_terminal *term)
 }
 
 /*
-** Configurates termcaps and allocates memory for term struct. 
+** Configurates termcaps and allocates memory for term struct.
 ** The program should always return to main function if the exit
 ** is done without errors. Termcaps `ti' command puts the terminal
 ** into whatever special modes are needed or appropriate for programs
 ** that move the cursor nonsequentially around the screen and `ho'
 ** moves the cursor to the upper left corner of the screen. Manages
 ** command history initialization and saving.
+// UPDATE IF 'ti' IS REMOVED
 */
 
 int				main(int argc, char **argv, char **env)
@@ -95,7 +97,7 @@ int				main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	config_termcaps();
-	tputs(tgetstr("ti", NULL), 1, print_char);
+	//tputs(tgetstr("ti", NULL), 1, print_char); //Screws up text editors
 	tputs(tgetstr("ho", NULL), 1, print_char);
 	term = (t_terminal *)malloc(sizeof(t_terminal));
 	!term ? program_exit(term, 1) : 0;

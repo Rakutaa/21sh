@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 18:50:52 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/24 15:42:53 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 17:40:12 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** Opens file defined in the halfsh.h file and appends current history
 ** in to the file using add_history function. If the file does not exist,
 ** Program will create one with appropriate permissions.
-** POSSIBLE ISSUES WITH STRING LENGTH!
+// POSSIBLE ISSUES WITH STRING LENGTH!
 */
 
 void		save_history(t_terminal *term)
