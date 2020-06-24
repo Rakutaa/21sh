@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:46 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/16 20:29:33 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 16:14:15 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	browse_up(t_terminal *term)
 	}
 	ft_bzero(term->in->string, ft_strlen(term->in->string));
 	ft_memmove(term->in->string, current->content, current->content_size);
-	term->in->index = current->content_size;
+	term->in->index = current->content_size - 1;
 }
 
 /*
@@ -71,7 +71,7 @@ static void	browse_down(t_terminal *term)
 	}
 	ft_bzero(term->in->string, ft_strlen(term->in->string));
 	ft_memmove(term->in->string, current->content, current->content_size);
-	term->in->index = current->content_size;
+	term->in->index = current->content_size - 1;
 }
 
 void		browse_history(t_terminal *term, int sum)
