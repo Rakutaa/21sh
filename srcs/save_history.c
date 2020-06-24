@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 18:50:52 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/24 09:59:03 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 15:35:23 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 ** Opens file defined in the halfsh.h file and appends current history
 ** in to the file using add_history function. If the file does not exist,
 ** Program will create one with appropriate permissions.
+** POSSIBLE ISSUES WITH STRING LENGTH!
 */
 
 void		save_history(t_terminal *term)
@@ -24,16 +25,17 @@ void		save_history(t_terminal *term)
 	t_list	*cur_list;
 	int		count;
 
-	fd = open(CMD_FILE, O_WRONLY|O_CREAT, 0666);
+	fd = open(H_FILE, O_WRONLY|O_CREAT, 0666);
 	if (fd == -1)
 		return ;
 	cur_list = term->history;
 	count = 0;
-	while (cur_list && count < FILE_LEN)
+	while (count < H_LEN && cur_list)
 	{
 		ft_putendl_fd(cur_list->content, fd);
 		cur_list = cur_list->next;
 		count++;
 	}
+	sleep(3);
 	close(fd);
 }

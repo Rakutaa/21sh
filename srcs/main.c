@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/24 09:52:11 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 15:00:58 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static void		command_line(t_terminal *term)
 				return ;								// DELETE
 			init_lexer(term);
 			ft_lstadd(&term->history, ft_lstnew(term->in->string, \
-			ft_strlen(term->in->string)));
+			ft_strlen(term->in->string) + 1));
 		}
 		else
 			ft_putchar('\n');
