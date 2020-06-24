@@ -6,23 +6,11 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 18:50:52 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/23 15:14:37 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 09:52:02 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
-
-/*
-** Writes history into a file using recursion.
-*/
-
-static void	add_history(int fd, t_list *history)
-{
-	if (!history)
-		return ;
-	add_history(fd, history->next);
-	ft_putendl_fd(history->content, fd);
-}
 
 /*
 ** Opens file defined in the halfsh.h file and appends current history
@@ -33,10 +21,16 @@ static void	add_history(int fd, t_list *history)
 void		save_history(t_terminal *term)
 {
 	int		fd;
+	t_list	*cur_list;
 
-	fd = open(CMD_FILE, O_RDONLY|O_CREAT, 0666);
+	fd = open(CMD_FILE, O_WRONLY|O_CREAT, 0666);
 	if (fd == -1)
 		return ;
-	add_history(fd, term->history);
+	cur_list = term->history;
+	while (cur_list)
+	{
+		ft_putendl_fd(cur_list->content, fd);
+		cur_list = cur_list->next;
+	}
 	close(fd);
 }

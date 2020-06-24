@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/23 15:14:04 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 09:52:11 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,6 @@ int				main(int argc, char **argv, char **env)
 	init_history(term);
 	print_banner();
 	command_line(term);
-	//save_history(term); // DOES NOT WORK. PROBLEM WITH WRITING INTO A FILE.
+	save_history(term);
 	program_exit(term, 0);
 }
