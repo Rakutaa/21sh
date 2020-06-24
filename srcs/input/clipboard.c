@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 22:51:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/17 23:12:07 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 15:51:24 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,33 @@ static void	copy_clipboard(t_terminal *term)
 	execute_ast(head);
 }
 
+/*
+** Copies contents of the current command to the clipboard and
+** clears current command.
+*/
+
+static void	cut_clipboard(t_terminal *term)
+{
+	t_ast_node	*ex;
+	t_ast		*head;
+	char		*echon[] = {"echo", "-n", term->in->string, NULL};
+	char		*copyn[] = {"pbcopy", NULL};
+
+	head = init_ast();
+	ex = create_expression(create_factor(echon, NULL), \
+	create_factor(copyn, NULL));
+	head->parent = ex;
+	execute_ast(head);
+	ft_bzero(term->in->string, ARG_MAX);
+	term->in->index = 0;
+}
+
 void		clipboard(t_terminal *term, int sum)
 {
-	if (sum == COPY)
+	if (sum == OPT_C)
 		copy_clipboard(term);
-	else if (sum == PASTE)
+	else if (sum == OPT_X)
+		cut_clipboard(term);
+	else if (sum == OPT_V)
 		paste_clipboard(term);
 }

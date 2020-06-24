@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/17 23:03:14 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 15:45:11 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void		search_action(t_terminal *term, int sum)
 		cursor_movement_2(term, sum);
 	else if (sum == UP || sum == DOWN)
 		browse_history(term, sum);
-	else if (sum == COPY || sum == PASTE)
+	else if (sum == OPT_C || sum ==OPT_X \
+	|| sum == OPT_V)
 		clipboard(term, sum);
 	else if (sum == BACK)
 		delete_char(term);

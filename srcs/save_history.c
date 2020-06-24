@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 18:50:52 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/24 15:35:23 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 15:42:53 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,5 @@ void		save_history(t_terminal *term)
 		cur_list = cur_list->next;
 		count++;
 	}
-	sleep(3);
 	close(fd);
 }
