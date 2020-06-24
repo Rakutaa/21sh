@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/22 11:47:54 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 09:54:39 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 
 # define CMD_FILE ".history"
+# define FILE_LEN 10
 # define ARG_MAX 262144
 # define INIT "$> "
 # define QUOTE "q> "
