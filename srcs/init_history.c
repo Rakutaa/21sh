@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 18:21:06 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/24 15:37:50 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 23:35:08 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 /*
 ** Opens file defined in halfsh.h file and adds every line of that file into
-** history linked list.
+** the history linked list.
 */
 
 void		init_history(t_terminal *term)
 {
 	int		fd;
 	char	*line;
-	t_list	*node;
+	t_dlist	*node;
 	int		count;
 
 	fd = open(H_FILE, O_RDONLY);
@@ -31,13 +31,12 @@ void		init_history(t_terminal *term)
 	count = 0;
 	while (count < H_LEN && get_next_line(fd, &line))
 	{
-		node = ft_lstnew(NULL, 0);
+		node = ft_dlstnew(NULL, 0);
 		if (!node)
 			break ;
 		node->content = line;
 		node->content_size = ft_strlen(line);
-		!term->history ? term->history = node :
-		ft_lstaddback(&term->history, node);
+		ft_dlstaddback(&term->history, node);
 		count++;
 	}
 	close(fd);

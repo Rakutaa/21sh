@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/25 16:46:36 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/25 16:51:36 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct		s_terminal
 	struct winsize	size;
 	t_list			*env;
 	t_input			*in;
-	t_list			*history;
+	t_dlist			*history;
 }					t_terminal;
 
 int					print_char(int c);

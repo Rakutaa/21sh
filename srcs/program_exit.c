@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:21 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/24 17:40:07 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 23:38:15 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	program_exit(t_terminal *term, int num)
 	{
 		ft_lstdel(&term->env, ft_del);
 		term->in ? free(term->in) : 0;
-		ft_lstdel(&term->history, ft_del);
+		ft_dlstdel(&term->history, ft_del);
 		free(term);
 	}
 	exit(num);

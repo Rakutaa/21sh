@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/24 17:40:40 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/24 23:35:28 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,29 +50,28 @@ static t_list	*copy_enviroment(t_terminal *term, char **env)
 /*
 ** This is the "core" part of the program. It allocates memory for the input
 ** struct which keeps the information about the current command and cursor
-** positon. The while loop takes care of multiple essential things:
-** 1. Initializes the input struct.
-** 2. Starts the line editor.
-** 3. In case of the command being empty string, skips lexing and history.
-** 4. Starts lexer.
-** 5. Pushes the command into history.
+** positon.
 */
 
 static void		command_line(t_terminal *term)
 {
+	t_dlist		*node;
+
 	term->in = (t_input *)malloc(sizeof(t_input));
 	!term->in ? program_exit(term, 1) : 0;
 	while (term)
 	{
 		init_input(term->in);
+		node = ft_dlstnew(NULL, 0);
+		ft_dlstadd(&term->history, node);
 		start_editor(term);
 		if (term->in->string[0])
 		{
 			if (ft_strequ(term->in->string, "exit"))	// DELETE
 				return ;								// DELETE
 			init_lexer(term);
-			ft_lstadd(&term->history, ft_lstnew(term->in->string, \
-			ft_strlen(term->in->string) + 1));
+			node->content = ft_strdup(term->in->string);
+			node->content_size = ft_strlen(node->content);
 		}
 		else
 			ft_putchar('\n');
