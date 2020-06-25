@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:43 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/18 11:53:42 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/26 02:05:59 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static void	signal_kill(int signum)
 {
 	if (signum)
 	{
+		g_term->h_current = g_term->h_head;
 		init_input(g_term->in);
 		ft_putchar('\n');
 		print_input(g_term);

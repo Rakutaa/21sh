@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/24 23:35:28 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/26 02:25:45 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,23 +55,20 @@ static t_list	*copy_enviroment(t_terminal *term, char **env)
 
 static void		command_line(t_terminal *term)
 {
-	t_dlist		*node;
-
 	term->in = (t_input *)malloc(sizeof(t_input));
 	!term->in ? program_exit(term, 1) : 0;
 	while (term)
 	{
+		term->h_current = term->h_head;
 		init_input(term->in);
-		node = ft_dlstnew(NULL, 0);
-		ft_dlstadd(&term->history, node);
 		start_editor(term);
 		if (term->in->string[0])
 		{
 			if (ft_strequ(term->in->string, "exit"))	// DELETE
 				return ;								// DELETE
 			init_lexer(term);
-			node->content = ft_strdup(term->in->string);
-			node->content_size = ft_strlen(node->content);
+			ft_dlstadd(&term->h_head, ft_dlstnew(term->in->string, \
+			ft_strlen(term->in->string)));
 		}
 		else
 			ft_putchar('\n');
@@ -102,7 +99,9 @@ int				main(int argc, char **argv, char **env)
 	!term ? program_exit(term, 1) : 0;
 	term->env = copy_enviroment(term, env);
 	term->in = NULL;
-	term->history = NULL;
+	term->h_current = NULL;
+	term->h_head = NULL;
+	term->h_tail = NULL;
 	init_history(term);
 	print_banner();
 	command_line(term);

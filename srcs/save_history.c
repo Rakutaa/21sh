@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 18:50:52 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/24 23:23:39 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/26 02:01:46 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		save_history(t_terminal *term)
 	fd = open(H_FILE, O_WRONLY|O_CREAT, 0666);
 	if (fd == -1)
 		return ;
-	current = term->history;
+	current = term->h_head;
 	count = 0;
 	while (count < H_LEN && current)
 	{

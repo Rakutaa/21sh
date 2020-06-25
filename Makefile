@@ -6,7 +6,7 @@
 #    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/06/25 16:51:19 by vkuokka          ###   ########.fr        #
+#    Updated: 2020/06/26 01:07:35 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,9 +59,9 @@ $(NAME):
 	@gcc $(FLAGS) -I $(INCL) -I $(LIBINCL) $(SRCS) -L$(LIBFOL) -l$(LIB) -ltermcap -o $(NAME)
 	@echo "Done"
 clean:
-	@make -C libft/ clean
+	-@make -C libft/ clean
 fclean: clean
-	@make -C libft/ fclean
+	-@make -C libft/ fclean
 	@echo "Removing binary..."
 	@rm -f $(NAME)
 	@echo "Done"

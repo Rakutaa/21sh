@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 18:21:06 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/24 23:35:08 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/26 02:02:49 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void		init_history(t_terminal *term)
 	fd = open(H_FILE, O_RDONLY);
 	if (fd == -1)
 		return ;
+	node = NULL;
 	count = 0;
 	while (count < H_LEN && get_next_line(fd, &line))
 	{
@@ -36,8 +37,9 @@ void		init_history(t_terminal *term)
 			break ;
 		node->content = line;
 		node->content_size = ft_strlen(line);
-		ft_dlstaddback(&term->history, node);
+		ft_dlstaddback(&term->h_head, node);
 		count++;
 	}
+	term->h_tail = node;
 	close(fd);
 }
