@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/24 15:52:25 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/25 16:46:36 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 # define HALFSH_H
 
-# include "ft_printf.h"
+# include "library.h"
 # include <sys/ioctl.h>
 # include <termios.h>
 # include <term.h>
 # include <signal.h>
 # include <fcntl.h>
+
 
 # define H_FILE ".history"
 # define H_LEN 10

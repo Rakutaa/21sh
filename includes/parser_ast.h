@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_ast.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 16:40:04 by vtran             #+#    #+#             */
-/*   Updated: 2020/06/10 19:12:02 by vtran            ###   ########.fr       */
+/*   Updated: 2020/06/25 16:46:53 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include "lexer.h"
+# include "library.h"
 
 typedef struct							s_redirection_aggregation
 {

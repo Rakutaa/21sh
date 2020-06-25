@@ -6,14 +6,13 @@
 #    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/06/22 12:22:28 by vkuokka          ###   ########.fr        #
+#    Updated: 2020/06/25 16:47:21 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
 
-SRCS = gnl/get_next_line.c \
-       srcs/config_termcaps.c \
+SRCS = srcs/config_termcaps.c \
        srcs/init_history.c \
        srcs/main.c \
        srcs/program_exit.c \
@@ -43,26 +42,27 @@ SRCS = gnl/get_next_line.c \
        srcs/interpreter/parser_utils.c \
        srcs/interpreter/helper_parser_redir_aggre.c \
 
-INCL = -I includes/
-INCL1 = -I libftprintf/includes
-INCL2 = -I libftprintf/libft/includes
-INCL3 =  -I gnl/
+INCL = includes/
 
-LIB = -lftprintf
-LIB1 = -ltermcap
-LIBFOL = -Llibftprintf/
+LIB = ft
+LIBFOL = libft/
+LIBINCL = libft/includes/
 
-COMP = gcc -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 $(NAME):
-	make -C libftprintf/
-	$(COMP) $(INCL) $(INCL1) $(INCL2) $(INCL3) $(SRCS) $(LIBFOL) $(LIB) $(LIB1) -o $(NAME)
+	-@git clone https://github.com/vkuokka/42-libft.git libft
+	@echo "Building library..."
+	@make -C libft/
+	@echo "Compiling program..."
+	@gcc $(FLAGS) -I $(INCL) -I $(LIBINCL) $(SRCS) -L$(LIBFOL) -l$(LIB) -ltermcap -o $(NAME)
+	@echo "Done"
 clean:
-	make -C libftprintf/ clean
-
+	@make -C libft/ clean
 fclean: clean
-	make -C libftprintf/ fclean
-	rm -f $(NAME)
-
+	@make -C libft/ fclean
+	@echo "Removing binary..."
+	@rm -f $(NAME)
+	@echo "Done"
 re: fclean all
