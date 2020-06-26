@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:46 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/26 02:04:38 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/26 14:09:33 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,14 @@
 
 static void	browse_up(t_terminal *term)
 {
-	if (term->h_current && term->in->h_index == 0)
+	if (term->h_current)
 	{
 		ft_bzero(term->in->string, ft_strlen(term->in->string));
 		ft_memmove(term->in->string, term->h_current->content, \
 		term->h_current->content_size);
 		term->in->index = term->h_current->content_size;
-		term->in->h_index++;
-	}
-	else if (term->h_current && term->h_current->next)
-	{
-		term->h_current = term->h_current->next;
-		ft_bzero(term->in->string, ft_strlen(term->in->string));
-		ft_memmove(term->in->string, term->h_current->content, \
-		term->h_current->content_size);
-		term->in->index = term->h_current->content_size;
-		term->in->h_index++;
+		if (term->h_current->next)
+			term->h_current = term->h_current->next;
 	}
 }
 
@@ -46,20 +38,19 @@ static void	browse_up(t_terminal *term)
 
 static void	browse_down(t_terminal *term)
 {
-	if (term->h_current && term->in->h_index == 1)
+	if (term->h_current)
 	{
-		ft_bzero(term->in->string, ft_strlen(term->in->string));
-		term->in->index = 0;
-		term->in->h_index--;
-	}
-	else if (term->h_current && term->h_current->prev)
-	{
+		if (!term->h_current->prev)
+		{
+			ft_bzero(term->in->string, ft_strlen(term->in->string));
+			term->in->index = 0;
+			return ;
+		}
 		term->h_current = term->h_current->prev;
 		ft_bzero(term->in->string, ft_strlen(term->in->string));
 		ft_memmove(term->in->string, term->h_current->content, \
 		term->h_current->content_size);
 		term->in->index = term->h_current->content_size;
-		term->in->h_index--;
 	}
 }
 

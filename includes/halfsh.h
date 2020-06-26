@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/26 01:54:23 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/26 13:54:15 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@
 
 typedef struct		s_input
 {
-	int				h_index;
 	char			prompt[4];
 	char			string[ARG_MAX];
 	int				index;
