@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/26 14:02:20 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/26 14:49:38 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,19 @@ static t_list	*copy_enviroment(t_terminal *term, char **env)
 ** positon.
 */
 
+static void		cut_tail(t_terminal *term)
+{
+	t_dlist		*tmp;
+
+	if (!term->h_tail)
+		return ;
+	tmp = term->h_tail;
+	term->h_tail = term->h_tail->prev;
+	term->h_tail->next = NULL;
+	ft_ddel(tmp->content, tmp->content_size);
+	free(tmp);
+}
+
 static void		command_line(t_terminal *term)
 {
 	term->in = (t_input *)malloc(sizeof(t_input));
@@ -69,6 +82,10 @@ static void		command_line(t_terminal *term)
 			init_lexer(term);
 			ft_dlstadd(&term->h_head, ft_dlstnew(term->in->string, \
 			ft_strlen(term->in->string)));
+			if (!term->h_tail)
+				term->h_tail = term->h_head;
+			if (ft_dlstlen(&term->h_head) > H_LEN)
+				cut_tail(term);
 		}
 		else
 			ft_putchar('\n');
