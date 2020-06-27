@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/26 14:49:38 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/27 19:18:21 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void		command_line(t_terminal *term)
 	!term->in ? program_exit(term, 1) : 0;
 	while (term)
 	{
-		term->h_current = term->h_head;
+		term->h_current = NULL;
 		init_input(term->in);
 		start_editor(term);
 		if (term->in->string[0])
@@ -116,7 +116,6 @@ int				main(int argc, char **argv, char **env)
 	!term ? program_exit(term, 1) : 0;
 	term->env = copy_enviroment(term, env);
 	term->in = NULL;
-	term->h_current = NULL;
 	term->h_head = NULL;
 	term->h_tail = NULL;
 	init_history(term);
