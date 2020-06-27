@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/26 13:54:15 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/27 10:49:37 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void				init_input(t_input *input);
 void				clipboard(t_terminal *term, int sum);
 void				init_history(t_terminal *term);
 void				save_history(t_terminal *term);
+int					listen_keys(void);
 
 
 #endif

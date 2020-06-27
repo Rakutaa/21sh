@@ -6,34 +6,12 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/21 18:18:28 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/27 10:48:29 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 #include "keyboard.h"
-
-/*
-** After being called by loop_editor, This function waits input stream and sums
-** up the information received. The sum itself represents ascii value of
-** a single keyboard key. The ascii values are defined in keyboard.h header.
-*/
-
-static int	listen_keys(void)
-{
-	char	key[KEY_SIZE + 1];
-	ssize_t	bytes;
-	size_t	i;
-	int		sum;
-
-	bytes = read(1, key, KEY_SIZE);
-	key[bytes] = '\0';
-	i = -1;
-	sum = 0;
-	while (key[++i])
-		sum += key[i];
-	return (sum);
-}
 
 /*
 ** Adds a character into current command if the length of the command

@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/26 14:59:59 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/26 22:07:12 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ void		search_action(t_terminal *term, int sum)
 	else if (sum == CTRL_UP || sum == CTRL_DOWN \
 	|| sum == HOME || sum == END)
 		cursor_movement_2(term, sum);
-	else if (sum == UP || sum == DOWN)
+	else if (sum == UP || sum == DOWN \
+	|| sum == CTRL_R)
 		browse_history(term, sum);
 	else if (sum == OPT_C || sum == OPT_X \
 	|| sum == OPT_V)
