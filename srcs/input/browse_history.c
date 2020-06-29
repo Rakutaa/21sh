@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:46 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/29 13:37:25 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/29 14:57:33 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,10 @@ static void	browse_down(t_terminal *term)
 	}
 }
 
+/*
+** Searches command history entries for matching string.
+*/
+
 static int	find_match(t_terminal *term, char *str)
 {
 	t_dlist	*current;
@@ -78,6 +82,13 @@ static int	find_match(t_terminal *term, char *str)
 	}
 	return (0) ;
 }
+
+/*
+** Initializes reverse-i-search and waits for the user input.
+** If input is anything else than printable or backspace
+** character, the function will exit while loop and return
+** into normal editor state.
+*/
 
 static void	search_history(t_terminal *term)
 {

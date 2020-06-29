@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 22:51:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/26 15:20:25 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/29 14:52:46 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,23 @@
 ** so the second memmove does not overwrite any important data.
 */
 
-static void add_paste(t_input *input, char *paste, int ret)
+static void	add_paste(t_input *input, char *paste)
 {
-	ft_memmove(input->string + input->index + ret, \
+	char	*tmp1;
+	char	*tmp2;
+	size_t	len;
+
+	if (!paste[0])
+		return ;
+	tmp1 = ft_strreplace(paste, "\n", " ");
+	tmp2 = ft_strreplace(tmp1, "\t", "    ");
+	free(tmp1);
+	len = ft_strlen(tmp2);
+	ft_memmove(input->string + input->index + len, \
 	input->string + input->index, ft_strlen(input->string) + input->index);
-	ft_memmove(input->string + input->index, paste, ret);
-	input->index += ret;
+	ft_memmove(input->string + input->index, tmp2, len);
+	free(tmp2);
+	input->index += len;
 }
 
 /*
@@ -37,12 +48,14 @@ static void add_paste(t_input *input, char *paste, int ret)
 
 static void	paste_clipboard(t_terminal *term)
 {
-	char	*cmd[] = {"pbpaste", NULL};
+	char	*cmd[2];
 	pid_t	pid;
 	int		p[2];
 	char	paste[ARG_MAX];
 	int		ret;
 
+	cmd[0] = "pbpaste";
+	cmd[1] = NULL;
 	pipe(p);
 	pid = fork();
 	if (!pid)
@@ -57,7 +70,7 @@ static void	paste_clipboard(t_terminal *term)
 		close(p[1]);
 		ret = read(p[0], paste, ARG_MAX - ft_strlen(term->in->string));
 		paste[ret] = '\0';
-		add_paste(term->in, paste, ret);
+		add_paste(term->in, paste);
 		close(p[0]);
 	}
 }
@@ -70,9 +83,15 @@ static void	copy_clipboard(t_terminal *term)
 {
 	t_ast_node	*ex;
 	t_ast		*head;
-	char		*echon[] = {"echo", "-n", term->in->string, NULL};
-	char		*copyn[] = {"pbcopy", NULL};
+	char		*echon[4];
+	char		*copyn[2];
 
+	echon[0] = "echo";
+	echon[1] = "-n";
+	echon[2] = term->in->string;
+	echon[3] = NULL;
+	copyn[0] = "pbcopy";
+	copyn[1] = NULL;
 	head = init_ast();
 	ex = create_expression(create_factor(echon, NULL), \
 	create_factor(copyn, NULL));
@@ -89,9 +108,15 @@ static void	cut_clipboard(t_terminal *term)
 {
 	t_ast_node	*ex;
 	t_ast		*head;
-	char		*echon[] = {"echo", "-n", term->in->string, NULL};
-	char		*copyn[] = {"pbcopy", NULL};
+	char		*echon[4];
+	char		*copyn[2];
 
+	echon[0] = "echo";
+	echon[1] = "-n";
+	echon[2] = term->in->string;
+	echon[3] = NULL;
+	copyn[0] = "pbcopy";
+	copyn[1] = NULL;
 	head = init_ast();
 	ex = create_expression(create_factor(echon, NULL), \
 	create_factor(copyn, NULL));
