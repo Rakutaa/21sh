@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/22 11:48:20 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/29 13:46:42 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 			ft_memmove(term->in->prompt, QUOTE, 4);
 			ft_putchar('\n');
 			start_editor(term);
+			if (term->in->sigint)
+				return (NULL);
 			continue ;
 		}
 		lexer->i++;
@@ -207,7 +209,8 @@ int		fixable(t_list *tokens, t_terminal *term)
 		ft_memmove(term->in->prompt, PIPE, 4);
 		ft_putchar('\n');
 		start_editor(term);
-//		free_tokens(tokens);
+		if (term->in->sigint)
+			return (0);
 		init_lexer(term);
 		return (9);
 	}
@@ -240,8 +243,11 @@ void				init_lexer(t_terminal *term)
 		else if (lexer->data[lexer->i])
 			ft_lstaddback(&lexer->tokens, \
 			ft_lstnew(get_token(lexer, term), sizeof(t_token)));
+			if (term->in->sigint)
+				break ;
 	}
-	if ((ret = fixable(lexer->tokens, term))) //tässä
+	ret = fixable(lexer->tokens, term);
+	if (ret && !term->in->sigint) //tässä
 	{
 		if (ret == 9)
 			return ;

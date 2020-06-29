@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:43:42 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/26 13:54:28 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/29 12:53:26 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 void	init_input(t_input *input)
 {
+	input->sigint = 0;
 	ft_memmove(input->prompt, INIT, 4);
 	ft_bzero(input->string, ARG_MAX);
 	input->index = 0;

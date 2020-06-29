@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:46 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/27 19:17:03 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/29 13:37:25 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	browse_up(t_terminal *term)
 		ft_bzero(term->in->string, ft_strlen(term->in->string));
 		ft_memmove(term->in->string, term->h_current->content, \
 		term->h_current->content_size);
-		term->in->index = term->h_current->content_size;
+		term->in->index = term->h_current->content_size - 1;
 	}
 }
 
@@ -53,7 +53,7 @@ static void	browse_down(t_terminal *term)
 		ft_bzero(term->in->string, ft_strlen(term->in->string));
 		ft_memmove(term->in->string, term->h_current->content, \
 		term->h_current->content_size);
-		term->in->index = term->h_current->content_size;
+		term->in->index = term->h_current->content_size - 1;
 	}
 }
 
@@ -97,6 +97,8 @@ static void	search_history(t_terminal *term)
 		ft_putstr("': ");
 		ft_putstr(term->in->string);
 		sum = listen_keys();
+		if (term->in->sigint)
+			break ;
 		if (sum == BACK && str[0])
 			str[ft_strlen(str) - 1] = '\0';
 		else if (ft_isprint(sum))

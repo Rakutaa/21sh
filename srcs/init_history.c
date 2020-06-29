@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 18:21:06 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/26 14:34:06 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/29 13:39:14 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void		init_history(t_terminal *term)
 		if (!node)
 			break ;
 		node->content = line;
-		node->content_size = ft_strlen(line);
+		node->content_size = ft_strlen(line) + 1;
 		ft_dlstaddback(&term->h_head, node);
 		count++;
 	}

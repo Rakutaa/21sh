@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/27 19:18:30 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/29 12:53:12 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <term.h>
 # include <signal.h>
 # include <fcntl.h>
+# include <stdbool.h>
 
 
 # define H_FILE ".history"
@@ -35,6 +36,7 @@ typedef struct		s_input
 	char			string[ARG_MAX];
 	int				index;
 	int				line;
+	bool			sigint;
 }					t_input;
 
 typedef struct		s_terminal

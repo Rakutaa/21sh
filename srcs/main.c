@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/27 19:18:21 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/29 13:36:19 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ static void		command_line(t_terminal *term)
 		term->h_current = NULL;
 		init_input(term->in);
 		start_editor(term);
-		if (term->in->string[0])
+		if (term->in->string[0] && !term->in->sigint)
 		{
 			if (ft_strequ(term->in->string, "exit"))	// DELETE
 				return ;								// DELETE
 			init_lexer(term);
 			ft_dlstadd(&term->h_head, ft_dlstnew(term->in->string, \
-			ft_strlen(term->in->string)));
+			ft_strlen(term->in->string) + 1));
 			if (!term->h_tail)
 				term->h_tail = term->h_head;
 			if (ft_dlstlen(&term->h_head) > H_LEN)

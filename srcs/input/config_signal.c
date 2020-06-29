@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:43 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/26 02:05:59 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/29 13:04:16 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,18 @@ static void	signal_continue(int signum)
 }
 
 /*
-** Clears the current command and prints out a prompt on a empty line.
+** Sets sigint flag to 1 and pushes empty string into
+** device stream to activate read in listen_keys
 */
 
 static void	signal_kill(int signum)
 {
 	if (signum)
 	{
-		g_term->h_current = g_term->h_head;
-		init_input(g_term->in);
-		ft_putchar('\n');
-		print_input(g_term);
+		g_term->in->sigint = 1;
+		ioctl(1, TIOCSTI, "");
 	}
+
 }
 
 /*

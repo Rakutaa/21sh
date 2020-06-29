@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/27 10:48:29 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/29 13:27:14 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	loop_editor(t_terminal *term)
 	while (term)
 	{
 		sum = listen_keys();
-		if (sum == ENTER)
+		if (sum == ENTER || term->in->sigint)
 		{
 			tputs(tgetstr("rc", NULL), 1, print_char);
 			break ;
@@ -57,6 +57,8 @@ static void	loop_editor(t_terminal *term)
 			add_char(term, sum);
 		else
 			search_action(term, sum);
+		if (term->in->sigint)
+			init_input(term->in);
 		print_input(term);
 	}
 }
