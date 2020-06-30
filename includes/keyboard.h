@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/26 22:05:43 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/30 14:04:27 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # define KEY_SIZE 8
 
 # define ENTER 10
+# define CTRL_L 12
 # define CTRL_R 18
+# define CTRL_U 21
 # define ESC 27
 # define SPACE 32
 # define BACK 127

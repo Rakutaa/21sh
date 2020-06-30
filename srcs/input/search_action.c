@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/26 22:07:12 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/30 14:09:20 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ static void	delete_char(t_terminal *term)
 	}
 }
 
+static void clear_input(t_terminal *term)
+{
+	ft_bzero(term->in->string, ARG_MAX);
+	term->in->index = 0;
+}
+
 /*
 ** Chooses right action by comparing sum and different
 ** definitions from keyboard.h file.
@@ -56,4 +62,8 @@ void		search_action(t_terminal *term, int sum)
 		clipboard(term, sum);
 	else if (sum == BACK)
 		delete_char(term);
+	else if (sum == CTRL_L)
+		tputs(tgetstr("ho", NULL), 1, print_char);
+	else if (sum == CTRL_U)
+		clear_input(term);
 }

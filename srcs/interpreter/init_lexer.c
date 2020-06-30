@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/29 13:46:42 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/30 14:03:46 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,10 +241,12 @@ void				init_lexer(t_terminal *term)
 				ft_lstnew(get_agr(lexer), sizeof(t_token)));
 		}
 		else if (lexer->data[lexer->i])
+		{
 			ft_lstaddback(&lexer->tokens, \
 			ft_lstnew(get_token(lexer, term), sizeof(t_token)));
 			if (term->in->sigint)
 				break ;
+		}
 	}
 	ret = fixable(lexer->tokens, term);
 	if (ret && !term->in->sigint) //tässä
