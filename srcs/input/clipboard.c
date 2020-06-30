@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 22:51:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/29 14:52:46 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/30 14:13:34 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static void	add_paste(t_input *input, char *paste)
 		return ;
 	tmp1 = ft_strreplace(paste, "\n", " ");
 	tmp2 = ft_strreplace(tmp1, "\t", "    ");
+	if (tmp2 >= ARG_MAX)
+		return ;
 	free(tmp1);
 	len = ft_strlen(tmp2);
 	ft_memmove(input->string + input->index + len, \
