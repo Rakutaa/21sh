@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/02 12:26:41 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/02 12:46:53 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static void eof_action(t_terminal *term)
 {
 	size_t	len;
 
-	if (!term->in->string[term->in->index])
+	if (!term->in->string[0])
 		program_exit(term, 0);
-	else
+	else if (term->in->string[term->in->index])
 	{
 		len = ft_strlen(term->in->string);
 		ft_memmove(term->in->string + term->in->index, \
