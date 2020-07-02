@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/29 13:36:19 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/02 12:06:05 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,18 +109,23 @@ int				main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	config_termcaps();
-	//tputs(tgetstr("ti", NULL), 1, print_char); //Screws up text editors
-	tputs(tgetstr("ho", NULL), 1, print_char);
 	term = (t_terminal *)malloc(sizeof(t_terminal));
 	!term ? program_exit(term, 1) : 0;
 	term->env = copy_enviroment(term, env);
 	term->in = NULL;
 	term->h_head = NULL;
 	term->h_tail = NULL;
-	init_history(term);
-	print_banner();
-	command_line(term);
-	save_history(term);
+	if (!isatty(STDIN_FILENO))
+		execute_pipe(term);
+	else
+	{
+		config_termcaps();
+		//tputs(tgetstr("ti", NULL), 1, print_char); //Screws up text editors
+		tputs(tgetstr("ho", NULL), 1, print_char);
+		init_history(term);
+		print_banner();
+		command_line(term);
+		save_history(term);
+	}
 	program_exit(term, 0);
 }

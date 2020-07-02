@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/30 14:09:20 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/02 12:26:41 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,22 @@ static void	delete_char(t_terminal *term)
 	}
 }
 
+static void eof_action(t_terminal *term)
+{
+	size_t	len;
+
+	if (!term->in->string[term->in->index])
+		program_exit(term, 0);
+	else
+	{
+		len = ft_strlen(term->in->string);
+		ft_memmove(term->in->string + term->in->index, \
+		term->in->string + term->in->index + 1, \
+		ft_strlen(term->in->string + term->in->index + 1));
+		term->in->string[len - 1] = 0;
+	}
+	
+}
 static void clear_input(t_terminal *term)
 {
 	ft_bzero(term->in->string, ARG_MAX);
@@ -66,4 +82,6 @@ void		search_action(t_terminal *term, int sum)
 		tputs(tgetstr("ho", NULL), 1, print_char);
 	else if (sum == CTRL_U)
 		clear_input(term);
+	else if (sum == CTRL_D)
+		eof_action(term);
 }

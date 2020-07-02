@@ -6,13 +6,14 @@
 #    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/06/27 10:50:15 by vkuokka          ###   ########.fr        #
+#    Updated: 2020/07/02 11:34:19 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
 
 SRCS = srcs/config_termcaps.c \
+       srcs/execute_pipe.c \
        srcs/init_history.c \
        srcs/main.c \
        srcs/program_exit.c \

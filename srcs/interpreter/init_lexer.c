@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/30 14:03:46 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/02 12:17:19 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,6 @@ void				init_lexer(t_terminal *term)
 	{
 		if (ret == 9)
 			return ;
-		ft_putendl("");
 		parse_tokens(term, lexer->tokens);
 	}
 	free_tokens(lexer->tokens);
