@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/02 12:06:05 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/02 17:08:54 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static void		command_line(t_terminal *term)
 		term->h_current = NULL;
 		init_input(term->in);
 		start_editor(term);
+		ft_putchar('\n');
 		if (term->in->string[0] && !term->in->sigint)
 		{
 			if (ft_strequ(term->in->string, "exit"))	// DELETE
@@ -87,8 +88,6 @@ static void		command_line(t_terminal *term)
 			if (ft_dlstlen(&term->h_head) > H_LEN)
 				cut_tail(term);
 		}
-		else
-			ft_putchar('\n');
 	}
 }
 
