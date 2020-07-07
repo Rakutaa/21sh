@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 22:51:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/02 18:05:59 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/07 15:38:17 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	add_paste(t_input *input, char *paste)
 ** segmentation fault in add_paste function.
 */
 
-static void	paste_mac_clipboard(t_terminal *term)
+static void	paste_clipboard(t_terminal *term)
 {
 	char	*cmd[2];
 	pid_t	pid;
@@ -71,7 +71,7 @@ static void	paste_mac_clipboard(t_terminal *term)
 	{
 		wait(&pid);
 		close(p[1]);
-		ret = read(p[0], paste, ARG_MAX - ft_strlen(term->in->string));
+		ret = read(p[0], paste, ARG_MAX - ft_strlen(term->in->string) - 1);
 		paste[ret] = '\0';
 		add_paste(term->in, paste);
 		close(p[0]);
@@ -136,5 +136,5 @@ void		mac_clipboard(t_terminal *term, int sum)
 	else if (sum == OPT_X)
 		cut_command(term);
 	else if (sum == OPT_V)
-		paste_mac_clipboard(term);
+		paste_clipboard(term);
 }
