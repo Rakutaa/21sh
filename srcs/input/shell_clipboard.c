@@ -6,12 +6,17 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 17:44:32 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/02 18:45:02 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/07 15:54:04 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 #include "keyboard.h"
+
+/*
+** Removes all of the characters after cursor position and
+** adds them into internal clipboard.
+*/
 
 static void	cut_after(t_terminal *term)
 {
@@ -22,6 +27,11 @@ static void	cut_after(t_terminal *term)
 	term->in->index = ft_strlen(term->in->string);
 }
 
+/*
+** Removes all of the characters before cursor position and
+** adds them into internal clipboard.
+*/
+
 static void	cut_before(t_terminal *term)
 {
 	ft_bzero(term->clipboard, ARG_MAX);
@@ -31,6 +41,10 @@ static void	cut_before(t_terminal *term)
 	ARG_MAX - term->in->index);
 	term->in->index = 0;
 }
+
+/*
+** Appends internal cipboard contents into current command.
+*/
 
 static void	paste_buffer(t_terminal *term)
 {
@@ -43,7 +57,7 @@ static void	paste_buffer(t_terminal *term)
 	tmp1 = ft_strreplace(term->clipboard, "\n", " ");
 	tmp2 = ft_strreplace(tmp1, "\t", "    ");
 	len = ft_strlen(tmp2);
-	if (len < ARG_MAX)
+	if (len < ARG_MAX - ft_strlen(term->in->string))
 	{
 		ft_memmove(term->in->string + term->in->index + len, \
 		term->in->string + term->in->index, ft_strlen(term->in->string) + term->in->index);

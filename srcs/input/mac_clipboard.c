@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 22:51:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/07 15:38:17 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/07 15:49:34 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	add_paste(t_input *input, char *paste)
 	tmp1 = ft_strreplace(paste, "\n", " ");
 	tmp2 = ft_strreplace(tmp1, "\t", "    ");
 	len = ft_strlen(tmp2);
-	if (len < ARG_MAX)
+	if (len < ARG_MAX - ft_strlen(input->string))
 	{
 		ft_memmove(input->string + input->index + len, \
 		input->string + input->index, ft_strlen(input->string) + input->index);
@@ -43,7 +43,7 @@ static void	add_paste(t_input *input, char *paste)
 }
 
 /*
-** Fetches clipboard contents using pbpaste command.
+** Fetches macOS clipboard contents using pbpaste command.
 ** read functions third parameter makes sure that the
 ** end result does not exceed the ARG_MAX and end up in
 ** segmentation fault in add_paste function.
@@ -79,7 +79,7 @@ static void	paste_clipboard(t_terminal *term)
 }
 
 /*
-** Copies contents of the current command to the clipboard.
+** Copies contents of the current command to the macOS clipboard.
 */
 
 static void	copy_command(t_terminal *term)
@@ -103,8 +103,8 @@ static void	copy_command(t_terminal *term)
 }
 
 /*
-** Copies contents of the current command to the clipboard and
-** clears current command.
+** Copies contents of the current command to the macOS clipboard
+** and clears current command.
 */
 
 static void	cut_command(t_terminal *term)
