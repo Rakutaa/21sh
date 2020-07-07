@@ -6,7 +6,7 @@
 #    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/07/02 11:34:19 by vkuokka          ###   ########.fr        #
+#    Updated: 2020/07/02 18:29:33 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,15 +20,16 @@ SRCS = srcs/config_termcaps.c \
        srcs/save_history.c \
        srcs/utils.c \
        srcs/input/browse_history.c \
-       srcs/input/clipboard.c \
        srcs/input/config_signal.c \
        srcs/input/config_terminal.c \
        srcs/input/cursor_movement_1.c \
        srcs/input/cursor_movement_2.c \
        srcs/input/init_input.c \
        srcs/input/listen_keys.c \
+       srcs/input/mac_clipboard.c \
        srcs/input/print_input.c \
        srcs/input/search_action.c \
+       srcs/input/shell_clipboard.c \
        srcs/input/start_editor.c \
        srcs/interpreter/init_lexer.c \
        srcs/interpreter/parse_tokens.c \

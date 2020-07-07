@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/02 17:08:54 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/02 17:56:41 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int				main(int argc, char **argv, char **env)
 	(void)argv;
 	term = (t_terminal *)malloc(sizeof(t_terminal));
 	!term ? program_exit(term, 1) : 0;
+	ft_bzero(term->clipboard, ARG_MAX);
 	term->env = copy_enviroment(term, env);
 	term->in = NULL;
 	term->h_head = NULL;

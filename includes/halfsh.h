@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/02 11:33:53 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/02 18:26:43 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct		s_terminal
 	struct termios	original;
 	struct termios	shell;
 	struct winsize	size;
+	char			clipboard[ARG_MAX];
 	t_list			*env;
 	t_input			*in;
 	t_dlist			*h_head;
@@ -66,7 +67,8 @@ void				browse_history(t_terminal *term, int sum);
 void				search_action(t_terminal *term, int sum);
 void				start_editor(t_terminal *term);
 void				init_input(t_input *input);
-void				clipboard(t_terminal *term, int sum);
+void				mac_clipboard(t_terminal *term, int sum);
+void				shell_clipboard(t_terminal *term, int sum);
 void				init_history(t_terminal *term);
 void				save_history(t_terminal *term);
 int					listen_keys(void);

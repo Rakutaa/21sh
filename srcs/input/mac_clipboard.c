@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clipboard.c                                        :+:      :+:    :+:   */
+/*   mac_clipboard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 22:51:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/30 20:24:25 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/02 18:05:59 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	add_paste(t_input *input, char *paste)
 ** segmentation fault in add_paste function.
 */
 
-static void	paste_clipboard(t_terminal *term)
+static void	paste_mac_clipboard(t_terminal *term)
 {
 	char	*cmd[2];
 	pid_t	pid;
@@ -82,7 +82,7 @@ static void	paste_clipboard(t_terminal *term)
 ** Copies contents of the current command to the clipboard.
 */
 
-static void	copy_clipboard(t_terminal *term)
+static void	copy_command(t_terminal *term)
 {
 	t_ast_node	*ex;
 	t_ast		*head;
@@ -107,7 +107,7 @@ static void	copy_clipboard(t_terminal *term)
 ** clears current command.
 */
 
-static void	cut_clipboard(t_terminal *term)
+static void	cut_command(t_terminal *term)
 {
 	t_ast_node	*ex;
 	t_ast		*head;
@@ -129,12 +129,12 @@ static void	cut_clipboard(t_terminal *term)
 	term->in->index = 0;
 }
 
-void		clipboard(t_terminal *term, int sum)
+void		mac_clipboard(t_terminal *term, int sum)
 {
 	if (sum == OPT_C)
-		copy_clipboard(term);
+		copy_command(term);
 	else if (sum == OPT_X)
-		cut_clipboard(term);
+		cut_command(term);
 	else if (sum == OPT_V)
-		paste_clipboard(term);
+		paste_mac_clipboard(term);
 }

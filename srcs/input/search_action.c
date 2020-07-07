@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/02 12:46:53 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/02 18:25:48 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,6 @@ static void eof_action(t_terminal *term)
 	}
 	
 }
-static void clear_input(t_terminal *term)
-{
-	ft_bzero(term->in->string, ARG_MAX);
-	term->in->index = 0;
-}
 
 /*
 ** Chooses right action by comparing sum and different
@@ -75,13 +70,14 @@ void		search_action(t_terminal *term, int sum)
 		browse_history(term, sum);
 	else if (sum == OPT_C || sum == OPT_X \
 	|| sum == OPT_V)
-		clipboard(term, sum);
+		mac_clipboard(term, sum);
+	else if (sum == CTRL_W || sum == CTRL_K \
+	|| sum == CTRL_U || sum == CTRL_Y)
+		shell_clipboard(term, sum);
 	else if (sum == BACK)
 		delete_char(term);
 	else if (sum == CTRL_L)
 		tputs(tgetstr("ho", NULL), 1, print_char);
-	else if (sum == CTRL_U)
-		clear_input(term);
 	else if (sum == CTRL_D)
 		eof_action(term);
 }
