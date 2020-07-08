@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:46 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/29 14:57:33 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/08 12:18:47 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,13 @@ static void	browse_up(t_terminal *term)
 			term->h_current = term->h_head;
 		else if (term->h_current->next)
 			term->h_current = term->h_current->next;
-		ft_bzero(term->in->string, ft_strlen(term->in->string));
-		ft_memmove(term->in->string, term->h_current->content, \
-		term->h_current->content_size);
-		term->in->index = term->h_current->content_size - 1;
+		if (term->h_current->content_size <= ARG_MAX)
+		{
+			ft_bzero(term->in->string, ft_strlen(term->in->string));
+			ft_memmove(term->in->string, term->h_current->content, \
+			term->h_current->content_size);
+			term->in->index = term->h_current->content_size - 1;
+		}
 	}
 }
 
@@ -49,11 +52,14 @@ static void	browse_down(t_terminal *term)
 			term->h_current = NULL;
 			return ;
 		}
-		term->h_current = term->h_current->prev;
-		ft_bzero(term->in->string, ft_strlen(term->in->string));
-		ft_memmove(term->in->string, term->h_current->content, \
-		term->h_current->content_size);
-		term->in->index = term->h_current->content_size - 1;
+		if (term->h_current->content_size <= ARG_MAX)
+		{
+			term->h_current = term->h_current->prev;
+			ft_bzero(term->in->string, ft_strlen(term->in->string));
+			ft_memmove(term->in->string, term->h_current->content, \
+			term->h_current->content_size);
+			term->in->index = term->h_current->content_size - 1;
+		}
 	}
 }
 
@@ -70,11 +76,11 @@ static int	find_match(t_terminal *term, char *str)
 	current = term->h_head;
 	while (current)
 	{
-		if (ft_strstr(current->content, str))
+		if (ft_strstr(current->content, str) && current->content_size <= ARG_MAX)
 		{
 			init_input(term->in);
 			ft_memmove(term->in->string, current->content, \
-			ft_strlen(current->content));
+			current->content_size);
 			term->in->index = current->content_size;
 			return (1) ;
 		}
@@ -112,7 +118,7 @@ static void	search_history(t_terminal *term)
 			break ;
 		if (sum == BACK && str[0])
 			str[ft_strlen(str) - 1] = '\0';
-		else if (ft_isprint(sum))
+		else if (ft_isprint(sum) && ft_strlen(str) < ARG_MAX)
 			str[ft_strlen(str)] = sum;
 		else if (!ft_isprint(sum) && sum != BACK)
 			return ;
