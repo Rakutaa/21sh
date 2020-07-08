@@ -4,7 +4,8 @@ Hive Helsinki project. **WIP**
 **Compilation**
 
 Clone repository and compile the program into your current working directory with the following commands:  
-$ `git clone https://github.com/vkuokka/42-21sh.git 21sh`   
+$ `git clone https://github.com/vkuokka/42-21sh.git 21sh`  
+$ `cd 21sh`  
 $ `make`  
 Now you should have binary file inside the repository which you can run with the following command:  
 $ `./21sh`  
