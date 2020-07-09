@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:43 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/29 13:04:16 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/09 14:35:36 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ static void	signal_kill(int signum)
 		g_term->in->sigint = 1;
 		ioctl(1, TIOCSTI, "");
 	}
-
 }
 
 /*

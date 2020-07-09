@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/02 18:26:43 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/09 14:28:52 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 # include <stdbool.h>
 
 
-# define H_FILE ".history"
-# define H_LEN 10
+# define HISTFILE ".history"
+# define HISTSIZE 10
+# define FCFILE "/private/tmp/21shfc"
 # define ARG_MAX 262144
 # define INIT "$> "
 # define QUOTE "q> "
@@ -73,6 +74,5 @@ void				init_history(t_terminal *term);
 void				save_history(t_terminal *term);
 int					listen_keys(void);
 void				execute_pipe(t_terminal *term);
-
 
 #endif

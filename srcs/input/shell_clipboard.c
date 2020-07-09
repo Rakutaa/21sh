@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 17:44:32 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/07 15:54:04 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/09 14:37:30 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ static void	paste_buffer(t_terminal *term)
 	if (len < ARG_MAX - ft_strlen(term->in->string))
 	{
 		ft_memmove(term->in->string + term->in->index + len, \
-		term->in->string + term->in->index, ft_strlen(term->in->string) + term->in->index);
+		term->in->string + term->in->index, \
+		ft_strlen(term->in->string) + term->in->index);
 		ft_memmove(term->in->string + term->in->index, tmp2, len);
 		term->in->index += len;
 	}

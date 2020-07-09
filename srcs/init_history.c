@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 18:21:06 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/29 13:39:14 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/08 13:04:15 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void		init_history(t_terminal *term)
 	t_dlist	*node;
 	int		count;
 
-	fd = open(H_FILE, O_RDONLY);
+	fd = open(HISTFILE, O_RDONLY);
 	if (fd == -1)
 		return ;
 	node = NULL;
 	count = 0;
-	while (count < H_LEN && get_next_line(fd, &line))
+	while (count < HISTSIZE && get_next_line(fd, &line))
 	{
 		node = ft_dlstnew(NULL, 0);
 		if (!node)

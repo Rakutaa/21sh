@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/02 17:56:41 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/09 14:29:42 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void		command_line(t_terminal *term)
 			ft_strlen(term->in->string) + 1));
 			if (!term->h_tail)
 				term->h_tail = term->h_head;
-			if (ft_dlstlen(&term->h_head) > H_LEN)
+			if (ft_dlstlen(&term->h_head) > HISTSIZE)
 				cut_tail(term);
 		}
 	}

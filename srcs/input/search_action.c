@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/02 18:25:48 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/09 14:38:26 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	delete_char(t_terminal *term)
 	}
 }
 
-static void eof_action(t_terminal *term)
+static void	eof_action(t_terminal *term)
 {
 	size_t	len;
 
@@ -49,7 +49,6 @@ static void eof_action(t_terminal *term)
 		ft_strlen(term->in->string + term->in->index + 1));
 		term->in->string[len - 1] = 0;
 	}
-	
 }
 
 /*
