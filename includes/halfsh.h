@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   halfsh.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/17 13:26:26 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/09 16:49:28 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 # define HALFSH_H
 
-# include "ft_printf.h"
+# include "library.h"
 # include <sys/ioctl.h>
 # include <termios.h>
 # include <term.h>

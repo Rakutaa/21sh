@@ -7,11 +7,11 @@ static void		change_dir(t_list *enviroment, char *path)
 	char		absolute[ARG_MAX];
 
 	if (access(path, F_OK) == -1)
-		ft_fprintf(2, "cd: no such file or directory: %s\n", path);
+		ft_dprintf(2, "cd: no such file or directory: %s\n", path);
 	else if (access(path, X_OK) == -1)
-		ft_fprintf(2, "cd: permission denied: %s\n", path);
+		ft_dprintf(2, "cd: permission denied: %s\n", path);
 	else if (chdir(path) == -1)
-		ft_fprintf(2, "cd: not a directory: %s\n", path);
+		ft_dprintf(2, "cd: not a directory: %s\n", path);
 	else
 	{
 		value = value_lookup(enviroment, "PWD");
@@ -28,16 +28,16 @@ int				buildin_cd(t_list *enviroment, char **args)
 	if (!args[1] || !args[1][0])
 	{
 		value = value_lookup(enviroment, "HOME");
-		!value ? ft_fprintf(2, "cd: HOME not set\n") \
+		!value ? ft_dprintf(2, "cd: HOME not set\n") \
 		: change_dir(enviroment, value);
 	}
 	else if (args[2])
-		ft_fprintf(2, "cd: too many arguments\n");
+		ft_dprintf(2, "cd: too many arguments\n");
 	else if (args[1][0] == '-' && !args[1][1])
 	{
 		value = value_lookup(enviroment, "OLDPWD");
 		if (!value)
-			ft_fprintf(2, "cd: OLDPWD not set\n");
+			ft_dprintf(2, "cd: OLDPWD not set\n");
 		else
 		{
 			ft_printf("%s\n", value);

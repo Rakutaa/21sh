@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vtran <vtran@student.42.fr>                +#+  +:+       +#+         #
+#    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/06/17 13:25:41 by vtran            ###   ########.fr        #
+#    Updated: 2020/07/09 16:52:25 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,22 +47,27 @@ SRCS = srcs/config_termcaps.c \
        srcs/interpreter/tokenize.c \
        srcs/interpreter/helper_parser_redir_aggre.c
 
-INCL =	includes/
-INCL1 = libftprintf/includes
-INCL2 = libftprintf/libft/includes
+INCL = includes/
 
-LIB = ftprintf
-LIBFOL = libftprintf/
+LIB = ft
+LIBFOL = libft/
+LIBINCL = libft/includes/
+
+FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 $(NAME):
-	#make -C libftprintf/
-	gcc -Wall -Werror -Wextra -I $(INCL) -I $(INCL1) -I $(INCL2) $(SRCS) -L$(LIBFOL) -l$(LIB) -ltermcap -o $(NAME)
+	-@git clone https://github.com/vkuokka/42-libft.git libft
+	@echo "Building library..."
+	@make -C libft/
+	@echo "Compiling program..."
+	@gcc $(FLAGS) -I $(INCL) -I $(LIBINCL) $(SRCS) -L$(LIBFOL) -l$(LIB) -ltermcap -o $(NAME)
+	@echo "Done"
 clean:
-	#make -C libftprintf/ clean
-
+	-@make -C libft/ clean
 fclean: clean
-	#make -C libftprintf/ fclean
-	rm -f $(NAME)
-
+	-@make -C libft/ fclean
+	@echo "Removing binary..."
+	@rm -f $(NAME)
+	@echo "Done"
 re: fclean all
