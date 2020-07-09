@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/29 13:36:19 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/17 13:51:01 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 static void		print_banner(void)
 {
-	tputs(tgetstr("cl", NULL), 1, print_char);
 	ft_putendl(" _____  __      _          _ _");
 	ft_putendl("/ __  \\/  |    | |        | | |");
 	ft_putendl("   / /  | | ___| |__   ___| | |");
@@ -26,45 +25,38 @@ static void		print_banner(void)
 	ft_putchar('\n');
 }
 
-static t_list	*copy_enviroment(t_terminal *term, char **env)
+static void		copy_enviroment(t_terminal *term, char **env)
 {
 	size_t		i;
-	size_t		len;
 	t_list		*start;
 	t_list		*node;
-
+	
+//	start = (t_list *)malloc(sizeof(t_list));
+	term->env = (t_env *)malloc(sizeof(t_env));
 	i = 0;
 	start = NULL;
 	while (env[i])
 	{
-		len = ft_strlen(env[i]);
-		node = ft_lstnew(env[i], len + 1);
+		node = ft_lstnew(env[i], ft_strlen(env[i]) + 1);
 		!node ? program_exit(term, 1) : 0;
 		*ft_strchr(node->content, '=') = '\0';
 		!start ? start = node : ft_lstaddback(&start, node);
 		i++;
 	}
-	return (start);
+	term->env->linked = start;
+	term->env->table = update_enviroment(term->env->linked);
 }
 
 /*
 ** This is the "core" part of the program. It allocates memory for the input
 ** struct which keeps the information about the current command and cursor
-** positon.
+** positon. The while loop takes care of multiple essential things:
+** 1. Initializes the input struct.
+** 2. Starts the line editor.
+** 3. In case of the command being empty string, skips lexing and history.
+** 4. Starts lexer.
+** 5. Pushes the command into history.
 */
-
-static void		cut_tail(t_terminal *term)
-{
-	t_dlist		*tmp;
-
-	if (!term->h_tail)
-		return ;
-	tmp = term->h_tail;
-	term->h_tail = term->h_tail->prev;
-	term->h_tail->next = NULL;
-	ft_ddel(tmp->content, tmp->content_size);
-	free(tmp);
-}
 
 static void		command_line(t_terminal *term)
 {
@@ -72,20 +64,15 @@ static void		command_line(t_terminal *term)
 	!term->in ? program_exit(term, 1) : 0;
 	while (term)
 	{
-		term->h_current = NULL;
 		init_input(term->in);
 		start_editor(term);
-		if (term->in->string[0] && !term->in->sigint)
+		if (term->in->string[0])
 		{
-			if (ft_strequ(term->in->string, "exit"))	// DELETE
-				return ;								// DELETE
+			if (ft_strequ(term->in->string, "exit"))
+				return ;
 			init_lexer(term);
-			ft_dlstadd(&term->h_head, ft_dlstnew(term->in->string, \
-			ft_strlen(term->in->string) + 1));
-			if (!term->h_tail)
-				term->h_tail = term->h_head;
-			if (ft_dlstlen(&term->h_head) > H_LEN)
-				cut_tail(term);
+			ft_lstadd(&term->history, ft_lstnew(term->in->string, \
+			ft_strlen(term->in->string)));
 		}
 		else
 			ft_putchar('\n');
@@ -93,14 +80,16 @@ static void		command_line(t_terminal *term)
 }
 
 /*
-** Configurates termcaps and allocates memory for term struct.
+** Configurates termcaps and allocates memory for term struct. 
 ** The program should always return to main function if the exit
 ** is done without errors. Termcaps `ti' command puts the terminal
 ** into whatever special modes are needed or appropriate for programs
 ** that move the cursor nonsequentially around the screen and `ho'
-** moves the cursor to the upper left corner of the screen. Manages
-** command history initialization and saving.
-// UPDATE IF 'ti' IS REMOVED
+** moves the cursor to the upper left corner of the screen.
+*/
+
+/*
+**env pitää muuttaa t_env muotoon.
 */
 
 int				main(int argc, char **argv, char **env)
@@ -110,17 +99,14 @@ int				main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	config_termcaps();
-	//tputs(tgetstr("ti", NULL), 1, print_char); //Screws up text editors
+	tputs(tgetstr("ti", NULL), 1, print_char);
 	tputs(tgetstr("ho", NULL), 1, print_char);
 	term = (t_terminal *)malloc(sizeof(t_terminal));
 	!term ? program_exit(term, 1) : 0;
-	term->env = copy_enviroment(term, env);
+	copy_enviroment(term, env);
 	term->in = NULL;
-	term->h_head = NULL;
-	term->h_tail = NULL;
-	init_history(term);
+	term->history = NULL;
 	print_banner();
 	command_line(term);
-	save_history(term);
 	program_exit(term, 0);
 }

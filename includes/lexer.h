@@ -31,22 +31,32 @@ typedef struct		s_token
 		TOKEN_AGG
 	}				e_type;
 	char			*value;
+	struct s_token	*next;
 }					t_token;
 
 typedef struct		s_lexer
 {
 	unsigned int	i;
 	char			*data;
-	t_list			*tokens;
+	t_token			*tokens;
 }					t_lexer;
 
 void				init_lexer(t_terminal *term);
-void				parse_tokens(t_terminal *term, t_list *tokens);
+void				parse_tokens(t_terminal *term, t_token *tokens);
 t_token				*get_t_list_token(t_list *node);
-t_list				*move_t_list_n_times(t_list *list, int n);
+t_token				*move_token_n_times(t_token *list, int n);
 void				check_dollar_tilde(t_list *env, t_token *token);
 t_token				*get_agr(t_lexer *lexer);
 int					is_aggre(t_lexer *lexer);
 t_token				*create_token(int type, char *value);
 t_token				*get_redirection(t_lexer *lexer);
+int					ok_to_parser(t_token *tokens, t_terminal *term);
+int					syntax_error(int i, int j);
+void				free_tokens(t_token *list);
+int					not_pipe_semi_re(t_lexer *lexer);
+void				add_token(t_token *tokens, t_token *new);
+void				add_null_redirection(t_token *tokens);
+t_token				*get_token(t_lexer *lexer, t_terminal *term);
+void				free_env(t_env *env);
+void				free_table(char	**table);
 #endif

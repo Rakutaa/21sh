@@ -1,18 +1,11 @@
 #include "lexer.h"
 
-void			free_tokens(t_list *list)
+void			free_tokens(t_token *list)
 {
-	t_token		*token;
-
 	if (list->next)
-	{
 		free_tokens(list->next);
-		token = list->content;
-		free(token->value);
-		free(token);
-		free(list);
-//		token->value = NULL;
-		token = NULL;
-		list = NULL;
-	}
+	free(list->value);
+	list->value = NULL;
+	free(list);
+	list = NULL;
 }

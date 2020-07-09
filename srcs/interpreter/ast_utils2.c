@@ -12,23 +12,33 @@
 
 #include "parser_ast.h"
 
-/*
-**logic was to make as many AST as there is cmds. 
-**cmds was separated by ;
-**if node is factor, will just exec. 
-**else opens the tree recursively
-**and the return from recursion will start
-**when this parent node is Factor. 
-*/
-
-void		execute_ast(t_ast *ast)
+void		buildin_factor(t_ast_node *obj, t_ast **ast, t_terminal *term)
 {
+	if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "cd"))
+		buildin_cd(term->env->linked, obj->nodes.t_factor.cmds);
+	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "echo"))
+		exec_factor(obj, ast, term->env->table);
+	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "setenv"))
+		buildin_setenv(term, obj->nodes.t_factor.cmds);
+	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "unsetenv"))
+		buildin_unsetenv(term, obj->nodes.t_factor.cmds);
+	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "env"))
+		buildin_env(term->env->table);
+	// else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "exit"))
+	// 	buildin_exit();
+}
+
+void		execute_ast(t_ast *ast, t_terminal *term)
+{
+	ft_putendl("");
 	while (ast)
 	{
 		if (ast->parent->e_node == FACTOR)
-			exec_factor(ast->parent, &ast);
+			ast->parent->nodes.t_factor.e_factor == BUILDIN ?
+			buildin_factor(ast->parent, &ast, term) : 
+			exec_factor(ast->parent, &ast, term->env->table);
 		else
-			visit_expression(ast->parent, &ast);
+			visit_expression(ast->parent, &ast, term->env->table);
 		ast = ast->next;
 	}
 }
@@ -55,14 +65,13 @@ t_ast		*create_ast_node(t_ast *ast, t_parser_node_list **list)
 	if (!ast)
 	{
 		ast = init_ast();
-		ast->parent = (*list)->parser_nodeobj->nodes.ast.ast_nodeobj;
+		ast->parent = (*list)->parser_nodeobj->nodes.ast_nodeobj;
 	}
-	else if ((*list)->next) //tässä!!!!! HEUREKA!!
-	// else
+	else if ((*list)->next)
 	{
 		ast->next = init_ast();
 		ast->next->parent =
-		(*list)->next->parser_nodeobj->nodes.ast.ast_nodeobj;
+		(*list)->next->parser_nodeobj->nodes.ast_nodeobj;
 		ast = ast->next;
 		*list = (*list)->next;
 	}
@@ -74,10 +83,10 @@ t_ast		*create_ast_node(t_ast *ast, t_parser_node_list **list)
 **ast->parent update. meaning that there is atleast one pipe
 */
 
-t_ast_node	*update_ast_parent(t_ast_node *left, t_ast_node *right)
-{
-	return (create_expression(left, right));
-}
+// t_ast_node	*update_ast_parent(t_ast_node *left, t_ast_node *right)
+// {
+// 	return (create_expression(left, right));
+// }
 
 t_ast		*create_ast_list(t_parser_node_list *list)
 {
@@ -88,7 +97,7 @@ t_ast		*create_ast_list(t_parser_node_list *list)
 	tmp = ast;
 	while (list)
 	{
-		if (list->parser_nodeobj->nodes.token.e_type != TOKEN_P)
+		if (list->parser_nodeobj->nodes.token->e_type != TOKEN_PIPE)
 		{
 			tmp = create_ast_node(tmp, &list);
 			if (!ast)
@@ -96,8 +105,8 @@ t_ast		*create_ast_list(t_parser_node_list *list)
 		}
 		else
 		{
-			tmp->parent = update_ast_parent(tmp->parent,
-			list->next->parser_nodeobj->nodes.ast.ast_nodeobj);
+			tmp->parent = create_expression(tmp->parent,
+			list->next->parser_nodeobj->nodes.ast_nodeobj);
 			list = list->next->next;
 		}
 	}

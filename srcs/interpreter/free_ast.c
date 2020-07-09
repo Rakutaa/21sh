@@ -12,8 +12,7 @@ static void	free_ast_node(t_ast_node *ast)
 void		free_ast(t_ast *list)
 {
 	if (list->next)
-	{
 		free_ast(list->next);
-		free_ast_node(list->parent);
-	}
+	free_ast_node(list->parent);
+	free(list);
 }

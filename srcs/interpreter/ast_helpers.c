@@ -21,6 +21,12 @@
 **expr then if it is not right node of the expr node.
 */
 
+
+void		cmd_not_found(char *cmd)
+{
+	ft_printf("%s: command not found\n", cmd);
+}
+
 void	helper_dup(t_ast **ast, t_ast_node *obj, int pipe_in)
 {
 	dup2((*ast)->in, 0);
@@ -34,6 +40,7 @@ void	helper_dup(t_ast **ast, t_ast_node *obj, int pipe_in)
 
 /*
 **helper to close a file fd, if i need to open a file.
+**this could be thought differently..
 */
 
 void	helper_close(t_ast_node *obj, t_ast **ast)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   halfsh.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/29 12:53:12 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/17 13:26:26 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,41 +14,40 @@
 
 # define HALFSH_H
 
-# include "library.h"
+# include "ft_printf.h"
 # include <sys/ioctl.h>
 # include <termios.h>
 # include <term.h>
 # include <signal.h>
-# include <fcntl.h>
-# include <stdbool.h>
 
-
-# define H_FILE ".history"
-# define H_LEN 10
 # define ARG_MAX 262144
-# define INIT "$> "
-# define QUOTE "q> "
-# define PIPE "p> "
+# define INIT "$>"
+# define FILL "> "
 
 typedef struct		s_input
 {
-	char			prompt[4];
+	int				h_index;
+	char			prompt[3];
 	char			string[ARG_MAX];
 	int				index;
 	int				line;
-	bool			sigint;
 }					t_input;
+
+typedef struct		s_env
+{
+	t_list			*linked;
+	char			**table;
+}					t_env;
+
 
 typedef struct		s_terminal
 {
 	struct termios	original;
 	struct termios	shell;
 	struct winsize	size;
-	t_list			*env;
+	t_env			*env;
 	t_input			*in;
-	t_dlist			*h_head;
-	t_dlist			*h_tail;
-	t_dlist			*h_current;
+	t_list			*history;
 }					t_terminal;
 
 int					print_char(int c);
@@ -66,10 +65,5 @@ void				browse_history(t_terminal *term, int sum);
 void				search_action(t_terminal *term, int sum);
 void				start_editor(t_terminal *term);
 void				init_input(t_input *input);
-void				clipboard(t_terminal *term, int sum);
-void				init_history(t_terminal *term);
-void				save_history(t_terminal *term);
-int					listen_keys(void);
-
 
 #endif

@@ -67,31 +67,27 @@ t_token *file, t_token *sign)
 }
 
 t_redirection_aggregation			*tokens_to_redirection(
-t_list *head, t_list *last)
+t_token *head, t_token *last)
 {
-	t_token						*sign;
 	t_redirection_aggregation	*rhead;
 
 	rhead = NULL;
 	while (head && head != last)
 	{
-		if (get_t_list_token(head)->e_type == TOKEN_REDIRECT)
+		if (head->e_type == TOKEN_REDIRECT)
 		{
 			add_redir_aggre_list(&rhead, create_redir_aggre_node(0,
-			get_t_list_token(head->next), get_t_list_token(head)));
-			head = move_t_list_n_times(head, 2);
+			head->next, head));
+			head = move_token_n_times(head, 2);
 		}
 		else
 		{
 			add_redir_aggre_list(&rhead,
-			create_redir_aggre_node(1, NULL, get_t_list_token(head)));
-			head = move_t_list_n_times(head, 1);
+			create_redir_aggre_node(1, NULL, head));
+			head = move_token_n_times(head, 1);
 		}
 	}
-	sign = NULL;
-	if (last)
-		sign = last->content;
-	if (sign && sign->e_type == TOKEN_AGG)
-		add_redir_aggre_list(&rhead, create_redir_aggre_node(1, NULL, sign));
+	if (last && last->e_type == TOKEN_AGG)
+		add_redir_aggre_list(&rhead, create_redir_aggre_node(1, NULL, last));
 	return (rhead);
 }

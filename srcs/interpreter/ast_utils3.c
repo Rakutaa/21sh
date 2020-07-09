@@ -32,6 +32,7 @@ void		do_redirection(t_ast **ast, t_redirection_aggregation *node)
 	if (redir[0] == '<')
 	{
 		close((*ast)->in);
+//		(*ast)->in = open(file, O_RDONLY);
 		(*ast)->in = open(file, O_RDONLY, O_CLOEXEC);
 		dup2((*ast)->in, 0);
 	}
@@ -84,18 +85,22 @@ void		visit_factor(t_ast_node *obj, t_ast **ast)
 	}
 }
 
-void		exec_factor(t_ast_node *obj, t_ast **ast)
+void		exec_factor(t_ast_node *obj, t_ast **ast, char **env)
 {
 	int							p[2];
 	pid_t						pid;
 
+	if (obj->nodes.t_factor.e_factor == EXEC && !obj->nodes.t_factor.path_join)
+		return (cmd_not_found(obj->nodes.t_factor.cmds[0]));
 	pipe(p);
 	pid = fork();
 	if (pid == 0)
 	{
 		helper_dup(ast, obj, p[1]);
 		close(p[0]);
-		execvp(obj->nodes.t_factor.cmds[0], obj->nodes.t_factor.cmds);
+		if (obj->nodes.t_factor.e_factor == BUILDIN)
+			buildin_echo(obj->nodes.t_factor.cmds);
+		execve(obj->nodes.t_factor.path_join, obj->nodes.t_factor.cmds, env);
 		exit(1);
 	}
 	else
@@ -111,13 +116,13 @@ void		exec_factor(t_ast_node *obj, t_ast **ast)
 **right is actually always factor :D 
 */
 
-void		visit_expression(t_ast_node *obj, t_ast **ast)
+void		visit_expression(t_ast_node *obj, t_ast **ast, char **env)
 {
 	t_ast_node					*left;
 	t_ast_node					*right;
 
 	left = obj->nodes.t_expr.left;
 	right = obj->nodes.t_expr.right;
-	left->e_node == 0 ? exec_factor(left, ast) : visit_expression(left, ast);
-	right->e_node == 0 ? exec_factor(right, ast) : visit_expression(right, ast);
+	left->e_node == 0 ? exec_factor(left, ast, env) : visit_expression(left, ast, env);
+	right->e_node == 0 ? exec_factor(right, ast, env) : visit_expression(right, ast, env);
 }

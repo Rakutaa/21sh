@@ -35,7 +35,7 @@ char	**update_enviroment(t_list *enviroment)
 	size_t	i;
 
 	len = ft_lstlen(&enviroment);
-	env = (char **)malloc(sizeof(char **) * len + 1);
+	env = (char **)malloc(sizeof(char *) * (len + 1));
 	if (!env)
 		return (NULL);
 	i = 0;
@@ -47,6 +47,6 @@ char	**update_enviroment(t_list *enviroment)
 		i++;
 		enviroment = enviroment->next;
 	}
-	env[i] = NULL;
+	env[len] = NULL;
 	return (env);
 }
