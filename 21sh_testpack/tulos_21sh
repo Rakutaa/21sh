@@ -1,0 +1,14 @@
+testi
+compare_output.sh
+testifile
+tulos_21sh
+tulos_bash
+-rw-r--r--   1 vkuokka  2019  227 Jul  9 14:34 testifile
+-rw-r--r--   1 vkuokka  2019  227 Jul  9 14:34 testifile
+kirjoitus tiedostoon
+/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/munki
+xterm-256color      moi
+$TERM      moi
+/Users/vkuokka/Code/Inner/21sh/21sh_testpack
+         
+21sh: Exit without errors.
