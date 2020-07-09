@@ -3,10 +3,10 @@
 
 int			check_syntax_error(int i, int j)
 {
-	if((j == 5 || i == 5))
+	if ((j == 5 || i == 5))
 		if((j == 5 && i == 5) || j == 3 || j == 4 || i == 3 || i == 4)
 			return (1);
-	if((j == 3 || i == 3) && (j == 4 || i == 4))
+	if ((j == 3 || i == 3) && (j == 4 || i == 4))
 		return (1);
 	return (0);
 }
@@ -50,7 +50,6 @@ int			not_pipe_semi_re(t_lexer *lexer)
 
 int			ok_to_parser(t_token *tokens, t_terminal *term)
 {
-	(void)term;
 	t_token *token;
 	t_token *token_next;
 
@@ -63,12 +62,15 @@ int			ok_to_parser(t_token *tokens, t_terminal *term)
 			if (check_syntax_error(token->e_type, token_next->e_type))
 				return (syntax_error(token->e_type, token_next->e_type));
 			if (token_next->e_type == 3 && token->e_type == 3)
-				add_null_redirection(tokens);
+				return (syntax_error(token->e_type, token_next->e_type));
 		}
 		tokens = tokens->next;
 	}
 	if (token_next && token_next->e_type == TOKEN_SEMI)
+	{
 		free_tokens(tokens);
+		token->next = NULL;
+	}
 	if (token_next && token_next->e_type == TOKEN_PIPE)
 		return (end_with_pipe(term));
 	return (1);

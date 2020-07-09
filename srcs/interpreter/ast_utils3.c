@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 18:02:46 by vtran             #+#    #+#             */
-/*   Updated: 2020/06/10 18:51:58 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/09 20:05:35 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void		do_redirection(t_ast **ast, t_redirection_aggregation *node)
 	if (redir[0] == '<')
 	{
 		close((*ast)->in);
-//		(*ast)->in = open(file, O_RDONLY);
 		(*ast)->in = open(file, O_RDONLY, O_CLOEXEC);
 		dup2((*ast)->in, 0);
 	}
@@ -58,6 +57,8 @@ void		do_aggregaation(t_redirection_aggregation *node)
 			close(!node->node.t_ag.n ? 1 : ft_atoi(node->node.t_ag.n));
 		else
 		{
+			if (fcntl(ft_atoi(node->node.t_ag.word), F_GETFL) == -1)
+				ft_printf("21sh bad fd, %s\n", node->node.t_ag.word);
 			close(1);
 			dup2(!node->node.t_ag.n ? 1 : ft_atoi(node->node.t_ag.n),
 			ft_atoi(node->node.t_ag.word));
@@ -79,7 +80,7 @@ void		visit_factor(t_ast_node *obj, t_ast **ast)
 	{
 		if (head->e_flag == 0)
 			do_redirection(ast, head);
-		else if (head->e_flag == 1)
+		else
 			do_aggregaation(head);
 		head = head->next;
 	}

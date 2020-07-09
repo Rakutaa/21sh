@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 13:08:11 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/17 13:25:52 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/09 17:47:35 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int					syntax_error(int i, int j);
 void				free_tokens(t_token *list);
 int					not_pipe_semi_re(t_lexer *lexer);
 void				add_token(t_token *tokens, t_token *new);
-void				add_null_redirection(t_token *tokens);
+void				add_null_redirection(t_token *tokens, t_token *head, t_token **next);
 t_token				*get_token(t_lexer *lexer, t_terminal *term);
 void				free_env(t_env *env);
 void				free_table(char	**table);

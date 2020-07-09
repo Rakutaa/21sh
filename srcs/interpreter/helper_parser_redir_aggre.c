@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:49:53 by vtran             #+#    #+#             */
-/*   Updated: 2020/06/10 19:12:15 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/09 19:55:19 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_token *file, t_token *sign)
 		i = i + 2;
 		node->node.t_ag.word = str[i] == '-' ? ft_strdup("-") :
 		ft_strdup(&str[i]);
+		node->next = NULL;
 	}
 	return (node);
 }
