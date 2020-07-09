@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/27 10:48:49 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/27 10:49:02 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/09 14:50:13 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 /*
 ** After being called by loop_editor, This function waits input stream and sums
-** up the information received. The sum itself represents ascii value of
-** a single keyboard key. The ascii values are defined in keyboard.h header.
+** up the ascii values received. The sum itself represents individual key.
+** This key can be normal ascii character, special key and key combination
+** defined in keyboard.h file.
 */
 
 int	listen_keys(void)
