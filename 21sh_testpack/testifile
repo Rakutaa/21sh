@@ -11,3 +11,7 @@ echo '$TERM      moi'
 pwd
 echo "         $OLDPWD"
 exit
+echo moro ;
+echo moro ;;
+echo moro >&2
+echo moro >&42
