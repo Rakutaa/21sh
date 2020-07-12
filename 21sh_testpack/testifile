@@ -1,5 +1,9 @@
-echo testi
+touch riri
 ls
+rm riri; cat riri 2>&-
+mkdir test ; cd test ; ls -a ; ls | cat | wc -c > fifi ; cat fifi
+cd ..
+rm -rf test
 ls -la | grep testifile > .test
 cat .test
 echo "kirjoitus tiedostoon" >> .test; echo koira | grep kissa
@@ -10,8 +14,45 @@ echo "$TERM      moi"
 echo '$TERM      moi'
 pwd
 echo "         $OLDPWD"
-exit
 echo moro ;
 echo moro ;;
 echo moro >&2
+echo moro >&2
+echo moro >&2
+echo moro >&2
+echo moro >&2
+echo moro >&2
+echo moro >&2
+echo moro >&2
+echo moro >&2
+echo moro >&2
+echo moro >&2
+echo moro >&2
+echo moro >&2
 echo moro >&42
+echo moro >&42
+echo moro >&42
+echo moro >&42
+echo moro >&42
+echo moro >&42
+echo moro >&42
+echo moro >&42
+echo moro >&42
+echo moro >&42
+echo moro >&42
+echo moro >&42
+echo moro >&42
+echo "echo hei"
+echo "echo hei"
+echo "echo hei"
+echo "echo hei"
+echo "echo hei"
+echo "echo hei"
+echo "echo hei"
+echo "echo hei"
+echo "echo hei"
+echo "echo hei"
+echo "echo hei"
+echo "echo hei"
+echo "echo hei"
+echo "echo hei"
