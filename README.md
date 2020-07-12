@@ -3,7 +3,7 @@
 
 ___
  
-**Introduction**
+### Introduction
 
 *"A shell program is an application that allows interacting with the computer. In a shell the user
 can run programs and also redirect the input to come from a file and output to come from a
@@ -12,7 +12,7 @@ etc. Additionally, shell programs offer features such as line editing, history, 
 wildcards, environment variable expansion, and programing constructions."*  
 <sup>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\- Introduction to Systems Programming: a Hands-on Approach by Gustavo A. Junipero Rodriguez-Rivera and Justin Ennen</sup>
 
-**Compilation**
+### Compilation
 
 Clone repository into your current working directory and compile the program with the following commands:
 ```
@@ -25,7 +25,7 @@ Now you should have binary file inside the repository which you can run with the
 $> ./21sh  
 ```
   
-**Keybindings**
+### Keybindings
 
 | KEY  | FUNCTION |
 | ------------- | ------------- |
@@ -43,7 +43,7 @@ $> ./21sh
 | <kbd>ctrl+u</kbd> | Cut the part of the current command *before* the cursor, and add it to the internal clipboard buffer. |
 | <kbd>ctrl+y</kbd> | Paste contents of the internal clipboad to the current command. |
 
-**MacOS Mojave clipboard shortcuts**
+### MacOS Mojave clipboard shortcuts
 
 | KEY  | FUNCTION |
 | ------------- | ------------- |
