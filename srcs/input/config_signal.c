@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:43 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/09 14:35:36 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/12 20:57:45 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	signal_continue(int signum)
 	if (signum == SIGCONT)
 	{
 		config_terminal(0, g_term);
-		tputs(tgetstr("ti", NULL), 1, print_char);
+		//tputs(tgetstr("ti", NULL), 1, print_char);
 		tputs(tgetstr("ho", NULL), 1, print_char);
 		ioctl(1, TIOCSTI, "");
 	}
