@@ -27,7 +27,7 @@ $ `./21sh`
 | ------------- | ------------- |
 | <kbd>right</kbd> | Move cursor right. |
 | <kbd>left</kbd> | Move cursor left. |
-| <kbd>ctrl+right</kbd> | Move cursor to the first of a word. |
+| <kbd>ctrl+right</kbd> | Move cursor to the beginning of a word. |
 | <kbd>ctrl+left</kbd> | Move cursor to the ending of a word. |
 | <kbd>ctrl+up</kbd> | Move cursor to the upper line. |
 | <kbd>ctrl+down</kbd> | Move cursor to the lower line. |
