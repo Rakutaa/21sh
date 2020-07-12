@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:46 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/09 14:36:48 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/12 18:55:30 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,12 @@ static void	search_history(t_terminal *term)
 	tputs(tgetstr("sc", NULL), 1, print_char);
 	while (term)
 	{
-		tputs(tgetstr("rc", NULL), 1, print_char);
-		tputs(tgetstr("cd", NULL), 1, print_char);
-		find_match(term, str) ? ft_putstr("(reverse-i-search)`")
-		: ft_putstr("(failed reverse-i-search)`");
-		ft_putstr(str);
-		ft_putstr("': ");
+		find_match(term, str) ? ft_printf("(reverse-i-search)`%s': ", str)
+		: ft_printf("(failed reverse-i-search)`%s': ", str);
 		ft_putstr(term->in->string);
 		sum = listen_keys();
+		tputs(tgetstr("rc", NULL), 1, print_char);
+		tputs(tgetstr("cd", NULL), 1, print_char);
 		if (term->in->sigint)
 			break ;
 		if (sum == BACK && str[0])
