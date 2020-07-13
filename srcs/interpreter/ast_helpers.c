@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:34:34 by vtran             #+#    #+#             */
-/*   Updated: 2020/06/10 18:52:18 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/09 19:55:20 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@
 **expr then if it is not right node of the expr node.
 */
 
+
+void		cmd_not_found(char *cmd)
+{
+	ft_printf("%s: command not found\n", cmd);
+}
+
 void	helper_dup(t_ast **ast, t_ast_node *obj, int pipe_in)
 {
 	dup2((*ast)->in, 0);
@@ -34,12 +40,30 @@ void	helper_dup(t_ast **ast, t_ast_node *obj, int pipe_in)
 
 /*
 **helper to close a file fd, if i need to open a file.
+**this could be thought differently..
 */
 
 void	helper_close(t_ast_node *obj, t_ast **ast)
 {
+	// (void)obj;
+	// (void)ast;
+	// int i;
+
+	// open(0);
+	// open(1);
+	// open(2);
+	// i = 3;
+	// while(i < 43)
+	// {
+	// 		close(i);
+	// 		i++;
+	// }
 	t_redirection_aggregation	*node;
 
+	if((*ast)->parent->e_node == 1 && (*ast)->in != 0)
+	{
+		close((*ast)->in);
+	}
 	node = obj->nodes.t_factor.list;
 	while (node)
 	{

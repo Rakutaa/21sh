@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_ast.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 16:40:04 by vtran             #+#    #+#             */
-/*   Updated: 2020/06/25 16:46:53 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/10 19:12:02 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include "lexer.h"
-# include "library.h"
 
 typedef struct							s_redirection_aggregation
 {
@@ -48,6 +47,12 @@ typedef struct							s_redirection_aggregation
 	struct s_redirection_aggregation	*next;
 }										t_redirection_aggregation;
 
+// typedef struct							s_env
+// {
+// 	char								**paths;
+// 	int									size;
+// }										t_env;
+
 /*
 **ideana olis et toi enum flagais noden.
 **Nyt ASTnodessa tiedetään et millainen
@@ -65,8 +70,14 @@ typedef struct							s_ast_node
 	{
 		struct							s_factor
 		{
+			enum
+			{
+				BUILDIN,
+				EXEC
+			}							e_factor;
 			char						**cmds;
 			t_redirection_aggregation	*list;
+			char						*path_join;
 		}								t_factor;
 		struct							s_expr
 		{
@@ -75,6 +86,12 @@ typedef struct							s_ast_node
 		}								t_expr;
 	}									nodes;
 }										t_ast_node;
+
+/*
+**listan_node
+*/
+
+//muuta nimi parseriks, ja lisää tähän node_list ominaisuus
 
 typedef struct							s_parser_node
 {
@@ -85,20 +102,15 @@ typedef struct							s_parser_node
 	}									e_node;
 	union
 	{
-		struct							s_parser_token
-		{
-			enum
-			{
-				TOKEN_P,
-				TOKEN_S
-			}							e_type;
-		}								token;
-		struct							s_parser_nodes
-		{
-			t_ast_node					*ast_nodeobj;
-		}								ast;
+		t_token							*token;
+		t_ast_node						*ast_nodeobj;
 	}									nodes;
+//	struct s_parser_node_list			*next;
 }										t_parser_node;
+
+/*
+**lista
+*/
 
 typedef struct							s_parser_node_list
 {
@@ -116,7 +128,8 @@ typedef struct							s_ast
 }										t_ast;
 
 t_ast_node								*create_factor(char **cmnd, \
-										t_redirection_aggregation *list);
+										t_redirection_aggregation *list, \
+										t_list *env);
 t_ast_node								*create_expression(t_ast_node *left, \
 										t_ast_node *right);
 void									helper_dup(t_ast **ast, \
@@ -124,23 +137,32 @@ void									helper_dup(t_ast **ast, \
 void									helper_close(t_ast_node *obj,
 										t_ast **ast);
 void									exec_factor(t_ast_node *obj,
-										t_ast **ast);
+										t_ast **ast, char **env);
 void									visit_factor(t_ast_node *obj,
 										t_ast **ast);
 void									visit_expression(t_ast_node *obj,
-										t_ast **ast);
+										t_ast **ast, char **env);
 void									add_node_to_parser_node_list(
 										t_parser_node_list\
 										**list, t_parser_node *ast_node, \
 										t_parser_node *token_node);
 t_ast									*create_ast_list(
 										t_parser_node_list *list);
-void									execute_ast(t_ast *ast);
+void									execute_ast(t_ast *ast, t_terminal *term);
 t_redirection_aggregation				*tokens_to_redirection(
-										t_list *head, t_list *last);
+										t_token *head, t_token *last);
 void									free_ast(t_ast *list);
 void									free_parser(t_parser_node_list *list);
-void									free_tokens(t_list *list);
+void									free_tokens(t_token *list);
 t_ast									*init_ast(void);
-
+void									buildin_factor(t_ast_node *obj, t_ast **ast, t_terminal *term);
+char									*value_lookup(t_list *enviroment, char *key);
+int										buildin_cd(t_list *enviroment, char **args);
+void									unset_key(t_list *enviroment, char *key);
+void									set_key(t_list *enviroment, char *key, char *value);
+int										buildin_env(char **env);
+int										buildin_unsetenv(t_terminal *term, char **args);
+int										buildin_setenv(t_terminal *term, char **args);
+void									cmd_not_found(char *cmd);
+void									buildin_echo(char **args);
 #endif

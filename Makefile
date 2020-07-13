@@ -3,33 +3,34 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
+#    By: vtran <vtran@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/06/27 10:50:15 by vkuokka          ###   ########.fr        #
+#    Updated: 2020/07/09 19:24:36 by vtran            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
 
 SRCS = srcs/config_termcaps.c \
-       srcs/init_history.c \
        srcs/main.c \
        srcs/program_exit.c \
-       srcs/save_history.c \
        srcs/utils.c \
        srcs/input/browse_history.c \
-       srcs/input/clipboard.c \
        srcs/input/config_signal.c \
        srcs/input/config_terminal.c \
        srcs/input/cursor_movement_1.c \
        srcs/input/cursor_movement_2.c \
        srcs/input/init_input.c \
-       srcs/input/listen_keys.c \
        srcs/input/print_input.c \
        srcs/input/search_action.c \
        srcs/input/start_editor.c \
+       srcs/interpreter/buildin_helpers.c \
+       srcs/interpreter/cd.c \
+       srcs/interpreter/echo.c \
+       srcs/interpreter/envs.c \
        srcs/interpreter/init_lexer.c \
+       srcs/interpreter/lexer_helper.c \
        srcs/interpreter/parse_tokens.c \
        srcs/interpreter/ast_utils1.c \
        srcs/interpreter/ast_utils2.c \
@@ -38,10 +39,13 @@ SRCS = srcs/config_termcaps.c \
        srcs/interpreter/dollar_tilde_utils.c \
        srcs/interpreter/helpers.c \
        srcs/interpreter/free_ast.c \
+       srcs/interpreter/free_env.c \
        srcs/interpreter/free_parse.c \
        srcs/interpreter/free_tokens.c \
        srcs/interpreter/parser_utils.c \
-       srcs/interpreter/helper_parser_redir_aggre.c \
+       srcs/interpreter/token_syntax.c \
+       srcs/interpreter/tokenize.c \
+       srcs/interpreter/helper_parser_redir_aggre.c
 
 INCL = includes/
 

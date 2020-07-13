@@ -6,12 +6,34 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/29 13:27:14 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/16 17:42:10 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 #include "keyboard.h"
+
+/*
+** After being called by loop_editor, This function waits input stream and sums
+** up the information received. The sum itself represents ascii value of
+** a single keyboard key. The ascii values are defined in keyboard.h header.
+*/
+
+static int	listen_keys(void)
+{
+	char	key[KEY_SIZE + 1];
+	ssize_t	bytes;
+	size_t	i;
+	int		sum;
+
+	bytes = read(1, key, KEY_SIZE);
+	key[bytes] = '\0';
+	i = -1;
+	sum = 0;
+	while (key[++i])
+		sum += key[i];
+	return (sum);
+}
 
 /*
 ** Adds a character into current command if the length of the command
@@ -48,7 +70,7 @@ static void	loop_editor(t_terminal *term)
 	while (term)
 	{
 		sum = listen_keys();
-		if (sum == ENTER || term->in->sigint)
+		if (sum == ENTER)
 		{
 			tputs(tgetstr("rc", NULL), 1, print_char);
 			break ;
@@ -57,14 +79,15 @@ static void	loop_editor(t_terminal *term)
 			add_char(term, sum);
 		else
 			search_action(term, sum);
-		if (term->in->sigint)
-			init_input(term->in);
 		print_input(term);
 	}
 }
 
 /*
 ** Acts as a "gateway" into the state where user can type current command.
+** This function is called by two functions: command_line function after
+** successful initialization or lexer's get_string function after it notices
+** that the current command contains unclosed single of double quotes.
 */
 
 void		start_editor(t_terminal *term)

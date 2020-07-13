@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_input.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/16 10:43:42 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/29 12:53:26 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/06/17 13:26:43 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 
 void	init_input(t_input *input)
 {
-	input->sigint = 0;
-	ft_memmove(input->prompt, INIT, 4);
+	input->h_index = -1;
+	ft_memmove(input->prompt, INIT, 3);
 	ft_bzero(input->string, ARG_MAX);
 	input->index = 0;
 	input->line = 0;

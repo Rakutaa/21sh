@@ -1,0 +1,17 @@
+echo testi
+ls
+ls -la | grep testifile > .test
+cat .test
+echo "kirjoitus tiedostoon" >> .test; echo koira | grep kissa
+cat < .test
+rm .test
+echo $PATH
+echo "$TERM      moi"
+echo '$TERM      moi'
+pwd
+echo "         $OLDPWD"
+echo moro ;;
+
+echo moro ;
+echo moro >&2
+echo moro >&42

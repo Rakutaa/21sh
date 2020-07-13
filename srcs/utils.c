@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:28 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/17 13:25:01 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/13 13:31:18 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char		*search_env(t_list *enviroment, char *key)
 	return (NULL);
 }
 
-char	**update_enviroment(t_list *enviroment)
+char		**update_enviroment(t_list *enviroment)
 {
 	char	**env;
 	size_t	len;
