@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/09 16:49:28 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/13 13:49:52 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,25 @@
 # include <termios.h>
 # include <term.h>
 # include <signal.h>
+# include <fcntl.h>
+# include <stdbool.h>
 
+
+# define HISTFILE ".history"
+# define HISTSIZE 10
+# define FCFILE "/private/tmp/21shfc"
 # define ARG_MAX 262144
-# define INIT "$>"
-# define FILL "> "
+# define INIT "$> "
+# define QUOTE "q> "
+# define PIPE "p> "
 
 typedef struct		s_input
 {
-	int				h_index;
-	char			prompt[3];
+	char			prompt[4];
 	char			string[ARG_MAX];
 	int				index;
 	int				line;
+	bool			sigint;
 }					t_input;
 
 typedef struct		s_env
@@ -45,9 +52,12 @@ typedef struct		s_terminal
 	struct termios	original;
 	struct termios	shell;
 	struct winsize	size;
+	char			clipboard[ARG_MAX];
 	t_env			*env;
 	t_input			*in;
-	t_list			*history;
+	t_dlist			*h_head;
+	t_dlist			*h_tail;
+	t_dlist			*h_current;
 }					t_terminal;
 
 int					print_char(int c);
@@ -65,5 +75,11 @@ void				browse_history(t_terminal *term, int sum);
 void				search_action(t_terminal *term, int sum);
 void				start_editor(t_terminal *term);
 void				init_input(t_input *input);
+void				mac_clipboard(t_terminal *term, int sum);
+void				shell_clipboard(t_terminal *term, int sum);
+void				init_history(t_terminal *term);
+void				save_history(t_terminal *term);
+int					listen_keys(void);
+void				execute_pipe(t_terminal *term);
 
 #endif

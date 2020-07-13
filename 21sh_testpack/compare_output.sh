@@ -1,4 +1,4 @@
 #! /bin/bash
-bash < testifile > tulos_bash
+zsh < testifile > tulos_zsh
 ../21sh < testifile > tulos_21sh
-diff tulos_bash tulos_21sh
+diff tulos_zsh tulos_21sh

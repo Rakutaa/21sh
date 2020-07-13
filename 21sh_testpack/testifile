@@ -1,17 +1,24 @@
-echo testi
+mkdir testdir
+cd testdir
 ls
-ls -la | grep testifile > .test
-cat .test
-echo "kirjoitus tiedostoon" >> .test; echo koira | grep kissa
-cat < .test
-rm .test
-echo $PATH
-echo "$TERM      moi"
-echo '$TERM      moi'
-pwd
-echo "         $OLDPWD"
+touch riri
+ls
+rm riri; cat riri 2>&-
+mkdir test ; cd test ; ls -a ; ls | cat | wc -c > fifi ; cat fifi
+cd ..
+rm -r test
+echo koira
+echo koira | grep kissa
+echo kissa
+echo kissa
+echo kissa
 echo moro ;;
-
 echo moro ;
-echo moro >&2
-echo moro >&42
+echo $TERM
+echo "$TERM"
+echo '$TERM'
+echo "big    break"
+echo "tab	alert!"
+cd ..
+rm -rf testdir
+exit

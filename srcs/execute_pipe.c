@@ -1,26 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_input.c                                       :+:      :+:    :+:   */
+/*   execute_pipe.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/06/16 10:43:42 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/29 12:53:26 by vkuokka          ###   ########.fr       */
+/*   Created: 2020/07/02 11:25:24 by vkuokka           #+#    #+#             */
+/*   Updated: 2020/07/13 13:46:41 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
+#include "lexer.h"
+#include "memory.h"
 
-/*
-** Initializes values of the input struct.
-*/
-
-void	init_input(t_input *input)
+void		execute_pipe(t_terminal *term)
 {
-	input->sigint = 0;
-	ft_memmove(input->prompt, INIT, 4);
-	ft_bzero(input->string, ARG_MAX);
-	input->index = 0;
-	input->line = 0;
+	char	*line;
+
+	term->in = (t_input *)malloc(sizeof(t_input));
+	!term->in ? program_exit(term, 1) : 0;
+	while (get_next_line(0, &line))
+	{
+		init_input(term->in);
+		config_terminal(0, term);
+		ft_memmove(term->in->string, line, ARG_MAX);
+		free(line);
+		config_terminal(1, term);
+		init_lexer(term);
+	}
 }

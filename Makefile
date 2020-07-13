@@ -3,18 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vtran <vtran@student.42.fr>                +#+  +:+       +#+         #
+#    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/07/09 19:24:36 by vtran            ###   ########.fr        #
+#    Updated: 2020/07/13 13:50:36 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
 
 SRCS = srcs/config_termcaps.c \
+       srcs/execute_pipe.c \
+       srcs/init_history.c \
        srcs/main.c \
        srcs/program_exit.c \
+       srcs/save_history.c \
        srcs/utils.c \
        srcs/input/browse_history.c \
        srcs/input/config_signal.c \
@@ -22,8 +25,10 @@ SRCS = srcs/config_termcaps.c \
        srcs/input/cursor_movement_1.c \
        srcs/input/cursor_movement_2.c \
        srcs/input/init_input.c \
+       srcs/input/listen_keys.c \
        srcs/input/print_input.c \
        srcs/input/search_action.c \
+       srcs/input/shell_clipboard.c \
        srcs/input/start_editor.c \
        srcs/interpreter/buildin_helpers.c \
        srcs/interpreter/cd.c \
