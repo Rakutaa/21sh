@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:46 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/12 18:55:30 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/13 11:50:59 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	find_match(t_terminal *term, char *str)
 			init_input(term->in);
 			ft_memmove(term->in->string, current->content, \
 			current->content_size);
-			term->in->index = current->content_size;
+			term->in->index = current->content_size - 1;
 			return (1);
 		}
 		current = current->next;
