@@ -33,6 +33,7 @@ void		execute_ast(t_ast *ast, t_terminal *term)
 	ft_putendl("");
 	while (ast)
 	{
+//		helper_close(NULL, NULL);
 		if (ast->parent->e_node == FACTOR)
 			ast->parent->nodes.t_factor.e_factor == BUILDIN ?
 			buildin_factor(ast->parent, &ast, term) : 

@@ -58,7 +58,10 @@ void		do_aggregaation(t_redirection_aggregation *node)
 		else
 		{
 			if (fcntl(ft_atoi(node->node.t_ag.word), F_GETFL) == -1)
+			{
 				ft_printf("21sh bad fd, %s\n", node->node.t_ag.word);
+				close(2);
+			}
 			close(1);
 			dup2(!node->node.t_ag.n ? 1 : ft_atoi(node->node.t_ag.n),
 			ft_atoi(node->node.t_ag.word));
@@ -108,8 +111,10 @@ void		exec_factor(t_ast_node *obj, t_ast **ast, char **env)
 	{
 		wait(NULL);
 		close(p[1]);
-		(*ast)->in = p[0];
 		helper_close(obj, ast);
+		(*ast)->in = p[0];
+		if ((*ast)->parent->e_node == 0)
+			close(p[0]);
 	}
 }
 

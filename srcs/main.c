@@ -92,6 +92,17 @@ static void		command_line(t_terminal *term)
 **env pitää muuttaa t_env muotoon.
 */
 
+void			close_fd()
+{
+	int i = 3;
+
+	while (i < 43)
+	{
+		close(i);
+		i++;
+	}
+}
+
 int				main(int argc, char **argv, char **env)
 {
 	t_terminal	*term;
@@ -107,6 +118,7 @@ int				main(int argc, char **argv, char **env)
 	term->in = NULL;
 	term->history = NULL;
 	print_banner();
+	close_fd();
 	command_line(term);
 	program_exit(term, 0);
 }
