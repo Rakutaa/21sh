@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:39:26 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/09 17:15:35 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/14 10:51:58 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void		buildin_factor(t_ast_node *obj, t_ast **ast, t_terminal *term)
 
 void		execute_ast(t_ast *ast, t_terminal *term)
 {
-	ft_putendl("");
 	while (ast)
 	{
 //		helper_close(NULL, NULL);

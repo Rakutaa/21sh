@@ -23,7 +23,6 @@ static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 		if (!lexer->data[lexer->i])
 		{
 			ft_memmove(term->in->prompt, QUOTE, 3);
-			ft_putchar('\n');
 			start_editor(term);
 			continue ;
 		}

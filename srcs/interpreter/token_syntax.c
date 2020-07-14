@@ -27,7 +27,6 @@ int			syntax_error(int i, int j)
 static int	end_with_pipe(t_terminal *term)
 {
 	ft_memmove(term->in->prompt, PIPE, 3);
-	ft_putchar('\n');
 	start_editor(term);
 	init_lexer(term);
 	return (0);
