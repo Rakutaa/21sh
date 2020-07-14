@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:28 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 13:35:58 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/13 15:15:06 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,25 @@ char		**update_enviroment(t_list *enviroment)
 	}
 	env[i] = NULL;
 	return (env);
+}
+
+void		copy_enviroment(t_terminal *term, char **env)
+{
+	size_t	i;
+	t_list	*start;
+	t_list	*node;
+
+	term->env = (t_env *)malloc(sizeof(t_env));
+	i = 0;
+	start = NULL;
+	while (env[i])
+	{
+		node = ft_lstnew(env[i], ft_strlen(env[i]) + 1);
+		!node ? program_exit(term, 1) : 0;
+		*ft_strchr(node->content, '=') = '\0';
+		!start ? start = node : ft_lstaddback(&start, node);
+		i++;
+	}
+	term->env->linked = start;
+	term->env->table = update_enviroment(term->env->linked);
 }

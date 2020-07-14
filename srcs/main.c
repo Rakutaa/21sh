@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 13:53:29 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/13 15:18:40 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,6 @@ static void		print_banner(void)
 	ft_putendl(" / /____| |\\__ \\ | | |  __/ | |");
 	ft_putendl("\\_____/\\___/___/_| |_|\\___|_|_|");
 	ft_putchar('\n');
-}
-
-static void		copy_enviroment(t_terminal *term, char **env)
-{
-	size_t		i;
-	t_list		*start;
-	t_list		*node;
-	
-//	start = (t_list *)malloc(sizeof(t_list));
-	term->env = (t_env *)malloc(sizeof(t_env));
-	i = 0;
-	start = NULL;
-	while (env[i])
-	{
-		node = ft_lstnew(env[i], ft_strlen(env[i]) + 1);
-		!node ? program_exit(term, 1) : 0;
-		*ft_strchr(node->content, '=') = '\0';
-		!start ? start = node : ft_lstaddback(&start, node);
-		i++;
-	}
-	term->env->linked = start;
-	term->env->table = update_enviroment(term->env->linked);
 }
 
 /*
@@ -91,30 +69,29 @@ static void		command_line(t_terminal *term)
 	}
 }
 
-
 /*
-** Configurates termcaps and allocates memory for term struct. 
-** The program should always return to main function if the exit
-** is done without errors. Termcaps `ti' command puts the terminal
-** into whatever special modes are needed or appropriate for programs
-** that move the cursor nonsequentially around the screen and `ho'
-** moves the cursor to the upper left corner of the screen.
+** env pitää muuttaa t_env muotoon.
+// What is this and what is it doing in my backyard???
 */
 
-/*
-**env pitää muuttaa t_env muotoon.
-*/
-
-void			close_fd()
+void			close_fd(void)
 {
-	int i = 3;
+	int			i;
 
+	i = 3;
 	while (i < 43)
 	{
 		close(i);
 		i++;
 	}
 }
+
+/*
+** Configurates termcaps and allocates memory for term struct.
+** The program should always return to main function if the exit
+** is done without errors. Termcaps command `ho' moves the cursor
+** to the upper left corner of the screen.
+*/
 
 int				main(int argc, char **argv, char **env)
 {
@@ -134,7 +111,6 @@ int				main(int argc, char **argv, char **env)
 	else
 	{
 		config_termcaps();
-		//tputs(tgetstr("ti", NULL), 1, print_char); //Screws up text editors
 		tputs(tgetstr("ho", NULL), 1, print_char);
 		init_history(term);
 		print_banner();
