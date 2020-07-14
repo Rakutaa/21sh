@@ -1,0 +1,46 @@
+echo '___FORK_AND_EXECVE___'
+foo
+echo '___'
+/bin/ls
+echo '___'
+/bin/ls -laF
+echo '___'
+/bin/ls -l -a -F
+echo '___BUILDINS___'
+echo "It works"
+echo '___'
+echo It works
+echo '___'
+cd /Users/
+/bin/pwd
+cd -
+echo '___'
+cd
+/bin/pwd
+cd -
+echo '___'
+cd ~/Desktop
+/bin/pwd
+cd -
+echo '___'
+/bin/pwd
+echo '___ENVIROMENT_MANAGEMENT___'
+env
+setenv FOO bar
+echo $FOO
+/usr/bin/env
+unsetenv FOO
+env
+unsetenv FOO
+env
+/usr/bin/env
+echo '___PATH_MANGEMENT___'
+unsetenv PATH
+setenv PATH "/bin:/usr/bin"
+ls
+/usr/bin/vim
+unsetenv PATH
+ls
+vim
+/bin/ls
+exit
