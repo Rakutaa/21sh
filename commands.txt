@@ -1,0 +1,38 @@
+echo '___PIPES___'
+ls | cat -e
+echo '___'
+ls | sort | cat -e
+echo '___'
+base64 /dev/urandom | head -c 1000 | grep 42 | wc -l | sed -e 's/1/Yes/g' -e 's/0/No/g'
+echo '___REDIRECTIONS___'
+echo "Testing redirections," > /tmp/test.txt
+cat /tmp/test.txt
+echo '___'
+echo "with multiple lines" >> /tmp/test.txt
+cat /tmp/test.txt
+echo '___'
+wc -c < /tmp/test.txt
+echo '___'
+echo '->cat -e << EOF command to be added later.<-'
+echo '___'
+echo '->cat -e << EOF >> /tmp/test.txt command to be added later<-'
+echo '___'
+cat /tmp/test.txt
+echo '___SEVERAL COMMANDS FOLLOWING EACH OTHER___'
+ls -l; touch newfile; ls -l
+rm newfile
+echo '___A LITTLE BIT OF EVERYTHING___'
+mkdir test; cd test; ls -a; ls | cat | wc -c > fifi; cat fifi
+cd ..
+rm -r test
+echo '___'
+echo "->cd /tmp; sort << EOF | cat -e > sorted_poem; sed -e 's/Roses/Turnips/' < sorted_poem > better poem; cd -; echo I prefer turnips anyway >> /tmp/better_poem; cat /tmp/better_poem command to be added later<-"
+echo '___FILE DESCRIPTOR AGGREGATION___'
+rm nosuchfile 2>&-
+echo '___'
+rm nosuchfile 2>&1 | cat -e
+echo '___'
+echo "No dollar character" 1>&2 | cat -e
+echo '___QUOTES MANAGEMENT__'
+echo 'echo with open quote to check newlines command added later'
+echo '___'
