@@ -35,5 +35,3 @@ echo '___'
 echo "No dollar character" 1>&2 | cat -e
 echo '___QUOTES_MANAGEMENT__'
 echo 'echo with open quote to check newlines command added later'
-echo '___'
-exit

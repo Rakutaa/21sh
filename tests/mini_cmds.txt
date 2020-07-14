@@ -58,4 +58,3 @@ vim
 echo '___'
 /bin/ls
 echo '___'
-exit
