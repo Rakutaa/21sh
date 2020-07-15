@@ -121,6 +121,10 @@ typedef struct							s_parser_node_list
 typedef struct							s_ast
 {
 	t_ast_node							*parent;
+	int									cmds;
+	int									*pids;
+	int									i;
+	int									*pipe;
 	int									in;
 	int									out;
 	int									err;
@@ -141,7 +145,7 @@ void									exec_factor(t_ast_node *obj,
 void									visit_factor(t_ast_node *obj,
 										t_ast **ast);
 void									visit_expression(t_ast_node *obj,
-										t_ast **ast, char **env);
+										t_ast **ast, t_terminal *term);
 void									add_node_to_parser_node_list(
 										t_parser_node_list\
 										**list, t_parser_node *ast_node, \

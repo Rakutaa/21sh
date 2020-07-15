@@ -29,13 +29,23 @@ void		cmd_not_found(char *cmd)
 
 void	helper_dup(t_ast **ast, t_ast_node *obj, int pipe_in)
 {
-	dup2((*ast)->in, 0);
+	if ((*ast)->in != 0)
+	{
+		dup2((*ast)->in, 0);
+		close((*ast)->in);
+	}
 	visit_factor(obj, ast);
-	if ((*ast)->parent->e_node == 1 && obj
-	!= (*ast)->parent->nodes.t_expr.right)
+	if ((*ast)->parent->e_node == 1 && 
+	obj != (*ast)->parent->nodes.t_expr.right)
+	{
 		dup2(pipe_in, 1);
-	else
+		close(pipe_in);
+	}
+	if ((*ast)->out != 1)
+	{
 		dup2((*ast)->out, 1);
+		close((*ast)->out);
+	}
 }
 
 /*

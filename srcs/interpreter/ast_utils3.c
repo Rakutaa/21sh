@@ -31,9 +31,11 @@ void		do_redirection(t_ast **ast, t_redirection_aggregation *node)
 	}
 	if (redir[0] == '<')
 	{
-		close((*ast)->in);
+		if ((*ast)->in != 0)
+			close((*ast)->in);
 		(*ast)->in = open(file, O_RDONLY, O_CLOEXEC);
 		dup2((*ast)->in, 0);
+		close((*ast)->in);
 	}
 }
 
@@ -89,46 +91,77 @@ void		visit_factor(t_ast_node *obj, t_ast **ast)
 	}
 }
 
-void		exec_factor(t_ast_node *obj, t_ast **ast, char **env)
+int			child(t_ast_node *obj, t_ast **ast, char **env)
 {
-	int							p[2];
-	pid_t						pid;
+	int pid;
 
-	if (obj->nodes.t_factor.e_factor == EXEC && !obj->nodes.t_factor.path_join)
-		return (cmd_not_found(obj->nodes.t_factor.cmds[0]));
-	pipe(p);
 	pid = fork();
 	if (pid == 0)
 	{
-		helper_dup(ast, obj, p[1]);
-		close(p[0]);
+		if (obj->e_node != 0)
+			close((*ast)->pipe[0]);
+		helper_dup(ast, obj, (*ast)->pipe[1]);
 		if (obj->nodes.t_factor.e_factor == BUILDIN)
 			buildin_echo(obj->nodes.t_factor.cmds);
 		execve(obj->nodes.t_factor.path_join, obj->nodes.t_factor.cmds, env);
-		exit(1);
+		abort();
 	}
-	else
-	{
-		wait(NULL);
-		close(p[1]);
-		helper_close(obj, ast);
-		(*ast)->in = p[0];
-		if ((*ast)->parent->e_node == 0)
-			close(p[0]);
-	}
+	return (pid);
 }
 
+void		exec_factor(t_ast_node *obj, t_ast **ast, char **env)
+{
+//	pid_t						pid;
+
+
+	if (obj->nodes.t_factor.e_factor == EXEC && !obj->nodes.t_factor.path_join)
+		return (cmd_not_found(obj->nodes.t_factor.cmds[0]));
+	pipe((*ast)->pipe);
+	(*ast)->pids[(*ast)->i] = child(obj, ast, env);
+	(*ast)->i++;
+	close((*ast)->pipe[1]);
+	if ((*ast)->in != 0)
+		close((*ast)->in);
+	if ((*ast)->parent->e_node == 1 &&
+	obj != (*ast)->parent->nodes.t_expr.right)
+		(*ast)->in = (*ast)->pipe[1];
+	else
+		close((*ast)->pipe[1]);
+}
+	// 	// 	if ((*ast)->in != 0)
+	// 	// {
+	// 	// 	dup2((*ast)->in, 0);
+	// 	// 	close((*ast)->in);
+	// 	// }
+	// 	// if ((*ast)->parent->e_node == 1 &&
+	// 	// obj != (*ast)->parent->nodes.t_expr.right)
+	// 	// {
+	// 	// 	dup2(p[1], 1);
+	// 	// 	close(p[1]);
+	// 	// }
+	// else
+	// {
+	// 	// wait(NULL);
+	// 	// close(p[1]);
+	// 	// helper_close(obj, ast);
+	// 	// (*ast)->in = p[0];
+	// 	// if ((*ast)->parent->e_node == 0)
+	// 	// 	close(p[0]);
+	// 	// if ((*ast)->in != 0)
+	// 	// 	close((*ast)->in);
+	// 	// close(p[1]);
+	// 	// (*ast)->in = p[0];
 /*
 **right is actually always factor :D 
 */
 
-void		visit_expression(t_ast_node *obj, t_ast **ast, char **env)
+void		visit_expression(t_ast_node *obj, t_ast **ast, t_terminal *term)
 {
 	t_ast_node					*left;
 	t_ast_node					*right;
 
 	left = obj->nodes.t_expr.left;
 	right = obj->nodes.t_expr.right;
-	left->e_node == 0 ? exec_factor(left, ast, env) : visit_expression(left, ast, env);
-	right->e_node == 0 ? exec_factor(right, ast, env) : visit_expression(right, ast, env);
+	left->e_node == 0 ? exec_factor(left, ast, term->env->table) : visit_expression(left, ast, term);
+	right->e_node == 0 ? exec_factor(right, ast, term->env->table) : visit_expression(right, ast, term);
 }
