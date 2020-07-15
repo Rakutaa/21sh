@@ -98,7 +98,7 @@ int			child(t_ast_node *obj, t_ast **ast, char **env)
 	pid = fork();
 	if (pid == 0)
 	{
-		if (obj->e_node != 0)
+		if ((*ast)->parent->e_node == 1 && obj != (*ast)->parent->nodes.t_expr.right)
 			close((*ast)->pipe[0]);
 		helper_dup(ast, obj, (*ast)->pipe[1]);
 		if (obj->nodes.t_factor.e_factor == BUILDIN)
@@ -112,21 +112,23 @@ int			child(t_ast_node *obj, t_ast **ast, char **env)
 void		exec_factor(t_ast_node *obj, t_ast **ast, char **env)
 {
 //	pid_t						pid;
+//	int							p[2];
 
 
 	if (obj->nodes.t_factor.e_factor == EXEC && !obj->nodes.t_factor.path_join)
 		return (cmd_not_found(obj->nodes.t_factor.cmds[0]));
-	pipe((*ast)->pipe);
+	if ((*ast)->parent->e_node == 1 && obj != (*ast)->parent->nodes.t_expr.right)
+		pipe((*ast)->pipe);
 	(*ast)->pids[(*ast)->i] = child(obj, ast, env);
 	(*ast)->i++;
-	close((*ast)->pipe[1]);
 	if ((*ast)->in != 0)
 		close((*ast)->in);
 	if ((*ast)->parent->e_node == 1 &&
 	obj != (*ast)->parent->nodes.t_expr.right)
-		(*ast)->in = (*ast)->pipe[1];
-	else
+	{
+		(*ast)->in = (*ast)->pipe[0];
 		close((*ast)->pipe[1]);
+	}
 }
 	// 	// 	if ((*ast)->in != 0)
 	// 	// {

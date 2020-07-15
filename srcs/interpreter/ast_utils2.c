@@ -32,7 +32,7 @@ void		buildin_factor(t_ast_node *obj, t_ast **ast, t_terminal *term)
 void		execute_ast(t_ast *ast, t_terminal *term)
 {
 	int i;
-	int ret;
+
 	i = 0;
 	while (ast)
 	{
@@ -47,8 +47,7 @@ void		execute_ast(t_ast *ast, t_terminal *term)
 		{
 			while (i != ast->cmds)
 			{
-				waitpid(ast->pids[i], &ret, 0);
-				ft_printf("%d taaaaaal\n", ret);
+				waitpid(ast->pids[i], NULL, 0);
 				i++;
 			}
 		}

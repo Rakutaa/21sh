@@ -125,6 +125,7 @@ typedef struct							s_ast
 	int									*pids;
 	int									i;
 	int									*pipe;
+	int									tbc;
 	int									in;
 	int									out;
 	int									err;

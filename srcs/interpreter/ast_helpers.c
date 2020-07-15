@@ -41,11 +41,11 @@ void	helper_dup(t_ast **ast, t_ast_node *obj, int pipe_in)
 		dup2(pipe_in, 1);
 		close(pipe_in);
 	}
-	if ((*ast)->out != 1)
-	{
-		dup2((*ast)->out, 1);
-		close((*ast)->out);
-	}
+	// if ((*ast)->out != 1)
+	// {
+	// 	dup2((*ast)->out, 1);
+	// 	close((*ast)->out);
+	// }
 }
 
 /*
