@@ -107,7 +107,8 @@ void		do_aggregaation(t_redirection_aggregation *node)
 				ft_printf("21sh bad fd, %s\n", node->node.t_ag.word);
 				close(2);
 			}
-			close(1);
+//			close(1);
+//			ft_printf("\n%s, %s\n", node->node.t_ag.n, node->node.t_ag.word);
 			dup2(!node->node.t_ag.n ? 1 : ft_atoi(node->node.t_ag.n),
 			ft_atoi(node->node.t_ag.word));
 		}

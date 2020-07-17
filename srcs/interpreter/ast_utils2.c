@@ -44,7 +44,7 @@ void		execute_ast(t_ast *ast, t_terminal *term)
 			exec_factor(ast->parent, &ast, term->env->table);
 		else
 			visit_expression(ast->parent, &ast, term);
-		if (ast->cmds > 1)
+		if (ast->cmds > 0)
 		{
 			while (i != ast->cmds)
 			{

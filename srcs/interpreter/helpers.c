@@ -92,7 +92,7 @@ int			is_aggre(t_lexer *lexer)
 		i++;
 	if (str[i] && str[i] == '>' && str[i + 1] && str[i + 1] == '>' && str[i + 2])
 		return (4);
-	if (str[i] && str[i] == '>' && str[i + 1] && str[i + 1] == '&' && str[i + 2] && (str[i + 2] == ' ' || str[i + 2] == '|' || str[i + 2] == ';'))
+	if (str[i] && str[i] == '>' && str[i + 1] && str[i + 1] == '&' && str[i + 2] && (str[i + 2] == ' ' || str[i + 2] == '|' || str[i + 2] == ';' || ft_isdigit(str[i + 2])))
 		return (8);
 	if (str[i] && str[i] == '>' && str[i + 1])
 		return (3);

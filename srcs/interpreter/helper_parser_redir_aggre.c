@@ -77,7 +77,7 @@ t_token *head, t_token *last)
 	{
 		if (head->e_type == TOKEN_REDIRECT)
 		{
-			ft_printf("%s, %s\n", head->next->value, head->value);
+//			ft_printf("%s, %s\n", head->next->value, head->value);
 			add_redir_aggre_list(&rhead, create_redir_aggre_node(0,
 			head->next, head));
 			head = move_token_n_times(head, 2);
