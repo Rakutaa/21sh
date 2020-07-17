@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 11:25:24 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 13:46:41 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/15 18:36:21 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		execute_pipe(t_terminal *term)
 	{
 		init_input(term->in);
 		config_terminal(0, term);
-		ft_memmove(term->in->string, line, ARG_MAX);
+		ft_memmove(term->in->string, line, ft_strlen(line));
 		free(line);
 		config_terminal(1, term);
 		init_lexer(term);
