@@ -49,7 +49,6 @@ void		execute_ast(t_ast *ast, t_terminal *term)
 			while (i != ast->cmds)
 			{
 				waitpid(ast->pids[i], &ret, 0);
-				printf("\nProcess 0 return : %d\n", ret);
 				i++;
 			}
 		}

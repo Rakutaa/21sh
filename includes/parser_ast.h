@@ -129,6 +129,7 @@ typedef struct							s_ast
 	int									in;
 	int									out;
 	int									err;
+	int									rwfd;
 	struct s_ast						*next;
 }										t_ast;
 

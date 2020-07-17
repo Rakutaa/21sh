@@ -20,22 +20,65 @@ void		do_redirection(t_ast **ast, t_redirection_aggregation *node)
 {
 	char						*file;
 	char						*redir;
+	int							n;
+	int							i;
 
+	i= 0;
 	file = node->node.t_redirection.file;
 	redir = node->node.t_redirection.redir;
+	if (ft_isdigit(redir[0]))
+	{
+		n = ft_atoi(redir);
+		while(ft_isdigit(redir[i]))
+			i++;
+		if(redir[i] == '>')
+		{
+			if ((*ast)->out != 1)
+				close((*ast)->out);
+			(*ast)->out = open(file, O_WRONLY | O_CREAT | (redir[i + 1] == '\0' ?
+		O_TRUNC : O_APPEND), S_IRUSR | S_IRGRP | S_IROTH | S_IWGRP | S_IWUSR);
+			dup2((*ast)->out, n);
+			close((*ast)->out);
+		}
+		else if (redir[i] == '<' && redir[i + 1] == '>')
+		{
+			(*ast)->rwfd = open(file, O_RDWR| O_CREAT | O_TRUNC, S_IRUSR | S_IRGRP | S_IROTH | S_IWGRP | S_IWUSR);
+			dup2((*ast)->rwfd, n);
+			close((*ast)->rwfd);
+		}
+	}
+	if (redir[0] == '&')
+	{
+		if ((*ast)->out != 1)
+			close((*ast)->out);
+		(*ast)->out = open(file, O_WRONLY | O_CREAT | 
+		O_TRUNC, S_IRUSR | S_IRGRP | S_IROTH | S_IWGRP | S_IWUSR);
+		dup2((*ast)->out, 1);
+		dup2((*ast)->out, 2);
+		close((*ast)->out);
+	}
 	if (redir[0] == '>')
 	{
-		close((*ast)->out);
+		if ((*ast)->out != 1)
+			close((*ast)->out);
 		(*ast)->out = open(file, O_WRONLY | O_CREAT | (redir[1] == '\0' ?
 		O_TRUNC : O_APPEND), S_IRUSR | S_IRGRP | S_IROTH | S_IWGRP | S_IWUSR);
+		dup2((*ast)->out, 1);
+		close((*ast)->out);
 	}
-	if (redir[0] == '<')
+	if (redir[0] == '<' && !redir[1])
 	{
 		if ((*ast)->in != 0)
 			close((*ast)->in);
-		(*ast)->in = open(file, O_RDONLY, O_CLOEXEC);
+		(*ast)->in = open(file, O_RDONLY);
 		dup2((*ast)->in, 0);
 		close((*ast)->in);
+	}
+	if (redir[0] == '<' && redir[1] == '>')
+	{
+		(*ast)->rwfd = open(file, O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH | S_IWGRP | S_IWUSR);
+		dup2((*ast)->rwfd, 0);
+		close((*ast)->rwfd);
 	}
 }
 

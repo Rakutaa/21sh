@@ -27,6 +27,41 @@ t_lexer				*lexa(t_terminal *term)
 	return (lexer);
 }
 
+void				get_strange_redirections(int i, t_lexer *lexer)
+{
+	int		counter;
+	char	*str;
+
+	counter = 0;
+	str = lexer->data;
+	while (ft_isdigit(lexer->data[lexer->i + counter]))
+		counter++;
+	if (i == 3 || i == 5)
+		counter = counter + 1;
+	else
+		counter = counter + 2;
+	add_token(lexer->tokens, create_token(TOKEN_REDIRECT, ft_strsub(str, lexer->i, counter)));
+	lexer->i = lexer->i + counter;
+}
+
+void				if_is_ag_re_do_ag_re(int i, t_lexer *lexer)
+{
+	if (i == 0)
+		return ;
+	if (i == 1 || i == 2)
+	{
+		lexer->i = lexer->i + 2;
+		if (i == 1)
+			add_token(lexer->tokens, create_token(TOKEN_REDIRECT, ft_strdup(":>")));
+		else
+			add_token(lexer->tokens, create_token(TOKEN_REDIRECT, ft_strdup("&>")));
+	}
+	else if (i > 2 && i < 8)
+		get_strange_redirections(i, lexer);
+	else
+		add_token(lexer->tokens, get_agr(lexer));
+}
+
 void				init_lexer(t_terminal *term)
 {
 	t_lexer			*lexer;
@@ -43,8 +78,7 @@ void				init_lexer(t_terminal *term)
 		{
 			while (lexer->data[lexer->i] && ft_isspace(lexer->data[lexer->i]))
 				lexer->i++;
-			if (is_aggre(lexer))
-				add_token(lexer->tokens, get_agr(lexer));
+			if_is_ag_re_do_ag_re(is_aggre(lexer), lexer);
 		}
 		else if (lexer->data[lexer->i])
 			add_token(lexer->tokens, get_token(lexer, term));
