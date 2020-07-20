@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
+#    By: vtran <vtran@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/07/13 13:50:36 by vkuokka          ###   ########.fr        #
+#    Updated: 2020/07/20 12:54:12 by vtran            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ SRCS = srcs/config_termcaps.c \
        srcs/input/cursor_movement_2.c \
        srcs/input/init_input.c \
        srcs/input/listen_keys.c \
+       srcs/input/mac_clipboard.c \
        srcs/input/print_input.c \
        srcs/input/search_action.c \
        srcs/input/shell_clipboard.c \

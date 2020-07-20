@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   search_action.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 13:49:17 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/20 12:55:06 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void		search_action(t_terminal *term, int sum)
 	else if (sum == UP || sum == DOWN \
 	|| sum == CTRL_R)
 		browse_history(term, sum);
-	/*else if (sum == OPT_C || sum == OPT_X \
+	else if (sum == OPT_C || sum == OPT_X \
 	|| sum == OPT_V)
-		mac_clipboard(term, sum);*/
+		mac_clipboard(term, sum);
 	else if (sum == CTRL_W || sum == CTRL_K \
 	|| sum == CTRL_U || sum == CTRL_Y)
 		shell_clipboard(term, sum);

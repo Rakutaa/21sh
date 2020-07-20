@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   halfsh.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 15:15:02 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/20 12:54:48 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void				shell_clipboard(t_terminal *term, int sum);
 void				init_history(t_terminal *term);
 void				save_history(t_terminal *term);
 int					listen_keys(void);
+void				mac_clipboard(t_terminal *term, int sum);
 void				execute_pipe(t_terminal *term);
 
 #endif
