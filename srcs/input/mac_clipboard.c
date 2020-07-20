@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mac_clipboard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 22:51:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/07 15:49:34 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/20 13:12:00 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,13 @@ static void	add_paste(t_input *input, char *paste)
 
 static void	paste_clipboard(t_terminal *term)
 {
-	char	*cmd[2];
+	char	*cmd[3];
 	pid_t	pid;
 	int		p[2];
 	char	paste[ARG_MAX];
 	int		ret;
 
-	cmd[0] = "full_path";
+	cmd[0] = "/usr/bin/pbpaste";
 	cmd[1] = "pbpaste";
 	cmd[2] = NULL;
 	pipe(p);
