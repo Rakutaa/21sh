@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:36:28 by vtran             #+#    #+#             */
-/*   Updated: 2020/06/10 18:47:55 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/20 12:42:00 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ void			add_exec_path(char	*name, t_list *env, t_ast_node	*facto)
 
 	i = -1;
 	env_path_value = value_lookup(env, "PATH");
+	if (!env_path_value)
+		return ;
 	paths = ft_strsplit(env_path_value, ':');
 	while (paths[++i])
 	{

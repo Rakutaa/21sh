@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 15:18:40 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/20 12:49:32 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ static void		print_banner(void)
 	ft_putchar('\n');
 }
 
-/*
-** This is the "core" part of the program. It allocates memory for the input
-** struct which keeps the information about the current command and cursor
-** positon.
-*/
-
 static void		cut_tail(t_terminal *term)
 {
 	t_dlist		*tmp;
@@ -43,6 +37,12 @@ static void		cut_tail(t_terminal *term)
 	ft_ddel(tmp->content, tmp->content_size);
 	free(tmp);
 }
+
+/*
+** This is the "core" part of the program. It allocates memory for the input
+** struct which keeps the information about the current command and cursor
+** positon.
+*/
 
 static void		command_line(t_terminal *term)
 {

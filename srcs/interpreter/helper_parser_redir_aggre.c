@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_parser_redir_aggre.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:49:53 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/09 19:55:19 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/20 12:29:26 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ t_token *head, t_token *last)
 	{
 		if (head->e_type == TOKEN_REDIRECT)
 		{
-			ft_printf("%s, %s\n", head->next->value, head->value);
 			add_redir_aggre_list(&rhead, create_redir_aggre_node(0,
 			head->next, head));
 			head = move_token_n_times(head, 2);
