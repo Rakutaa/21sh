@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/20 14:35:23 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/20 15:15:08 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,31 +78,11 @@ void				init_lexer(t_terminal *term)
 		}
 		else
 			add_token(&lexer->tokens, get_token(lexer, term));
+		if (term->in->sigint)
+			break ;
 	}
-	if (ok_to_parser(lexer->tokens, term))
+	if (!term->in->sigint && ok_to_parser(lexer->tokens, term))
 		parse_tokens(term, lexer->tokens);
 	free_tokens(lexer->tokens);
 	free(lexer);
-	/*
-	while (lexer->data[lexer->i] && ft_isspace(lexer->data[lexer->i]))
-		lexer->i++;
-	lexer->tokens = get_token(lexer, term);
-	if (!not_pipe_semi_re(lexer))
-		return ;
-	while (lexer->data[lexer->i])
-	{
-		if (ft_isspace(lexer->data[lexer->i]))
-		{
-			while (lexer->data[lexer->i] && ft_isspace(lexer->data[lexer->i]))
-				lexer->i++;
-			if_is_ag_re_do_ag_re(is_aggre(lexer), lexer);
-		}
-		else if (lexer->data[lexer->i])
-			add_token(&lexer->tokens, get_token(lexer, term));
-	}
-	if (ok_to_parser(lexer->tokens, term))
-		parse_tokens(term, lexer->tokens);
-	free_tokens(lexer->tokens);
-	free(lexer);
-	*/
 }

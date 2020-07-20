@@ -24,6 +24,8 @@ static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 		{
 			ft_memmove(term->in->prompt, QUOTE, 3);
 			start_editor(term);
+			if (term->in->sigint)
+				break ;
 			continue ;
 		}
 		lexer->i++;
