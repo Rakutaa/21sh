@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/20 12:49:32 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/20 16:10:10 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ static void		command_line(t_terminal *term)
 		{
 			if (ft_strequ(term->in->string, "exit"))	// DELETE
 				return ;								// DELETE
-			init_lexer(term);
 			ft_dlstadd(&term->h_head, ft_dlstnew(term->in->string, \
 			ft_strlen(term->in->string) + 1));
+			init_lexer(term);
 			if (!term->h_tail)
 				term->h_tail = term->h_head;
 			if (ft_dlstlen(&term->h_head) > HISTSIZE)

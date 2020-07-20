@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 13:08:11 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/20 14:12:52 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/20 16:06:39 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef struct		s_token
 typedef struct		s_lexer
 {
 	unsigned int	i;
-	char			*data;
+	char			data[ARG_MAX];
 	t_token			*tokens;
 }					t_lexer;
 

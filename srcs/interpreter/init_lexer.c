@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/20 15:15:08 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/20 16:07:42 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ t_lexer				*lexa(t_terminal *term)
 
 	lexer = (t_lexer *)malloc(sizeof(t_lexer));
 	!lexer ? program_exit(term, 1) : 0;
-	lexer->data = term->in->string;
+	ft_bzero(lexer->data, ARG_MAX);
+	ft_strcat(lexer->data, term->in->string);
 	lexer->i = 0;
 	lexer->tokens = NULL;
 	return (lexer);
