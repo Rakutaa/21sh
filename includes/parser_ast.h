@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_ast.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 16:40:04 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/20 16:36:08 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/21 14:39:12 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct							s_redirection_aggregation
 	{
 		struct							s_redirection
 		{
+			int							*heredoc;
 			char						*redir;
 			char						*file;
 		}								t_redirection;
@@ -156,7 +157,7 @@ t_ast									*create_ast_list(
 										t_parser_node_list *list);
 void									execute_ast(t_ast *ast, t_terminal *term);
 t_redirection_aggregation				*tokens_to_redirection(
-										t_token *head, t_token *last);
+										t_token *head, t_token *last, t_terminal *term);
 void									free_ast(t_ast *list);
 void									free_parser(t_parser_node_list *list);
 void									free_tokens(t_token *list);

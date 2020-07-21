@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   halfsh.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/20 12:54:48 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/21 14:23:27 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define INIT "$> "
 # define QUOTE "q> "
 # define PIPE "p> "
+# define HEREDOC "h> "
 
 typedef struct		s_input
 {

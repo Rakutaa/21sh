@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 18:02:46 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/21 13:28:05 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/21 15:01:52 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,17 @@ void		do_redirection(t_ast **ast, t_redirection_aggregation *node)
 		dup2((*ast)->in, 0);
 		close((*ast)->in);
 	}
+	
+	if (redir[0] == '<' && redir[1] == '<' && !redir[2])
+	{
+		if ((*ast)->in != 0)
+			close((*ast)->in);
+		(*ast)->in = node->node.t_redirection.heredoc[0];
+		dup2((*ast)->in, 0);
+		close((*ast)->in);
+		close((node->node.t_redirection.heredoc[1]));
+	}
+
 	if (redir[0] == '<' && redir[1] == '>')
 	{
 		(*ast)->rwfd = open(file, O_RDWR | O_APPEND | O_CREAT, S_IRUSR | S_IRGRP | S_IROTH | S_IWGRP | S_IWUSR);
