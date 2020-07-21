@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_parser_redir_aggre.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:49:53 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/21 15:00:08 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/21 16:27:53 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,12 @@ t_redirection_aggregation **list, t_redirection_aggregation *node)
 **previous list node
 */
 
-void	write_heredoc(int in, char *file, t_terminal *term)
+void	write_heredoc(int out, char *file, t_terminal *term)
 {
-//	dup2(in, 1);
 //	close(in);
+//	(void)in;
+//	dup2(out, 1);
+//	close(out);
 	while (1)
 	{
 		init_input(term->in);
@@ -48,8 +50,9 @@ void	write_heredoc(int in, char *file, t_terminal *term)
 		ft_putchar('\n');
 		if (ft_strequ(term->in->string, file))
 			break;
-		ft_putendl_fd(term->in->string, in);
+		ft_putendl_fd(term->in->string, out);
 	}
+	close(out);
 }
 
 static t_redirection_aggregation	*create_redir_aggre_node(int type,
