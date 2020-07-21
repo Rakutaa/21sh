@@ -1,0 +1,8 @@
+echo '___RANDOM___'
+echo "empty lines..."
+
+
+
+echo "done."
+echo '___'
+		echo	tabs and            spaces        
