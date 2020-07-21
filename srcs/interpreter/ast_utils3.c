@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 18:02:46 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/21 13:13:11 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/21 13:28:05 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,9 @@ void		visit_expression(t_ast_node *obj, t_ast **ast, t_terminal *term)
 
 	left = obj->nodes.t_expr.left;
 	right = obj->nodes.t_expr.right;
-	left->e_node == 0 ? exec_factor(left, ast, term->env->table) : visit_expression(left, ast, term);
-	right->e_node == 0 ? exec_factor(right, ast, term->env->table) : visit_expression(right, ast, term);
+	if (left->e_node == 0)
+		left->nodes.t_factor.e_factor == 0 ? buildin_factor(left, ast, term) : exec_factor(left, ast, term->env->table);
+	else
+		visit_expression(left, ast, term);
+	exec_factor(right, ast, term->env->table);
 }

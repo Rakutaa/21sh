@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:39:26 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/21 13:10:55 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/21 13:49:14 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 void		buildin_factor(t_ast_node *obj, t_ast **ast, t_terminal *term)
 {
+	if ((*ast)->parent->e_node == 1 && obj != (*ast)->parent->nodes.t_expr.right)
+	{
+		pipe((*ast)->pipe);
+		dup2((*ast)->pipe[1], 1);
+		close((*ast)->pipe[1]);
+	}
 	if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "cd"))
 		buildin_cd(term->env->linked, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "echo"))
