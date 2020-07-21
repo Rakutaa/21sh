@@ -28,14 +28,10 @@ echo '___ENVIROMENT_MANAGEMENT___'
 env
 echo '___'
 setenv FOO bar
-env
-echo '___'
-echo $FOO
 echo '___'
 /usr/bin/env
 echo '___'
-unsetenv FOO
-env
+echo $FOO
 echo '___'
 unsetenv FOO
 env
@@ -43,18 +39,18 @@ echo '___'
 /usr/bin/env
 echo '___PATH_MANGEMENT___'
 unsetenv PATH
-echo $PATH
 setenv PATH "/bin:/usr/bin"
-echo '___'
-ls
-echo '___'
-/usr/bin/vim
-echo '___'
-unsetenv PATH
 echo '___'
 ls
 echo '___'
 vim
 echo '___'
+unsetenv PATH
+echo '___'
+ls
+echo '___'
+emacs
+echo '___'
 /bin/ls
 echo '___'
+ /usr/bin/emacs
