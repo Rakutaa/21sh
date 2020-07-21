@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:39:26 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/20 13:18:52 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/21 13:10:55 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void		execute_ast(t_ast *ast, t_terminal *term)
 	int i;
 	int ret;
 
-	i = 0;
 	while (ast)
 	{
+		i = 0;
 		ast->pids = malloc(sizeof(int) * ast->cmds);
 		if (ast->parent->e_node == FACTOR)
 			ast->parent->nodes.t_factor.e_factor == BUILDIN ?

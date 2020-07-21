@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 18:02:46 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/09 20:05:35 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/21 13:13:11 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,10 +107,8 @@ void		do_aggregaation(t_redirection_aggregation *node)
 				ft_printf("21sh bad fd, %s\n", node->node.t_ag.word);
 				close(2);
 			}
-//			close(1);
-//			ft_printf("\n%s, %s\n", node->node.t_ag.n, node->node.t_ag.word);
-			dup2(!node->node.t_ag.n ? 1 : ft_atoi(node->node.t_ag.n),
-			ft_atoi(node->node.t_ag.word));
+			else
+				dup2(ft_atoi(node->node.t_ag.word), !node->node.t_ag.n ? 1 : ft_atoi(node->node.t_ag.n));
 		}
 	}
 }
@@ -155,10 +153,6 @@ int			child(t_ast_node *obj, t_ast **ast, char **env)
 
 void		exec_factor(t_ast_node *obj, t_ast **ast, char **env)
 {
-//	pid_t						pid;
-//	int							p[2];
-
-
 	if (obj->nodes.t_factor.e_factor == EXEC && !obj->nodes.t_factor.path_join)
 		return (cmd_not_found(obj->nodes.t_factor.cmds[0]));
 	if ((*ast)->parent->e_node == 1 && obj != (*ast)->parent->nodes.t_expr.right)

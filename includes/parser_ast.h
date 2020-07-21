@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 16:40:04 by vtran             #+#    #+#             */
-/*   Updated: 2020/06/10 19:12:02 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/20 16:36:08 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,5 +170,5 @@ int										buildin_env(char **env);
 int										buildin_unsetenv(t_terminal *term, char **args);
 int										buildin_setenv(t_terminal *term, char **args);
 void									cmd_not_found(char *cmd);
-void									buildin_echo(char **args);
+void									buildin_echo(char **obj);
 #endif
