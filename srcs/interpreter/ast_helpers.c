@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_helpers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:34:34 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/09 19:55:20 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/21 14:39:23 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,26 @@ void		cmd_not_found(char *cmd)
 	ft_printf("%s: command not found\n", cmd);
 }
 
-void	helper_dup(t_ast **ast, t_ast_node *obj, int pipe_in)
+void	helper_dup(t_ast **ast, t_ast_node *obj, int out)
 {
-	dup2((*ast)->in, 0);
+	if ((*ast)->in != 0)
+	{
+		dup2((*ast)->in, 0);
+		close((*ast)->in);
+	}
+	if ((*ast)->parent->e_node == 1 && 
+	obj != (*ast)->parent->nodes.t_expr.right)
+	{
+		dup2(out, 1);
+//		dup2(out, 2); //taaal on aggregation, fixaa jotenkin
+		close(out);
+	}
 	visit_factor(obj, ast);
-	if ((*ast)->parent->e_node == 1 && obj
-	!= (*ast)->parent->nodes.t_expr.right)
-		dup2(pipe_in, 1);
-	else
-		dup2((*ast)->out, 1);
+	// if ((*ast)->out != 1)
+	// {
+	// 	dup2((*ast)->out, 1);
+	// 	close((*ast)->out);
+	// }
 }
 
 /*

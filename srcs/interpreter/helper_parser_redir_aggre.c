@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:49:53 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/09 19:55:19 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/21 16:27:53 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,27 @@ t_redirection_aggregation **list, t_redirection_aggregation *node)
 **previous list node
 */
 
+void	write_heredoc(int out, char *file, t_terminal *term)
+{
+//	close(in);
+//	(void)in;
+//	dup2(out, 1);
+//	close(out);
+	while (1)
+	{
+		init_input(term->in);
+		ft_memmove(term->in->prompt, HEREDOC, 4);
+		start_editor(term);
+		ft_putchar('\n');
+		if (ft_strequ(term->in->string, file))
+			break;
+		ft_putendl_fd(term->in->string, out);
+	}
+	close(out);
+}
+
 static t_redirection_aggregation	*create_redir_aggre_node(int type,
-t_token *file, t_token *sign)
+t_token *file, t_token *sign, t_terminal *term)
 {
 	t_redirection_aggregation	*node;
 	char						*str;
@@ -49,6 +68,12 @@ t_token *file, t_token *sign)
 	{
 		node->node.t_redirection.file = file->value;
 		node->node.t_redirection.redir = sign->value;
+		if (ft_strequ(sign->value, "<<"))
+		{
+			node->node.t_redirection.heredoc = malloc(sizeof(int) * 2);
+			pipe(node->node.t_redirection.heredoc);
+			write_heredoc(node->node.t_redirection.heredoc[1], file->value, term);
+		}
 		node->next = NULL;
 	}
 	else
@@ -68,7 +93,7 @@ t_token *file, t_token *sign)
 }
 
 t_redirection_aggregation			*tokens_to_redirection(
-t_token *head, t_token *last)
+t_token *head, t_token *last, t_terminal *term)
 {
 	t_redirection_aggregation	*rhead;
 
@@ -78,17 +103,17 @@ t_token *head, t_token *last)
 		if (head->e_type == TOKEN_REDIRECT)
 		{
 			add_redir_aggre_list(&rhead, create_redir_aggre_node(0,
-			head->next, head));
+			head->next, head, term));
 			head = move_token_n_times(head, 2);
 		}
 		else
 		{
 			add_redir_aggre_list(&rhead,
-			create_redir_aggre_node(1, NULL, head));
+			create_redir_aggre_node(1, NULL, head, term));
 			head = move_token_n_times(head, 1);
 		}
 	}
 	if (last && last->e_type == TOKEN_AGG)
-		add_redir_aggre_list(&rhead, create_redir_aggre_node(1, NULL, last));
+		add_redir_aggre_list(&rhead, create_redir_aggre_node(1, NULL, last, term));
 	return (rhead);
 }

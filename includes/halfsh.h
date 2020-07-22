@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 15:15:02 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/21 14:23:27 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define INIT "$> "
 # define QUOTE "q> "
 # define PIPE "p> "
+# define HEREDOC "h> "
 
 typedef struct		s_input
 {
@@ -81,6 +82,7 @@ void				shell_clipboard(t_terminal *term, int sum);
 void				init_history(t_terminal *term);
 void				save_history(t_terminal *term);
 int					listen_keys(void);
+void				mac_clipboard(t_terminal *term, int sum);
 void				execute_pipe(t_terminal *term);
 
 #endif

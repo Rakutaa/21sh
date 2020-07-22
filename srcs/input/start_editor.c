@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/29 13:27:14 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/21 13:57:49 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,20 @@ static void	loop_editor(t_terminal *term)
 
 void		start_editor(t_terminal *term)
 {
-	config_terminal(0, term);
-	print_input(term);
-	loop_editor(term);
-	config_terminal(1, term);
+	char	*line;
+
+	if (!isatty(STDIN_FILENO))
+	{
+		if (!get_next_line(0, &line))
+			program_exit(term, 0);
+		ft_strcat(term->in->string, line); // check line length before trying to append?
+		free(line);
+	}
+	else
+	{
+		config_terminal(0, term);
+		print_input(term);
+		loop_editor(term);
+		config_terminal(1, term);
+	}
 }

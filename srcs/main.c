@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 15:18:40 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/21 13:12:09 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,35 @@ static void		print_banner(void)
 }
 
 /*
+** Adds node into history doubly list and cuts the tail
+** if history length exceeds HISTSIZE defined in header.
+*/
+
+static void		add_history(t_terminal *term)
+{
+	t_dlist		*tmp;
+
+	ft_dlstadd(&term->h_head, ft_dlstnew(term->in->string, \
+	ft_strlen(term->in->string) + 1));
+	if (!term->h_tail)
+		term->h_tail = term->h_head;
+	if (ft_dlstlen(&term->h_head) > HISTSIZE)
+	{
+		if (!term->h_tail)
+			return ;
+		tmp = term->h_tail;
+		term->h_tail = term->h_tail->prev;
+		term->h_tail->next = NULL;
+		ft_ddel(tmp->content, tmp->content_size);
+		free(tmp);
+	}
+}
+
+/*
 ** This is the "core" part of the program. It allocates memory for the input
 ** struct which keeps the information about the current command and cursor
 ** positon.
 */
-
-static void		cut_tail(t_terminal *term)
-{
-	t_dlist		*tmp;
-
-	if (!term->h_tail)
-		return ;
-	tmp = term->h_tail;
-	term->h_tail = term->h_tail->prev;
-	term->h_tail->next = NULL;
-	ft_ddel(tmp->content, tmp->content_size);
-	free(tmp);
-}
 
 static void		command_line(t_terminal *term)
 {
@@ -58,13 +70,9 @@ static void		command_line(t_terminal *term)
 		{
 			if (ft_strequ(term->in->string, "exit"))	// DELETE
 				return ;								// DELETE
+			if (isatty(STDIN_FILENO))
+				add_history(term);
 			init_lexer(term);
-			ft_dlstadd(&term->h_head, ft_dlstnew(term->in->string, \
-			ft_strlen(term->in->string) + 1));
-			if (!term->h_tail)
-				term->h_tail = term->h_head;
-			if (ft_dlstlen(&term->h_head) > HISTSIZE)
-				cut_tail(term);
 		}
 	}
 }

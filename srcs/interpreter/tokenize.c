@@ -22,8 +22,16 @@ static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 	{
 		if (!lexer->data[lexer->i])
 		{
+			init_input(term->in);
 			ft_memmove(term->in->prompt, QUOTE, 3);
 			start_editor(term);
+			if (ft_strlen(lexer->data) + 1 + ft_strlen(term->in->string) >= ARG_MAX)
+				break ;
+			ft_strcat(lexer->data, "\n");
+			ft_strcat(lexer->data, term->in->string);
+			ft_putchar('\n');
+			if (term->in->sigint)
+				break ;
 			continue ;
 		}
 		lexer->i++;

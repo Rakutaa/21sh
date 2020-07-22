@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 09:59:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/09 19:53:51 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/21 14:41:46 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_redirection_aggregation *redir, t_list *env)
 	return (create_factor(cmd, redir, env));
 }
 
-t_ast_node		*tokens_to_ast_node(t_token *head, t_token *last, t_list *env)
+t_ast_node		*tokens_to_ast_node(t_token *head, t_token *last, t_list *env, t_terminal *term)
 {
 	t_token						*tmp;
 	t_redirection_aggregation	*redir;
@@ -43,7 +43,7 @@ t_ast_node		*tokens_to_ast_node(t_token *head, t_token *last, t_list *env)
 	{
 		if (tmp->e_type == TOKEN_REDIRECT || tmp->e_type == TOKEN_AGG)
 		{
-			redir = tokens_to_redirection(tmp, last);
+			redir = tokens_to_redirection(tmp, last, term);
 			break ;
 		}
 		if (tmp == last && (tmp->next || tmp->e_type == TOKEN_SEMI))
@@ -55,7 +55,7 @@ t_ast_node		*tokens_to_ast_node(t_token *head, t_token *last, t_list *env)
 }
 
 void			tokens_to_parser_node(t_parser_node_list **list,
-t_token *head, t_token *last, t_list *env)
+t_token *head, t_token *last, t_list *env, t_terminal *term)
 {
 	t_parser_node				*ast_nodeobj;
 	t_parser_node				*token_nodeobj;
@@ -63,7 +63,7 @@ t_token *head, t_token *last, t_list *env)
 	ast_nodeobj = malloc(sizeof(t_parser_node));
 	token_nodeobj = NULL;
 	ast_nodeobj->e_node = AST;
-	ast_nodeobj->nodes.ast_nodeobj = tokens_to_ast_node(head, last, env);
+	ast_nodeobj->nodes.ast_nodeobj = tokens_to_ast_node(head, last, env, term);
 	if ((last->e_type == 3 || last->e_type == 5) && last->next) //tässä
 	{
 		token_nodeobj = malloc(sizeof(t_parser_node));
@@ -95,7 +95,7 @@ void			parse_tokens(t_terminal *term, t_token *tokens)
 		if (current->e_type == TOKEN_PIPE || current->e_type == TOKEN_SEMI ||
 		!current->next)
 		{
-			tokens_to_parser_node(&nhead, head, current, term->env->linked);
+			tokens_to_parser_node(&nhead, head, current, term->env->linked, term);
 			head = move_token_n_times(current, 1);
 		}
 		current = move_token_n_times(current, 1);

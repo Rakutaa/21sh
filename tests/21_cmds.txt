@@ -1,3 +1,5 @@
+echo '___COMMAND_LINE_MANAGEMENT___'
+	/bin/ls     -l		-A   
 echo '___PIPES___'
 ls | cat -e
 echo '___'
@@ -13,10 +15,19 @@ cat /tmp/test.txt
 echo '___'
 wc -c < /tmp/test.txt
 echo '___'
-echo '->cat -e << EOF command to be added later.<-'
+cat -e << EOF
+Roses are red
+Violets are blue
+All my base are belong to you
+And so are you
+EOF
 echo '___'
-echo '->cat -e << EOF >> /tmp/test.txt command to be added later<-'
-echo '___'
+cat -e << EOF >> /tmp/test.txt
+Roses are red
+Violets are blue
+All my base are belong to you
+And so are you
+EOF
 cat /tmp/test.txt
 echo '___SEVERAL COMMANDS FOLLOWING EACH OTHER___'
 ls -l; touch newfile; ls -l
@@ -26,7 +37,12 @@ mkdir test; cd test; ls -a; ls | cat | wc -c > fifi; cat fifi
 cd ..
 rm -r test
 echo '___'
-echo "->cd /tmp; sort << EOF | cat -e > sorted_poem; sed -e 's/Roses/Turnips/' < sorted_poem > better poem; cd -; echo I prefer turnips anyway >> /tmp/better_poem; cat /tmp/better_poem command to be added later<-"
+cd /tmp; sort << EOF | cat -e > sorted_poem; sed -e 's/Roses/Turnips/' < sorted_poem > better poem; cd -; echo I prefer turnips anyway >> /tmp/better_poem; cat /tmp/better_poem
+Roses are red
+Violets are blue
+All my base are belong to you
+I love you
+EOF
 echo '___FILE_DESCRIPTOR_AGGREGATION___'
 rm nosuchfile 2>&-
 echo '___'
@@ -34,4 +50,9 @@ rm nosuchfile 2>&1 | cat -e
 echo '___'
 echo "No dollar character" 1>&2 | cat -e
 echo '___QUOTES_MANAGEMENT__'
-echo 'echo with open quote to check newlines command added later'
+echo "
+Roses are red
+Violets are blue
+All my base are belong to you
+I love you
+"

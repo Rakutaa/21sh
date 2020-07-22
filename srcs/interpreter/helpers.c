@@ -84,22 +84,25 @@ int			is_aggre(t_lexer *lexer)
 
 	i = lexer->i;
 	str = lexer->data;
+	if (str[i] == ':' && str[i + 1] == '>')
+		return (1);
+	if (str[i] == '&' && str[i + 1] == '>')
+		return (2);
 	while (ft_isdigit(str[i]))
 		i++;
-	if (str[i] != '<' && str[i] != '>')
-		return (0);
-	i++;
-	if (str[i] != '&')
-		return (0);
-	i++;
-	if (str[i] != '-' && !ft_isdigit(str[i]))
-		return (0);
-	if (str[i] == '-' && (!str[i + 1] || str[i + 1] == ' '
-	|| str[i + 1] == ';' || str[i + 1] == '|'))
-		return (1);
-	while (ft_isdigit(str[i]))
-		i++;
-	if ((!str[i] || str[i] == ' ' || str[i] == ';' || str[i] == '|'))
-		return (1);
+	if (str[i] && str[i] == '>' && str[i + 1] && str[i + 1] == '>' && str[i + 2])
+		return (4);
+	if (str[i] && str[i] == '>' && str[i + 1] && str[i + 1] == '&' && str[i + 2] && (str[i + 2] == ' ' || str[i + 2] == '|' || str[i + 2] == ';' || ft_isdigit(str[i + 2])))
+		return (8);
+	if (str[i] && str[i] == '>' && str[i + 1])
+		return (3);
+	if (str[i] && str[i] == '<' && str[i + 1] && str[i + 1] == '<' && str[i + 2])
+		return (6);	
+	if (str[i] && str[i] == '<' && str[i + 1] && str[i + 1] == '>' && str[i + 2])
+		return (7);
+	if (str[i] && str[i] == '<' && str[i + 1] && str[i + 1] == '&' && str[i + 2] && (str[i + 2] == ' ' || str[i + 2] == '|' || str[i + 2] == ';'))
+		return (9);
+	if (str[i] && str[i] == '<' && str[i + 1])
+		return (5);
 	return (0);
 }

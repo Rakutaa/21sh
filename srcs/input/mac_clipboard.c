@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mac_clipboard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 22:51:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/07 15:49:34 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/20 13:12:00 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,21 +51,22 @@ static void	add_paste(t_input *input, char *paste)
 
 static void	paste_clipboard(t_terminal *term)
 {
-	char	*cmd[2];
+	char	*cmd[3];
 	pid_t	pid;
 	int		p[2];
 	char	paste[ARG_MAX];
 	int		ret;
 
-	cmd[0] = "pbpaste";
-	cmd[1] = NULL;
+	cmd[0] = "/usr/bin/pbpaste";
+	cmd[1] = "pbpaste";
+	cmd[2] = NULL;
 	pipe(p);
 	pid = fork();
 	if (!pid)
 	{
 		dup2(p[1], 1);
 		close(p[0]);
-		execvp(cmd[0], cmd);
+		execve(cmd[0], &cmd[1], term->env->table);
 	}
 	else
 	{
@@ -96,10 +97,10 @@ static void	copy_command(t_terminal *term)
 	copyn[0] = "pbcopy";
 	copyn[1] = NULL;
 	head = init_ast();
-	ex = create_expression(create_factor(echon, NULL), \
-	create_factor(copyn, NULL));
+	ex = create_expression(create_factor(echon, NULL, term->env->linked), \
+	create_factor(copyn, NULL, term->env->linked));
 	head->parent = ex;
-	execute_ast(head);
+	execute_ast(head, term);
 }
 
 /*
@@ -121,10 +122,10 @@ static void	cut_command(t_terminal *term)
 	copyn[0] = "pbcopy";
 	copyn[1] = NULL;
 	head = init_ast();
-	ex = create_expression(create_factor(echon, NULL), \
-	create_factor(copyn, NULL));
+	ex = create_expression(create_factor(echon, NULL, term->env->linked), \
+	create_factor(copyn, NULL, term->env->linked));
 	head->parent = ex;
-	execute_ast(head);
+	execute_ast(head, term);
 	ft_bzero(term->in->string, ARG_MAX);
 	term->in->index = 0;
 }
