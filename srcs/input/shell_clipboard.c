@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 17:44:32 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/09 14:37:30 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 14:08:03 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ void		shell_clipboard(t_terminal *term, int sum)
 		cut_after(term);
 	else if (sum == CTRL_U)
 		cut_before(term);
-	else if (sum == CTRL_Y)
+	else if (sum == CTRL_P)
 		paste_buffer(term);
 }
