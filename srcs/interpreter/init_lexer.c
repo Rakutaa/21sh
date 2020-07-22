@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/22 23:38:13 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/22 23:45:54 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void				init_lexer(t_terminal *term)
 		{
 			lexer->i++;
 			if (lexer->i > 0)
-				if_is_ag_re_do_ag_re(is_aggre(lexer), lexer);
+				if_is_ag_re_do_ag_re(is_re_ag(lexer), lexer);
 			continue ;
 		}
 		else

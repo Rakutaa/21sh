@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 13:08:11 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/20 16:06:39 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 23:45:54 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_token				*get_t_list_token(t_list *node);
 t_token				*move_token_n_times(t_token *list, int n);
 void				check_dollar_tilde(t_list *env, t_token *token);
 t_token				*get_agr(t_lexer *lexer);
-int					is_aggre(t_lexer *lexer);
+int					is_re_ag(t_lexer *lexer);
 t_token				*create_token(int type, char *value);
 t_token				*get_redirection(t_lexer *lexer);
 int					ok_to_parser(t_token *tokens, t_terminal *term);
