@@ -6,13 +6,13 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/22 22:08:22 by hege              #+#    #+#             */
-/*   Updated: 2020/07/22 22:08:29 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 00:15:18 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser_ast.h"
 
-static void	free_ast_node(t_ast_node *ast)
+static void	free_ast_node(t_ast_n *ast)
 {
 	if (ast && ast->e_node == EXPR)
 	{

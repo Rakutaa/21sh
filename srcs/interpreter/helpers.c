@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:48:00 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/22 23:50:12 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 00:16:00 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_token		*move_token_n_times(t_token *list, int n)
 	return (list);
 }
 
-t_token		*get_redirection(t_lexer *lexer)
+t_token		*get_re(t_lexer *lexer)
 {
 	if (lexer->data[lexer->i] == '>')
 	{

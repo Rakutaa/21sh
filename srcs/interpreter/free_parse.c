@@ -6,13 +6,13 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/22 22:12:01 by hege              #+#    #+#             */
-/*   Updated: 2020/07/22 22:17:51 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 00:26:41 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser_ast.h"
 
-static void	free_redir_aggre(t_redirection_aggregation *list)
+static void	free_redir_aggre(t_re_ag *list)
 {
 	if (list->next)
 		free_redir_aggre(list->next);
@@ -24,12 +24,12 @@ static void	free_redir_aggre(t_redirection_aggregation *list)
 		if (list->node.t_ag.word)
 			free(list->node.t_ag.word);
 	}
-	else if (list->node.t_redirection.heredoc)
-		free(list->node.t_redirection.heredoc);
+	else if (list->node.t_re.heredoc)
+		free(list->node.t_re.heredoc);
 	free(list);
 }
 
-static void	free_factor(t_ast_node *factor)
+static void	free_factor(t_ast_n *factor)
 {
 	free(factor->nodes.t_factor.cmds);
 	if (factor->nodes.t_factor.list)
@@ -39,7 +39,7 @@ static void	free_factor(t_ast_node *factor)
 	free(factor);
 }
 
-void		free_parser(t_parser_node_list *list)
+void		free_parser(t_parser_l *list)
 {
 	if (list->next)
 		free_parser(list->next);

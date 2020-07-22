@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 13:08:11 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/22 23:45:54 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 00:16:00 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void				check_dollar_tilde(t_list *env, t_token *token);
 t_token				*get_agr(t_lexer *lexer);
 int					is_re_ag(t_lexer *lexer);
 t_token				*create_token(int type, char *value);
-t_token				*get_redirection(t_lexer *lexer);
+t_token				*get_re(t_lexer *lexer);
 int					ok_to_parser(t_token *tokens, t_terminal *term);
 int					syntax_error(int i, int j);
 void				free_tokens(t_token *list);

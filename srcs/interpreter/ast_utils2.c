@@ -6,18 +6,18 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:39:26 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/22 22:57:43 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 00:26:26 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser_ast.h"
 
-void		buildin_factor(t_ast_node *obj, t_ast **ast, t_terminal *term)
+void		buildin_factor(t_ast_n *obj, t_ast **ast, t_terminal *term)
 {
 	if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "cd"))
 		buildin_cd(term->env->linked, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "echo"))
-		exec_factor(obj, ast, term->env->table);
+		visit_exec(obj, ast, term->env->table);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "setenv"))
 		buildin_setenv(term, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "unsetenv"))
@@ -40,7 +40,7 @@ void		execute_ast(t_ast *ast, t_terminal *term)
 		if (ast->parent->e_node == FACTOR)
 			ast->parent->nodes.t_factor.e_factor == BUILDIN ?
 			buildin_factor(ast->parent, &ast, term) :
-			exec_factor(ast->parent, &ast, term->env->table);
+			visit_exec(ast->parent, &ast, term->env->table);
 		else
 			visit_expression(ast->parent, &ast, term);
 		if (ast->cmds > 0)
@@ -77,7 +77,7 @@ t_ast		*init_ast(void)
 **either there is mulple cmds separated ; or first cmd
 */
 
-t_ast		*create_ast_node(t_ast *ast, t_parser_node_list **list)
+t_ast		*create_ast_node(t_ast *ast, t_parser_l **list)
 {
 	if (!ast)
 	{
@@ -100,7 +100,7 @@ t_ast		*create_ast_node(t_ast *ast, t_parser_node_list **list)
 **ast->parent update. meaning that there is atleast one pipe
 */
 
-t_ast		*create_ast_list(t_parser_node_list *list)
+t_ast		*create_ast_list(t_parser_l *list)
 {
 	t_ast	*ast;
 	t_ast	*tmp;

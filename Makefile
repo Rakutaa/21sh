@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vtran <vtran@student.42.fr>                +#+  +:+       +#+         #
+#    By: hege <hege@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/07/20 12:54:12 by vtran            ###   ########.fr        #
+#    Updated: 2020/07/23 00:05:20 by hege             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,9 @@ SRCS = srcs/config_termcaps.c \
        srcs/interpreter/ast_utils3.c \
        srcs/interpreter/ast_helpers.c \
        srcs/interpreter/dollar_tilde_utils.c \
+       srcs/interpreter/re_ag.c \
+       srcs/interpreter/re_ag_dub.c \
+       srcs/interpreter/re_ag_dub2.c \
        srcs/interpreter/helpers.c \
        srcs/interpreter/free_ast.c \
        srcs/interpreter/free_env.c \

@@ -1,10 +1,21 @@
-//#include "parser_ast.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   token_syntax.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/07/22 23:58:05 by hege              #+#    #+#             */
+/*   Updated: 2020/07/22 23:58:28 by hege             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
 int			check_syntax_error(int i, int j)
 {
 	if ((j == 5 || i == 5))
-		if((j == 5 && i == 5) || j == 3 || j == 4 || i == 3 || i == 4)
+		if ((j == 5 && i == 5) || j == 3 || j == 4 || i == 3 || i == 4)
 			return (1);
 	if ((j == 3 || i == 3) && (j == 4 || i == 4))
 		return (1);
@@ -20,7 +31,7 @@ int			syntax_error(int i, int j)
 	else if (j == 3)
 		ft_printf("\n21: unexpected syntax error close to keyword \"|\"\n");
 	else
-		ft_printf("\n21: unexpected syntax error close to keyword \"newline\"\n");
+		ft_printf("\n21: unexpected syntax error close to keyword \"nl\"\n");
 	return (0);
 }
 

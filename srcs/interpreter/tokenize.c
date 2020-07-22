@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/07/22 23:59:08 by hege              #+#    #+#             */
+/*   Updated: 2020/07/23 00:16:00 by hege             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
 static char			*get_word(t_lexer *lexer)
@@ -54,7 +66,7 @@ t_token				*create_token(int type, char *value)
 	return (token);
 }
 
-t_token		*get_token(t_lexer *lexer, t_terminal *term)
+t_token				*get_token(t_lexer *lexer, t_terminal *term)
 {
 	t_token			*token;
 
@@ -64,7 +76,7 @@ t_token		*get_token(t_lexer *lexer, t_terminal *term)
 		if (lexer->data[lexer->i] == '|')
 			token = create_token(TOKEN_PIPE, ft_strdup("|"));
 		else if (lexer->data[lexer->i] == '>' || lexer->data[lexer->i] == '<')
-			token = get_redirection(lexer);
+			token = get_re(lexer);
 		else if (lexer->data[lexer->i] == ';')
 			token = create_token(TOKEN_SEMI, ft_strdup(";"));
 		lexer->i++;

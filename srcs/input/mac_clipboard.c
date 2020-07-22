@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mac_clipboard.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 22:51:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/20 13:12:00 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/23 00:15:18 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	paste_clipboard(t_terminal *term)
 
 static void	copy_command(t_terminal *term)
 {
-	t_ast_node	*ex;
+	t_ast_n	*ex;
 	t_ast		*head;
 	char		*echon[4];
 	char		*copyn[2];
@@ -110,7 +110,7 @@ static void	copy_command(t_terminal *term)
 
 static void	cut_command(t_terminal *term)
 {
-	t_ast_node	*ex;
+	t_ast_n	*ex;
 	t_ast		*head;
 	char		*echon[4];
 	char		*copyn[2];

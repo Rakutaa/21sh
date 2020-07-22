@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_helpers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:34:34 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/21 14:39:23 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/23 00:16:00 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		cmd_not_found(char *cmd)
 	ft_printf("%s: command not found\n", cmd);
 }
 
-void	helper_dup(t_ast **ast, t_ast_node *obj, int out)
+void	helper_dup(t_ast **ast, t_ast_n *obj, int out)
 {
 	if ((*ast)->parent->e_node == 1 && 
 	obj != (*ast)->parent->nodes.t_expr.right)
@@ -25,7 +25,7 @@ void	helper_dup(t_ast **ast, t_ast_node *obj, int out)
 		dup2(out, 1);
 		close(out);
 	}
-	visit_factor(obj, ast);
+	visit_re_ag(obj, ast);
 	if ((*ast)->in != 0)
 	{
 		dup2((*ast)->in, 0);
@@ -33,9 +33,9 @@ void	helper_dup(t_ast **ast, t_ast_node *obj, int out)
 	}
 }
 
-void	helper_close(t_ast_node *obj, t_ast **ast)
+void	helper_close(t_ast_n *obj, t_ast **ast)
 {
-	t_redirection_aggregation	*node;
+	t_re_ag	*node;
 
 	if((*ast)->parent->e_node == 1 && (*ast)->in != 0)
 	{
@@ -46,7 +46,7 @@ void	helper_close(t_ast_node *obj, t_ast **ast)
 	{
 		if (node && node->e_flag == 0)
 		{
-			if (node->node.t_redirection.redir[0] == '>' && (*ast)->out != 1)
+			if (node->node.t_re.redir[0] == '>' && (*ast)->out != 1)
 				close((*ast)->out);
 		}
 		node = node->next;

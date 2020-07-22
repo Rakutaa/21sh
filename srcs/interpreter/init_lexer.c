@@ -6,14 +6,12 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/22 23:45:54 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/22 23:53:35 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser_ast.h"
 #include "lexer.h"
-
-
 
 t_lexer				*lexa(t_terminal *term)
 {
@@ -41,7 +39,8 @@ void				get_strange_redirections(int i, t_lexer *lexer)
 		counter = counter + 1;
 	else
 		counter = counter + 2;
-	add_token(&lexer->tokens, create_token(TOKEN_REDIRECT, ft_strsub(str, lexer->i, counter)));
+	add_token(&lexer->tokens,
+	create_token(TOKEN_REDIRECT, ft_strsub(str, lexer->i, counter)));
 	lexer->i = lexer->i + counter;
 }
 
@@ -53,9 +52,11 @@ void				if_is_ag_re_do_ag_re(int i, t_lexer *lexer)
 	{
 		lexer->i = lexer->i + 2;
 		if (i == 1)
-			add_token(&lexer->tokens, create_token(TOKEN_REDIRECT, ft_strdup(":>")));
+			add_token(&lexer->tokens,
+			create_token(TOKEN_REDIRECT, ft_strdup(":>")));
 		else
-			add_token(&lexer->tokens, create_token(TOKEN_REDIRECT, ft_strdup("&>")));
+			add_token(&lexer->tokens,
+			create_token(TOKEN_REDIRECT, ft_strdup("&>")));
 	}
 	else if (i > 2 && i < 8)
 		get_strange_redirections(i, lexer);
