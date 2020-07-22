@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   program_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:21 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 15:13:02 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 22:45:45 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
+#include "parser_ast.h"
 
 /*
 ** Returns terminal configuration as it was before launching
 ** the program. Frees memory allocated in main.c file.
+** free_env pakko täällä.. tai muuten tulee leaks
 */
 
 void	program_exit(t_terminal *term, int num)

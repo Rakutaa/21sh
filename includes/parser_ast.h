@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_ast.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 16:40:04 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/21 14:39:12 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 22:56:53 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ typedef struct							s_ast
 	int									*pids;
 	int									i;
 	int									*pipe;
-	int									tbc;
 	int									in;
 	int									out;
 	int									err;

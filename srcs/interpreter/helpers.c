@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:48:00 by vtran             #+#    #+#             */
-/*   Updated: 2020/06/10 18:10:33 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/22 23:38:00 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-//tokenize2.c
-
-// t_token		*get_t_list_token(t_list *node)
-// {
-// 	if (node)
-// 		return (node->content);
-// 	return (NULL);
-// }
 
 t_token		*move_token_n_times(t_token *list, int n)
 {

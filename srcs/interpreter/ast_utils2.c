@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:39:26 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/21 16:30:16 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/22 22:57:43 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void		buildin_factor(t_ast_node *obj, t_ast **ast, t_terminal *term)
 		buildin_unsetenv(term, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "env"))
 		buildin_env(term->env->table);
+	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "exit"))
+		exit(0);
 }
 
 void		execute_ast(t_ast *ast, t_terminal *term)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_parse.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/07/22 22:12:01 by hege              #+#    #+#             */
+/*   Updated: 2020/07/22 22:17:51 by hege             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser_ast.h"
 
 static void	free_redir_aggre(t_redirection_aggregation *list)
@@ -10,12 +22,14 @@ static void	free_redir_aggre(t_redirection_aggregation *list)
 		if (list->node.t_ag.n)
 			free(list->node.t_ag.n);
 		if (list->node.t_ag.word)
-			free(list->node.t_ag.word);		
+			free(list->node.t_ag.word);
 	}
+	else if (list->node.t_redirection.heredoc)
+		free(list->node.t_redirection.heredoc);
 	free(list);
 }
 
-static void free_factor(t_ast_node *factor)
+static void	free_factor(t_ast_node *factor)
 {
 	free(factor->nodes.t_factor.cmds);
 	if (factor->nodes.t_factor.list)

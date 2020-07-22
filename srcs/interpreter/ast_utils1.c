@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:36:28 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/21 13:53:23 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/22 22:39:54 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int				is_buildin(char *str)
 {
 	if (!ft_strcmp(str, "echo") || !ft_strcmp(str, "cd") ||
-	!ft_strcmp(str, "setenv")
+	!ft_strcmp(str, "setenv") || !ft_strcmp(str, "exit")
 	|| !ft_strcmp(str, "unsetenv") || !ft_strcmp(str, "env"))
 		return (1);
 	return (0);
