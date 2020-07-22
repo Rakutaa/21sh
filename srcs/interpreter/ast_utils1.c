@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:36:28 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 00:15:18 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 00:40:29 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,10 @@ void			add_exec_path(char *name, t_list *env, t_ast_n *facto)
 	ft_arrfree(paths);
 }
 
-t_ast_n		*create_factor(char **cmnd, t_re_ag *list,
+t_ast_n			*create_factor(char **cmnd, t_re_ag *list,
 				t_list *env)
 {
-	t_ast_n	*facto;
+	t_ast_n		*facto;
 
 	facto = malloc(sizeof(t_ast_n));
 	facto->e_node = FACTOR;
@@ -88,9 +88,9 @@ t_ast_n		*create_factor(char **cmnd, t_re_ag *list,
 	return (facto);
 }
 
-t_ast_n		*create_expression(t_ast_n *left, t_ast_n *right)
+t_ast_n			*create_expression(t_ast_n *left, t_ast_n *right)
 {
-	t_ast_n	*express;
+	t_ast_n		*express;
 
 	express = malloc(sizeof(t_ast_n));
 	express->e_node = EXPR;

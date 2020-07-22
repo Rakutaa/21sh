@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:49:53 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 00:16:00 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 00:42:08 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 **adding into a simple cmds redirection or aggregation as a linked list
 */
 
-static void							add_redir_aggre_list(
+static void		add_redir_aggre_list(
 t_re_ag **list, t_re_ag *node)
 {
-	t_re_ag	*tmp;
+	t_re_ag		*tmp;
 
 	if (!*list)
 		*list = node;
@@ -36,7 +36,7 @@ t_re_ag **list, t_re_ag *node)
 **previous list node
 */
 
-void								write_heredoc(char *sign,
+void			write_heredoc(char *sign,
 t_re_ag *node, char *file, t_terminal *term)
 {
 	if (!ft_strequ(sign, "<<"))
@@ -62,8 +62,8 @@ t_re_ag *node, char *file, t_terminal *term)
 static t_re_ag	*create_redir_aggre_node(int type,
 t_token *file, t_token *sign, t_terminal *term)
 {
-	t_re_ag	*node;
-	int							i;
+	t_re_ag		*node;
+	int			i;
 
 	node = malloc(sizeof(t_re_ag));
 	node->e_flag = type == 0 ? 0 : 1;
@@ -91,7 +91,7 @@ t_token *file, t_token *sign, t_terminal *term)
 t_re_ag			*tokens_to_redirection(
 t_token *head, t_token *last, t_terminal *term)
 {
-	t_re_ag	*rhead;
+	t_re_ag		*rhead;
 
 	rhead = NULL;
 	while (head && head != last)

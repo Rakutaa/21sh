@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/22 22:12:01 by hege              #+#    #+#             */
-/*   Updated: 2020/07/23 00:26:41 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 00:38:13 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		free_parser(t_parser_l *list)
 	if (list->next)
 		free_parser(list->next);
 	if (list->parser_nodeobj->e_node != TOKEN)
-		free_factor(list->parser_nodeobj->nodes.ast_nodeobj);
+		free_factor(list->parser_nodeobj->nodes.t_a.ast_nodeobj);
 	free(list->parser_nodeobj);
 	free(list);
 }

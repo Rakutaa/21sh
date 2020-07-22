@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:39:26 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 00:26:26 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 00:37:54 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,13 @@ t_ast		*create_ast_node(t_ast *ast, t_parser_l **list)
 	if (!ast)
 	{
 		ast = init_ast();
-		ast->parent = (*list)->parser_nodeobj->nodes.ast_nodeobj;
+		ast->parent = (*list)->parser_nodeobj->nodes.t_a.ast_nodeobj;
 	}
 	else if ((*list)->next)
 	{
 		ast->next = init_ast();
 		ast->next->parent =
-		(*list)->next->parser_nodeobj->nodes.ast_nodeobj;
+		(*list)->next->parser_nodeobj->nodes.t_a.ast_nodeobj;
 		ast = ast->next;
 		*list = (*list)->next;
 	}
@@ -109,7 +109,7 @@ t_ast		*create_ast_list(t_parser_l *list)
 	tmp = ast;
 	while (list)
 	{
-		if (list->parser_nodeobj->nodes.token->e_type != TOKEN_PIPE)
+		if (list->parser_nodeobj->nodes.t_t.token->e_type != TOKEN_PIPE)
 		{
 			tmp = create_ast_node(tmp, &list);
 			tmp->cmds++;
@@ -119,7 +119,7 @@ t_ast		*create_ast_list(t_parser_l *list)
 		else
 		{
 			tmp->parent = create_expression(tmp->parent,
-			list->next->parser_nodeobj->nodes.ast_nodeobj);
+			list->next->parser_nodeobj->nodes.t_a.ast_nodeobj);
 			list = list->next->next;
 			tmp->cmds++;
 		}

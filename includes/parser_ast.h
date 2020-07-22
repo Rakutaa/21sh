@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 16:40:04 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 00:26:03 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 00:38:55 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct				s_ast_n
 
 /*
 **listan_node
+**unionin tilal pitäis olla void.. vittu
 */
 
 typedef struct				s_parser_n
@@ -95,8 +96,14 @@ typedef struct				s_parser_n
 	}						e_node;
 	union
 	{
-		t_token				*token;
-		t_ast_n				*ast_nodeobj;
+		struct				s_t
+		{
+			t_token			*token;
+		}					t_t;
+		struct				s_a
+		{
+			t_ast_n			*ast_nodeobj;
+		}					t_a;
 	}						nodes;
 }							t_parser_n;
 
