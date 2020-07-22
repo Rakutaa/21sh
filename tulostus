@@ -1,0 +1,150 @@
+___COMMAND_LINE_MANAGEMENT___
+yhteensä 140
+-rwxrwxr-x 1 hege hege 83296 heinä 22 21:21 21sh
+-rw-rw-r-- 1 hege hege    23 heinä 22 20:54 author
+-rw-rw-r-- 1 hege hege     5 heinä 22 20:54 file
+drwxrwxr-x 8 hege hege  4096 heinä 22 21:13 .git
+-rw-rw-r-- 1 hege hege    49 heinä 22 20:54 .gitignore
+-rw-rw-r-- 1 hege hege   115 heinä 22 21:20 .history
+drwxrwxr-x 2 hege hege  4096 heinä 22 21:10 includes
+-rw-rw-r-- 1 hege hege     0 heinä 22 20:54 kakka
+-rw-rw-r-- 1 hege hege     0 heinä 22 20:54 kkka
+drwxrwxr-x 5 hege hege  4096 heinä 22 21:21 libft
+-rw-rw-r-- 1 hege hege  2864 heinä 22 21:10 Makefile
+-rw-rw-r-- 1 hege hege    15 heinä 22 20:54 moro
+-rw-rw-r-- 1 hege hege  2573 heinä 22 21:10 README.md
+drwxrwxr-x 5 hege hege  4096 heinä 22 21:10 srcs
+drwxrwxr-x 2 hege hege  4096 heinä 22 21:10 tests
+drwxrwxr-x 2 hege hege  4096 heinä 22 20:54 tmp
+-rw-rw-r-- 1 hege hege    30 heinä 22 21:22 tulostus
+-rw-rw-r-- 1 hege hege     0 heinä 22 20:54 uus
+___PIPES___
+21sh$
+author$
+file$
+includes$
+kakka$
+kkka$
+libft$
+Makefile$
+moro$
+README.md$
+srcs$
+tests$
+tmp$
+tulostus$
+uus$
+___
+21sh$
+author$
+file$
+includes$
+kakka$
+kkka$
+libft$
+Makefile$
+moro$
+README.md$
+srcs$
+tests$
+tmp$
+tulostus$
+uus$
+___
+No
+___REDIRECTIONS___
+Testing redirections,
+___
+Testing redirections,
+with multiple lines
+___
+42
+___
+
+
+
+
+
+Roses are red$
+Violets are blue$
+All my base are belong to you$
+And so are you$
+___
+
+
+
+
+
+Testing redirections,
+with multiple lines
+Roses are red$
+Violets are blue$
+All my base are belong to you$
+And so are you$
+___SEVERAL COMMANDS FOLLOWING EACH OTHER___
+yhteensä 128
+-rwxrwxr-x 1 hege hege 83296 heinä 22 21:21 21sh
+-rw-rw-r-- 1 hege hege    23 heinä 22 20:54 author
+-rw-rw-r-- 1 hege hege     5 heinä 22 20:54 file
+drwxrwxr-x 2 hege hege  4096 heinä 22 21:10 includes
+-rw-rw-r-- 1 hege hege     0 heinä 22 20:54 kakka
+-rw-rw-r-- 1 hege hege     0 heinä 22 20:54 kkka
+drwxrwxr-x 5 hege hege  4096 heinä 22 21:21 libft
+-rw-rw-r-- 1 hege hege  2864 heinä 22 21:10 Makefile
+-rw-rw-r-- 1 hege hege    15 heinä 22 20:54 moro
+-rw-rw-r-- 1 hege hege  2573 heinä 22 21:10 README.md
+drwxrwxr-x 5 hege hege  4096 heinä 22 21:10 srcs
+drwxrwxr-x 2 hege hege  4096 heinä 22 21:10 tests
+drwxrwxr-x 2 hege hege  4096 heinä 22 20:54 tmp
+-rw-rw-r-- 1 hege hege  1575 heinä 22 21:22 tulostus
+-rw-rw-r-- 1 hege hege     0 heinä 22 20:54 uus
+yhteensä 128
+-rwxrwxr-x 1 hege hege 83296 heinä 22 21:21 21sh
+-rw-rw-r-- 1 hege hege    23 heinä 22 20:54 author
+-rw-rw-r-- 1 hege hege     5 heinä 22 20:54 file
+drwxrwxr-x 2 hege hege  4096 heinä 22 21:10 includes
+-rw-rw-r-- 1 hege hege     0 heinä 22 20:54 kakka
+-rw-rw-r-- 1 hege hege     0 heinä 22 20:54 kkka
+drwxrwxr-x 5 hege hege  4096 heinä 22 21:21 libft
+-rw-rw-r-- 1 hege hege  2864 heinä 22 21:10 Makefile
+-rw-rw-r-- 1 hege hege    15 heinä 22 20:54 moro
+-rw-rw-r-- 1 hege hege     0 heinä 22 21:22 newfile
+-rw-rw-r-- 1 hege hege  2573 heinä 22 21:10 README.md
+drwxrwxr-x 5 hege hege  4096 heinä 22 21:10 srcs
+drwxrwxr-x 2 hege hege  4096 heinä 22 21:10 tests
+drwxrwxr-x 2 hege hege  4096 heinä 22 20:54 tmp
+-rw-rw-r-- 1 hege hege  2359 heinä 22 21:22 tulostus
+-rw-rw-r-- 1 hege hege     0 heinä 22 20:54 uus
+___A LITTLE_BIT_OF_EVERYTHING___
+.
+..
+5
+___
+
+
+
+
+
+/home/hege/before_sunrise
+All my base are belong to you$
+I love you$
+Turnips are red$
+Violets are blue$
+I prefer turnips anyway
+___FILE_DESCRIPTOR_AGGREGATION___
+___
+rm: tiedostoa 'nosuchfile' ei voi poistaa: Tiedostoa tai hakemistoa ei ole$
+___
+___QUOTES_MANAGEMENT__
+
+
+
+
+
+
+Roses are red
+Violets are blue
+All my base are belong to you
+I love you
+
+21sh: Exit without errors.

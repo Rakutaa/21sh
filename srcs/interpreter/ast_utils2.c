@@ -37,7 +37,7 @@ void		execute_ast(t_ast *ast, t_terminal *term)
 		ast->pids = malloc(sizeof(int) * ast->cmds);
 		if (ast->parent->e_node == FACTOR)
 			ast->parent->nodes.t_factor.e_factor == BUILDIN ?
-			buildin_factor(ast->parent, &ast, term) : 
+			buildin_factor(ast->parent, &ast, term) :
 			exec_factor(ast->parent, &ast, term->env->table);
 		else
 			visit_expression(ast->parent, &ast, term);
@@ -64,7 +64,8 @@ t_ast		*init_ast(void)
 	ast->cmds = 0;
 	ast->pids = NULL;
 	ast->i = 0;
-	ast->pipe = malloc(sizeof(int)*2);
+	ast->rwfd = -1;
+	ast->pipe = malloc(sizeof(int) * 2);
 	ast->parent = NULL;
 	ast->next = NULL;
 	return (ast);
@@ -96,11 +97,6 @@ t_ast		*create_ast_node(t_ast *ast, t_parser_node_list **list)
 /*
 **ast->parent update. meaning that there is atleast one pipe
 */
-
-// t_ast_node	*update_ast_parent(t_ast_node *left, t_ast_node *right)
-// {
-// 	return (create_expression(left, right));
-// }
 
 t_ast		*create_ast_list(t_parser_node_list *list)
 {

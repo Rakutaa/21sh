@@ -12,10 +12,6 @@
 
 #include "parser_ast.h"
 
-/*
-**adding redirection fd's
-*/
-
 void		do_redirection(t_ast **ast, t_redirection_aggregation *node)
 {
 	char						*file;

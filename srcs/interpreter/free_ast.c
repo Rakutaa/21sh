@@ -14,5 +14,7 @@ void		free_ast(t_ast *list)
 	if (list->next)
 		free_ast(list->next);
 	free_ast_node(list->parent);
+	free(list->pipe);
+	free(list->pids);
 	free(list);
 }

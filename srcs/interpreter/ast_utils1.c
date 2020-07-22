@@ -88,12 +88,6 @@ t_ast_node		*create_factor(char **cmnd, t_redirection_aggregation *list,
 	return (facto);
 }
 
-/*
-**this is a pipe between two simple cmd
-**left node write to pipe
-**right node reads from pipe
-*/
-
 t_ast_node		*create_expression(t_ast_node *left, t_ast_node *right)
 {
 	t_ast_node	*express;
