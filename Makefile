@@ -3,17 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vtran <vtran@student.42.fr>                +#+  +:+       +#+         #
+#    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/07/20 12:54:12 by vtran            ###   ########.fr        #
+#    Updated: 2020/07/22 15:08:25 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = 21sh
 
 SRCS = srcs/config_termcaps.c \
-       srcs/execute_pipe.c \
        srcs/init_history.c \
        srcs/main.c \
        srcs/program_exit.c \

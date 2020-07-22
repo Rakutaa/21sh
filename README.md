@@ -49,7 +49,7 @@ $> ./21sh
 | <kbd>end</kbd> | Move cursor to the ending of current command. |
 | <kbd>ctrl+k</kbd> | Cut the part of the current command *after* the cursor, and add it to the internal clipboard buffer. |
 | <kbd>ctrl+u</kbd> | Cut the part of the current command *before* the cursor, and add it to the internal clipboard buffer. |
-| <kbd>ctrl+y</kbd> | Paste contents of the internal clipboad to the current command. |
+| <kbd>ctrl+p</kbd> | Paste contents of the internal clipboad to the current command. |
 
 ### MacOS Mojave clipboard shortcuts
 | KEY  | FUNCTION |

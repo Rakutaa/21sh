@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/21 13:12:09 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 15:10:06 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,16 +114,11 @@ int				main(int argc, char **argv, char **env)
 	term->in = NULL;
 	term->h_head = NULL;
 	term->h_tail = NULL;
-	if (!isatty(STDIN_FILENO))
-		execute_pipe(term);
-	else
-	{
-		config_termcaps();
-		tputs(tgetstr("ho", NULL), 1, print_char);
-		init_history(term);
-		print_banner();
-		command_line(term);
-		save_history(term);
-	}
+	config_termcaps();
+	tputs(tgetstr("ho", NULL), 1, print_char);
+	init_history(term);
+	print_banner();
+	command_line(term);
+	save_history(term);
 	program_exit(term, 0);
 }
