@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:28 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 15:15:06 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 16:54:27 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int			print_char(int c)
 {
-	return (write(0, &c, 1));
+	return (write(STDIN_FILENO, &c, 1));
 }
 
 char		*search_env(t_list *enviroment, char *key)

@@ -6,17 +6,11 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 18:50:52 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/09 14:43:18 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 15:43:40 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
-
-/*
-** Opens file defined in the halfsh.h file and appends current history
-** in to the file using add_history function. If the file does not exist,
-** Program will create one with appropriate permissions.
-*/
 
 void		save_history(t_terminal *term)
 {

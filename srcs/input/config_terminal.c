@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:04 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/06/16 10:41:04 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 17:36:38 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,16 @@
 void		config_terminal(int reset, t_terminal *term)
 {
 	if (reset)
-		tcsetattr(1, TCSAFLUSH, &term->original);
+		tcsetattr(STDIN_FILENO, TCSANOW, &term->original);
 	else
 	{
-		tcgetattr(1, &term->original);
+		if (tcgetattr(STDIN_FILENO, &term->original) == -1)
+			program_exit(term, 1);
 		term->shell = term->original;
-		ioctl(1, TIOCGWINSZ, &term->size);
+		ioctl(STDIN_FILENO, TIOCGWINSZ, &term->size);
 		term->shell.c_lflag &= ~(ICANON | ECHO);
-		tcsetattr(1, TCSAFLUSH, &term->shell);
+		if (tcsetattr(STDIN_FILENO, TCSANOW, &term->shell) == -1)
+			program_exit(term, 1);
 		config_signal(term);
 	}
 }

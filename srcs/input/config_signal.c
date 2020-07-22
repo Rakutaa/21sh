@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:43 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/12 20:57:45 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 17:42:23 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static void	signal_resize(int signum)
 {
 	if (signum == SIGWINCH)
 	{
-		ioctl(1, TIOCGWINSZ, &g_term->size);
-		ioctl(1, TIOCSTI, "");
+		ioctl(STDIN_FILENO, TIOCGWINSZ, &g_term->size);
+		ioctl(STDIN_FILENO, TIOCSTI, "");
 	}
 }
 
@@ -38,9 +38,8 @@ static void	signal_suspend(int signum)
 	if (signum == SIGTSTP)
 	{
 		config_terminal(1, g_term);
-		tputs(tgetstr("te", NULL), 1, print_char);
 		signal(SIGTSTP, SIG_DFL);
-		ioctl(1, TIOCSTI, "\x1a");
+		ioctl(STDIN_FILENO, TIOCSTI, "\x1a");
 	}
 }
 
@@ -54,9 +53,8 @@ static void	signal_continue(int signum)
 	if (signum == SIGCONT)
 	{
 		config_terminal(0, g_term);
-		//tputs(tgetstr("ti", NULL), 1, print_char);
 		tputs(tgetstr("ho", NULL), 1, print_char);
-		ioctl(1, TIOCSTI, "");
+		ioctl(STDIN_FILENO, TIOCSTI, "");
 	}
 }
 
@@ -70,7 +68,7 @@ static void	signal_kill(int signum)
 	if (signum)
 	{
 		g_term->in->sigint = 1;
-		ioctl(1, TIOCSTI, "");
+		ioctl(STDIN_FILENO, TIOCSTI, "");
 	}
 }
 

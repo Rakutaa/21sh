@@ -6,17 +6,12 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 18:21:06 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 15:05:55 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 15:53:27 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 #include "get_next_line.h"
-
-/*
-** Opens file defined in halfsh.h file and adds every line of that file into
-** the history linked list.
-*/
 
 void		init_history(t_terminal *term)
 {

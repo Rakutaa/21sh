@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:21 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/22 15:31:14 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 15:43:51 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*
 ** Returns terminal configuration as it was before launching
-** the program. Frees memory allocated in main.c file.
+** the program. Frees allocated memory.
 */
 
 void	program_exit(t_terminal *term, int num)

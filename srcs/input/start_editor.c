@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/22 15:32:16 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 17:32:54 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,13 @@ static void	loop_editor(t_terminal *term)
 }
 
 /*
-** Acts as a "gateway" into the state where user can type current command.
+** Chooses between reading line from file and showing line editor.
 */
 
 void		start_editor(t_terminal *term)
 {
 	char	*line;
 
-	config_terminal(0, term);
 	if (!isatty(STDIN_FILENO))
 	{
 		if (!get_next_line(0, &line))
@@ -83,8 +82,9 @@ void		start_editor(t_terminal *term)
 	}
 	else
 	{
+		config_terminal(0, term);
 		print_input(term);
 		loop_editor(term);
+		config_terminal(1, term);
 	}
-	config_terminal(1, term);
 }

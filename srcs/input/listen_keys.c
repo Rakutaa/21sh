@@ -6,19 +6,12 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/27 10:48:49 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 13:49:00 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 17:34:24 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "halfsh.h"
 #include "keyboard.h"
-
-/*
-** After being called by loop_editor, This function waits input stream and sums
-** up the ascii values received. The sum itself represents individual key.
-** This key can be normal ascii character, special key and key combination
-** defined in keyboard.h file.
-*/
 
 int	listen_keys(void)
 {
@@ -27,7 +20,7 @@ int	listen_keys(void)
 	size_t	i;
 	int		sum;
 
-	bytes = read(1, key, KEY_SIZE);
+	bytes = read(STDIN_FILENO, key, KEY_SIZE);
 	key[bytes] = '\0';
 	i = -1;
 	sum = 0;
