@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 13:08:11 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/23 00:16:00 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 01:25:03 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct		s_lexer
 }					t_lexer;
 
 void				init_lexer(t_terminal *term);
-void				parse_tokens(t_terminal *term, t_token *tokens);
+void				parse_tokens(t_terminal *term, t_lexer *lexer);
 t_token				*get_t_list_token(t_list *node);
 t_token				*move_token_n_times(t_token *list, int n);
 void				check_dollar_tilde(t_list *env, t_token *token);

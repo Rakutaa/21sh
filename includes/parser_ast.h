@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 16:40:04 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 00:38:55 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 01:39:52 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,14 @@ typedef struct				s_ast
 	struct s_ast			*next;
 }							t_ast;
 
+typedef struct 				s_free
+{
+	t_ast					*ast;
+	t_parser_l				*parser;
+	t_lexer					*lexer;
+}							t_free;
+
+
 t_ast_n						*create_factor(char **cmnd, t_re_ag *list,
 							t_list *env);
 t_ast_n						*create_expression(t_ast_n *left,
@@ -142,12 +150,12 @@ void						visit_exec(t_ast_n *obj, t_ast **ast,
 							char **env);
 void						visit_re_ag(t_ast_n *obj, t_ast **ast);
 void						visit_expression(t_ast_n *obj,
-							t_ast **ast, t_terminal *term);
+							t_ast **ast, t_terminal *term, t_free *willy);
 void						add_node_to_parser_node_list(t_parser_l
 							**list, t_parser_n *ast_node, \
 							t_parser_n *token_node);
 t_ast						*create_ast_list(t_parser_l *list);
-void						execute_ast(t_ast *a, t_terminal *t);
+void						execute_ast(t_ast *a, t_terminal *t, t_free *willy);
 t_re_ag						*tokens_to_redirection(t_token *h,
 							t_token *l, t_terminal *t);
 void						free_ast(t_ast *list);
@@ -155,7 +163,7 @@ void						free_parser(t_parser_l *list);
 void						free_tokens(t_token *list);
 t_ast						*init_ast(void);
 void						buildin_factor(t_ast_n *obj,
-							t_ast **ast, t_terminal *term);
+							t_ast **ast, t_terminal *term, t_free *willy);
 char						*value_lookup(t_list *env, char *key);
 int							buildin_cd(t_list *env, char **args);
 void						unset_key(t_list *env, char *key);
@@ -172,4 +180,7 @@ void						greater_and_double(t_ast **ast,
 void						less_than(t_ast **ast, char *file);
 void						heredoc(t_ast **ast, t_re_ag *node);
 void						less_greater_than(t_ast **ast, char *file);
+t_free						*init_willy(t_lexer *lexer, t_ast *ast,
+							t_parser_l *parser);
+void						free_willy(t_free *willy, t_terminal *term);
 #endif

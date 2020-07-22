@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/17 22:51:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/23 00:15:18 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 01:29:48 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static void	copy_command(t_terminal *term)
 	ex = create_expression(create_factor(echon, NULL, term->env->linked), \
 	create_factor(copyn, NULL, term->env->linked));
 	head->parent = ex;
-	execute_ast(head, term);
+	execute_ast(head, term, NULL);
 }
 
 /*
@@ -125,7 +125,7 @@ static void	cut_command(t_terminal *term)
 	ex = create_expression(create_factor(echon, NULL, term->env->linked), \
 	create_factor(copyn, NULL, term->env->linked));
 	head->parent = ex;
-	execute_ast(head, term);
+	execute_ast(head, term, NULL);
 	ft_bzero(term->in->string, ARG_MAX);
 	term->in->index = 0;
 }

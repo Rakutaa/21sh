@@ -6,13 +6,14 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:39:26 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 00:37:54 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 01:41:52 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser_ast.h"
 
-void		buildin_factor(t_ast_n *obj, t_ast **ast, t_terminal *term)
+void		buildin_factor(t_ast_n *obj, t_ast **ast, t_terminal *term,
+			t_free *willy)
 {
 	if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "cd"))
 		buildin_cd(term->env->linked, obj->nodes.t_factor.cmds);
@@ -25,13 +26,13 @@ void		buildin_factor(t_ast_n *obj, t_ast **ast, t_terminal *term)
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "env"))
 		buildin_env(term->env->table);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "exit"))
-		exit(0);
+		free_willy(willy, term);
 }
 
-void		execute_ast(t_ast *ast, t_terminal *term)
+void		execute_ast(t_ast *ast, t_terminal *term, t_free *willy)
 {
-	int i;
-	int ret;
+	int		i;
+	int		ret;
 
 	while (ast)
 	{
@@ -39,10 +40,10 @@ void		execute_ast(t_ast *ast, t_terminal *term)
 		ast->pids = malloc(sizeof(int) * ast->cmds);
 		if (ast->parent->e_node == FACTOR)
 			ast->parent->nodes.t_factor.e_factor == BUILDIN ?
-			buildin_factor(ast->parent, &ast, term) :
+			buildin_factor(ast->parent, &ast, term, willy) :
 			visit_exec(ast->parent, &ast, term->env->table);
 		else
-			visit_expression(ast->parent, &ast, term);
+			visit_expression(ast->parent, &ast, term, willy);
 		if (ast->cmds > 0)
 		{
 			while (i != ast->cmds)

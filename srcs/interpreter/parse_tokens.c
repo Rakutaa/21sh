@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 09:59:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/23 00:37:00 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 01:37:22 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,21 +76,23 @@ t_token *head, t_token *last, t_terminal *term)
 }
 
 void			tiger_king_stealing_ur_loot(t_ast *ast,
-t_parser_l *head)
+t_parser_l *head, t_free *willy)
 {
+	free(willy);
 	free_ast(ast);
 	free_parser(head);
 }
 
-void			parse_tokens(t_terminal *term, t_token *tokens)
+void			parse_tokens(t_terminal *term, t_lexer *lexer)
 {
 	t_token		*current;
 	t_token		*head;
 	t_parser_l	*nhead;
 	t_ast		*ast;
+	t_free		*willy;
 
-	head = tokens;
-	current = tokens;
+	head = lexer->tokens;
+	current = lexer->tokens;
 	nhead = NULL;
 	while (current)
 	{
@@ -104,6 +106,7 @@ void			parse_tokens(t_terminal *term, t_token *tokens)
 		current = move_token_n_times(current, 1);
 	}
 	ast = create_ast_list(nhead);
-	execute_ast(ast, term);
-	tiger_king_stealing_ur_loot(ast, nhead);
+	willy = init_willy(lexer, ast, nhead);
+	execute_ast(ast, term, willy);
+	tiger_king_stealing_ur_loot(ast, nhead, willy);
 }

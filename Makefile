@@ -6,7 +6,7 @@
 #    By: hege <hege@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/07/23 00:05:20 by hege             ###   ########.fr        #
+#    Updated: 2020/07/23 01:38:16 by hege             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRCS = srcs/config_termcaps.c \
        srcs/interpreter/ast_utils3.c \
        srcs/interpreter/ast_helpers.c \
        srcs/interpreter/dollar_tilde_utils.c \
+       srcs/interpreter/struct_for_exit.c \
        srcs/interpreter/re_ag.c \
        srcs/interpreter/re_ag_dub.c \
        srcs/interpreter/re_ag_dub2.c \

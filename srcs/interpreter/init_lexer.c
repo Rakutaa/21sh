@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/22 23:53:35 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 01:29:52 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void				init_lexer(t_terminal *term)
 			break ;
 	}
 	if (!term->in->sigint && ok_to_parser(lexer->tokens, term))
-		parse_tokens(term, lexer->tokens);
+		parse_tokens(term, lexer);
 	free_tokens(lexer->tokens);
 	free(lexer);
 }

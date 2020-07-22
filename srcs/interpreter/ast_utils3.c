@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 18:02:46 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 00:15:18 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 01:36:13 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void		visit_exec(t_ast_n *obj, t_ast **ast, char **env)
 	}
 }
 
-void		visit_expression(t_ast_n *obj, t_ast **ast, t_terminal *term)
+void		visit_expression(t_ast_n *obj, t_ast **ast, t_terminal *term,
+			t_free *willy)
 {
 	t_ast_n					*left;
 	t_ast_n					*right;
@@ -59,9 +60,9 @@ void		visit_expression(t_ast_n *obj, t_ast **ast, t_terminal *term)
 	right = obj->nodes.t_expr.right;
 	if (left->e_node == 0)
 		left->nodes.t_factor.e_factor == 0 ?
-		buildin_factor(left, ast, term) :
+		buildin_factor(left, ast, term, willy) :
 		visit_exec(left, ast, term->env->table);
 	else
-		visit_expression(left, ast, term);
+		visit_expression(left, ast, term, willy);
 	visit_exec(right, ast, term->env->table);
 }

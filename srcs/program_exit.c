@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:21 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/22 22:45:45 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 01:17:04 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	program_exit(t_terminal *term, int num)
 	{
 		term->in ? free(term->in) : 0;
 		ft_dlstdel(&term->h_head, ft_ddel);
+		free_env(term->env);
 		free(term);
 	}
 	exit(num);
