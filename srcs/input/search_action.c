@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/22 14:08:37 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 15:18:05 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ void		search_action(t_terminal *term, int sum)
 	else if (sum == UP || sum == DOWN \
 	|| sum == CTRL_R)
 		browse_history(term, sum);
-	else if (sum == OPT_C || sum == OPT_X \
-	|| sum == OPT_V)
-		mac_clipboard(term, sum);
 	else if (sum == CTRL_K \
 	|| sum == CTRL_U || sum == CTRL_P)
 		shell_clipboard(term, sum);

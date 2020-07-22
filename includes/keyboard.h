@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:33 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/22 14:08:09 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/22 15:17:14 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,5 @@
 # define CTRL_DOWN 345
 # define CTRL_RIGHT 346
 # define CTRL_LEFT 347
-# define OPT_C -150
-# define OPT_V -252
-# define OPT_X -269
 
 #endif

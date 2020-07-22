@@ -6,7 +6,7 @@
 #    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/07/22 15:08:25 by vkuokka          ###   ########.fr        #
+#    Updated: 2020/07/22 15:17:48 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ SRCS = srcs/config_termcaps.c \
        srcs/input/cursor_movement_2.c \
        srcs/input/init_input.c \
        srcs/input/listen_keys.c \
-       srcs/input/mac_clipboard.c \
        srcs/input/print_input.c \
        srcs/input/search_action.c \
        srcs/input/shell_clipboard.c \
