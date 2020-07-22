@@ -1,0 +1,53 @@
+echo '___PIPES___'
+echo '___'
+base64 /dev/urandom | head -c 10 | grep 42 | wc -l | sed -e 's/1/Yes/g' -e 's/0/No/g'
+echo '___REDIRECTIONS___'
+echo "Testing redirections," > /tmp/test.txt
+cat /tmp/test.txt
+echo '___'
+echo "with multiple lines" >> /tmp/test.txt
+cat /tmp/test.txt
+echo '___'
+wc -c < /tmp/test.txt
+echo '___'
+cat -e << EOF
+Roses are red
+Violets are blue
+All my base are belong to you
+And so are you
+EOF
+echo '___'
+cat -e << EOF >> /tmp/test.txt
+Roses are red
+Violets are blue
+All my base are belong to you
+And so are you
+EOF
+cat /tmp/test.txt
+echo '___SEVERAL COMMANDS FOLLOWING EACH OTHER___'
+touch newfile;
+rm newfile
+echo '___A LITTLE_BIT_OF_EVERYTHING___'
+mkdir test; cd test; ls | cat | wc -c > fifi; cat fifi
+cd ..
+rm -r test
+echo '___'
+cd /tmp; sort << EOF | cat -e > sorted_poem; sed -e 's/Roses/Turnips/' < sorted_poem > better_poem; cd -; echo I prefer turnips anyway >> /tmp/better_poem; cat /tmp/better_poem
+Roses are red
+Violets are blue
+All my base are belong to you
+I love you
+EOF
+echo '___FILE_DESCRIPTOR_AGGREGATION___'
+rm nosuchfile 2>&-
+echo '___'
+rm nosuchfile 2>&1 | cat -e
+echo '___'
+echo "No dollar character" 1>&2 | cat -e
+echo '___QUOTES_MANAGEMENT__'
+echo "
+Roses are red
+Violets are blue
+All my base are belong to you
+I love you
+"

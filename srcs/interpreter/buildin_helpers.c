@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   buildin_helpers.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/07/22 22:05:42 by hege              #+#    #+#             */
+/*   Updated: 2020/07/22 22:06:08 by hege             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
 void		unset_key(t_list *enviroment, char *key)
@@ -24,9 +36,7 @@ void		unset_key(t_list *enviroment, char *key)
 		}
 }
 
-//**env pitäis updatee
-
-void	set_key(t_list *enviroment, char *key, char *value)
+void		set_key(t_list *enviroment, char *key, char *value)
 {
 	size_t	len1;
 	size_t	len2;
@@ -48,7 +58,7 @@ void	set_key(t_list *enviroment, char *key, char *value)
 	ft_lstaddback(&enviroment, node);
 }
 
-char			*value_lookup(t_list *enviroment, char *key)
+char		*value_lookup(t_list *enviroment, char *key)
 {
 	while (enviroment)
 	{
