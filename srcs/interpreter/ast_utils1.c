@@ -12,23 +12,19 @@
 
 #include "parser_ast.h"
 
-/*
-**this is the substance of syntax grammar. 
-**simple cmd.|| !ft_strcmp(str, "exit")
-*/ 
-
 int				is_buildin(char *str)
 {
-	if (!ft_strcmp(str, "echo") || !ft_strcmp(str, "cd") || !ft_strcmp(str, "setenv")
+	if (!ft_strcmp(str, "echo") || !ft_strcmp(str, "cd") ||
+	!ft_strcmp(str, "setenv")
 	|| !ft_strcmp(str, "unsetenv") || !ft_strcmp(str, "env"))
 		return (1);
 	return (0);
 }
 
-static char			*path_join(char *str1, char *str2)
+static char		*path_join(char *str1, char *str2)
 {
-	size_t			i;
-	char			*ret;
+	size_t		i;
+	char		*ret;
 
 	i = ft_strlen(str1);
 	if (str1[i - 1] == '/')
@@ -42,7 +38,7 @@ static char			*path_join(char *str1, char *str2)
 	return (ret);
 }
 
-void			add_exec_path(char	*name, t_list *env, t_ast_node	*facto)
+void			add_exec_path(char *name, t_list *env, t_ast_node *facto)
 {
 	char		**paths;
 	char		*env_path_value;
@@ -50,10 +46,9 @@ void			add_exec_path(char	*name, t_list *env, t_ast_node	*facto)
 	char		*path;
 
 	if (access(name, F_OK) == 0)
-	{
 		facto->nodes.t_factor.path_join = ft_strdup(name);
+	if (access(name, F_OK) == 0)
 		return ;
-	}
 	i = -1;
 	env_path_value = value_lookup(env, "PATH");
 	if (!env_path_value)
@@ -69,16 +64,11 @@ void			add_exec_path(char	*name, t_list *env, t_ast_node	*facto)
 		}
 		free(path);
 	}
-	i = 0;
-	while(paths[i])
-	{
-		free(paths[i]);
-		i++;
-	}
-	free(paths);
+	ft_arrfree(paths);
 }
 
-t_ast_node		*create_factor(char **cmnd, t_redirection_aggregation *list, t_list *env)
+t_ast_node		*create_factor(char **cmnd, t_redirection_aggregation *list,
+				t_list *env)
 {
 	t_ast_node	*facto;
 

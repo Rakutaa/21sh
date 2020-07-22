@@ -14,16 +14,9 @@
 
 void		buildin_factor(t_ast_node *obj, t_ast **ast, t_terminal *term)
 {
-	if ((*ast)->parent->e_node == 1 && obj != (*ast)->parent->nodes.t_expr.right)
-	{
-		pipe((*ast)->pipe);
-		dup2((*ast)->pipe[1], 1);
-		close((*ast)->pipe[1]);
-	}
 	if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "cd"))
 		buildin_cd(term->env->linked, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "echo"))
-//		buildin_echo(obj->nodes.t_factor.cmds, ast, obj);
 		exec_factor(obj, ast, term->env->table);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "setenv"))
 		buildin_setenv(term, obj->nodes.t_factor.cmds);
@@ -31,8 +24,6 @@ void		buildin_factor(t_ast_node *obj, t_ast **ast, t_terminal *term)
 		buildin_unsetenv(term, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "env"))
 		buildin_env(term->env->table);
-	// else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "exit"))
-	// 	buildin_exit();
 }
 
 void		execute_ast(t_ast *ast, t_terminal *term)
