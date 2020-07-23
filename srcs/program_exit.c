@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:21 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/23 14:35:36 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/23 20:37:18 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 #include "parser_ast.h"
 
 /*
-** Returns terminal configuration as it was before launching
-** the program. Frees allocated memory.
+** Saves history before returning terminal configurations as they were
+** before entering the program. Frees allocated memory.
 */
 
 void	program_exit(t_terminal *term, int num)
 {
+	save_history(term);
 	term ? config_terminal(1, term) : 0;
 	num == 0 ? ft_putendl_fd("21sh: Exit without errors.", STDOUT_FILENO) : 0;
 	num == 1 ? ft_putendl_fd("21sh: Exit with errors.", STDERR_FILENO) : 0;

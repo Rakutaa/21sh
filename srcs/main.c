@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/22 16:57:59 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/23 20:48:20 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@ static void		print_banner(void)
 	ft_putendl("\\_____/\\___/___/_| |_|\\___|_|_|");
 	ft_putchar('\n');
 }
-
-/*
-** Adds node into history doubly list and cuts the tail
-** if history length exceeds HISTSIZE defined in header.
-*/
 
 static void		add_history(t_terminal *term)
 {
@@ -50,13 +45,7 @@ static void		add_history(t_terminal *term)
 	}
 }
 
-/*
-** This is the "core" part of the program. It allocates memory for the input
-** struct which keeps the information about the current command and cursor
-** positon.
-*/
-
-static void		command_line(t_terminal *term)
+static void		program_loop(t_terminal *term)
 {
 	term->in = (t_input *)malloc(sizeof(t_input));
 	!term->in ? program_exit(term, 1) : 0;
@@ -68,8 +57,6 @@ static void		command_line(t_terminal *term)
 		ft_putchar('\n');
 		if (term->in->string[0] && !term->in->sigint)
 		{
-			if (ft_strequ(term->in->string, "exit"))	// DELETE
-				return ;								// DELETE
 			if (isatty(STDIN_FILENO))
 				add_history(term);
 			init_lexer(term);
@@ -94,13 +81,6 @@ void			close_fd(void)
 	}
 }
 
-/*
-** Configurates termcaps and allocates memory for term struct.
-** The program should always return to main function if the exit
-** is done without errors. Termcaps command `ho' moves the cursor
-** to the upper left corner of the screen.
-*/
-
 int				main(int argc, char **argv, char **env)
 {
 	t_terminal	*term;
@@ -113,13 +93,10 @@ int				main(int argc, char **argv, char **env)
 	ft_bzero(term->clipboard, ARG_MAX);
 	copy_enviroment(term, env);
 	term->in = NULL;
-	term->h_head = NULL;
-	term->h_tail = NULL;
-	tputs(tgetstr("ho", NULL), 1, print_char);
 	init_history(term);
+	tputs(tgetstr("ho", NULL), 1, print_char);
 	print_banner();
-	command_line(term);
-	save_history(term);
+	program_loop(term);
 	program_exit(term, 0);
 	return (0);
 }
