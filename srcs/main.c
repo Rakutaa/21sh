@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/23 20:48:20 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/23 21:12:02 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,6 @@ static void		program_loop(t_terminal *term)
 				add_history(term);
 			init_lexer(term);
 		}
-	}
-}
-
-/*
-** env pitää muuttaa t_env muotoon.
-// What is this and what is it doing in my backyard???
-*/
-
-void			close_fd(void)
-{
-	int			i;
-
-	i = 3;
-	while (i < 43)
-	{
-		close(i);
-		i++;
 	}
 }
 

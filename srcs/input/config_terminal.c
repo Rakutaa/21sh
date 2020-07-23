@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:04 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/22 17:36:38 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/23 23:02:50 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 ** Chooses action according to reset value. If reset value
 ** is positive, It gathers information about the window size
 ** for term struct and turns off ICANON and ECHO. If it is zero
-** the function Configurates the terminal and SIGSTP as they were
-** before the program started.
+** the function Configurates the terminal as it was before the
+** program started.
 */
 
 void		config_terminal(int reset, t_terminal *term)
