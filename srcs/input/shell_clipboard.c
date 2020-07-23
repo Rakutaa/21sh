@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 17:44:32 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/22 14:08:03 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/23 22:49:27 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,22 @@ static void	cut_before(t_terminal *term)
 
 static void	paste_buffer(t_terminal *term)
 {
-	char	*tmp1;
-	char	*tmp2;
-	size_t	len;
+	size_t	len1;
+	size_t	len2;
 
 	if (!term->clipboard[0])
 		return ;
-	tmp1 = ft_strreplace(term->clipboard, "\n", " ");
-	tmp2 = ft_strreplace(tmp1, "\t", "    ");
-	len = ft_strlen(tmp2);
-	if (len < ARG_MAX - ft_strlen(term->in->string))
-	{
-		ft_memmove(term->in->string + term->in->index + len, \
-		term->in->string + term->in->index, \
-		ft_strlen(term->in->string) + term->in->index);
-		ft_memmove(term->in->string + term->in->index, tmp2, len);
-		term->in->index += len;
-	}
-	free(tmp1);
-	free(tmp2);
+	len1 = ft_strlen(term->clipboard);
+	len2 = ft_strlen(term->in->string);
+	if (len2 + len1 >= ARG_MAX ||
+	len2 + term->in->index + len1 >= ARG_MAX)
+		return ;
+	ft_memmove(term->in->string + term->in->index + len1, \
+	term->in->string + term->in->index, \
+	len2 + term->in->index);
+	ft_memmove(term->in->string + term->in->index, \
+	term->clipboard, len1);
+	term->in->index += len1;
 }
 
 void		shell_clipboard(t_terminal *term, int sum)
