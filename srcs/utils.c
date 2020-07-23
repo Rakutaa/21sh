@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:28 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/22 16:54:27 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/23 14:35:47 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char		**update_enviroment(t_list *enviroment)
 	size_t	i;
 
 	len = ft_lstlen(&enviroment);
-	env = (char **)malloc(sizeof(char **) * len + 1);
+	env = (char **)malloc(sizeof(char *) * len + 1);
 	if (!env)
 		return (NULL);
 	i = 0;

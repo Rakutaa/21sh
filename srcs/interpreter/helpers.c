@@ -3,23 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   helpers.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:48:00 by vtran             #+#    #+#             */
-/*   Updated: 2020/06/10 18:10:33 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/23 00:16:00 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
-
-//tokenize2.c
-
-// t_token		*get_t_list_token(t_list *node)
-// {
-// 	if (node)
-// 		return (node->content);
-// 	return (NULL);
-// }
 
 t_token		*move_token_n_times(t_token *list, int n)
 {
@@ -31,7 +22,7 @@ t_token		*move_token_n_times(t_token *list, int n)
 	return (list);
 }
 
-t_token		*get_redirection(t_lexer *lexer)
+t_token		*get_re(t_lexer *lexer)
 {
 	if (lexer->data[lexer->i] == '>')
 	{
@@ -77,32 +68,41 @@ t_token		*get_agr(t_lexer *lexer)
 	return (create_token(TOKEN_AGG, ft_strsub(str, counter, i - counter)));
 }
 
-int			is_aggre(t_lexer *lexer)
+int			is_aggre(char *str, int i)
+{
+	if (str[i] && str[i] == '>' && str[i + 1] && str[i + 1] == '&' &&
+	str[i + 2] && (str[i + 2] == ' ' || str[i + 2] == '|' || str[i + 2] == '-'
+	|| str[i + 2] == ';' || ft_isdigit(str[i + 2])))
+		return (8);
+	if (str[i] && str[i] == '<' && str[i + 1] && str[i + 1] == '&' && str[i + 2]
+	&& (str[i + 2] == ' ' || str[i + 2] == '|' || str[i + 2] == '-' ||
+	str[i + 2] == ';'))
+		return (9);
+	return (0);
+}
+
+int			is_re_ag(t_lexer *lexer)
 {
 	int		i;
-	char	*str;
+	char	*s;
 
 	i = lexer->i;
-	str = lexer->data;
-	if (str[i] == ':' && str[i + 1] == '>')
+	s = lexer->data;
+	if (s[i] == ':' && s[i + 1] == '>')
 		return (1);
-	if (str[i] == '&' && str[i + 1] == '>')
+	if (s[i] == '&' && s[i + 1] == '>')
 		return (2);
-	while (ft_isdigit(str[i]))
+	while (ft_isdigit(s[i]))
 		i++;
-	if (str[i] && str[i] == '>' && str[i + 1] && str[i + 1] == '>' && str[i + 2])
+	if (s[i] && s[i] == '>' && s[i + 1] && s[i + 1] == '>' && s[i + 2])
 		return (4);
-	if (str[i] && str[i] == '>' && str[i + 1] && str[i + 1] == '&' && str[i + 2] && (str[i + 2] == ' ' || str[i + 2] == '|' || str[i + 2] == ';' || ft_isdigit(str[i + 2])))
-		return (8);
-	if (str[i] && str[i] == '>' && str[i + 1])
+	if (s[i] && s[i] == '>' && s[i + 1] && s[i + 1] != '&')
 		return (3);
-	if (str[i] && str[i] == '<' && str[i + 1] && str[i + 1] == '<' && str[i + 2])
-		return (6);	
-	if (str[i] && str[i] == '<' && str[i + 1] && str[i + 1] == '>' && str[i + 2])
+	if (s[i] && s[i] == '<' && s[i + 1] && s[i + 1] == '<' && s[i + 2])
+		return (6);
+	if (s[i] && s[i] == '<' && s[i + 1] && s[i + 1] == '>' && s[i + 2])
 		return (7);
-	if (str[i] && str[i] == '<' && str[i + 1] && str[i + 1] == '&' && str[i + 2] && (str[i + 2] == ' ' || str[i + 2] == '|' || str[i + 2] == ';'))
-		return (9);
-	if (str[i] && str[i] == '<' && str[i + 1])
+	if (s[i] && s[i] == '<' && s[i + 1] && s[i + 1] != '&')
 		return (5);
-	return (0);
+	return (is_aggre(s, i));
 }

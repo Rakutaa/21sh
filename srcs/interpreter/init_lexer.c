@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   init_lexer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/20 16:07:42 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/23 12:32:50 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser_ast.h"
 #include "lexer.h"
-
-
 
 t_lexer				*lexa(t_terminal *term)
 {
@@ -41,7 +39,8 @@ void				get_strange_redirections(int i, t_lexer *lexer)
 		counter = counter + 1;
 	else
 		counter = counter + 2;
-	add_token(&lexer->tokens, create_token(TOKEN_REDIRECT, ft_strsub(str, lexer->i, counter)));
+	add_token(&lexer->tokens,
+	create_token(TOKEN_REDIRECT, ft_strsub(str, lexer->i, counter)));
 	lexer->i = lexer->i + counter;
 }
 
@@ -53,15 +52,27 @@ void				if_is_ag_re_do_ag_re(int i, t_lexer *lexer)
 	{
 		lexer->i = lexer->i + 2;
 		if (i == 1)
-			add_token(&lexer->tokens, create_token(TOKEN_REDIRECT, ft_strdup(":>")));
+			add_token(&lexer->tokens,
+			create_token(TOKEN_REDIRECT, ft_strdup(":>")));
 		else
-			add_token(&lexer->tokens, create_token(TOKEN_REDIRECT, ft_strdup("&>")));
+			add_token(&lexer->tokens,
+			create_token(TOKEN_REDIRECT, ft_strdup("&>")));
 	}
 	else if (i > 2 && i < 8)
 		get_strange_redirections(i, lexer);
 	else
 		add_token(&lexer->tokens, get_agr(lexer));
 }
+
+// int					check_first_token(t_token *tokens)
+// {
+// 	if (!tokens)
+// 		return (0);
+// 	if (tokens->e_type == TOKEN_SEMI || tokens->e_type == TOKEN_PIPE ||
+// 	tokens->e_type == TOKEN_REDIRECT)
+// 		return (0);
+// 	return (1);
+// }
 
 void				init_lexer(t_terminal *term)
 {
@@ -74,7 +85,7 @@ void				init_lexer(t_terminal *term)
 		{
 			lexer->i++;
 			if (lexer->i > 0)
-				if_is_ag_re_do_ag_re(is_aggre(lexer), lexer);
+				if_is_ag_re_do_ag_re(is_re_ag(lexer), lexer);
 			continue ;
 		}
 		else
@@ -82,8 +93,8 @@ void				init_lexer(t_terminal *term)
 		if (term->in->sigint)
 			break ;
 	}
-	if (!term->in->sigint && ok_to_parser(lexer->tokens, term))
-		parse_tokens(term, lexer->tokens);
+	if (!term->in->sigint && lexer->tokens && ok_to_parser(lexer->tokens, term))
+		parse_tokens(term, lexer);
 	free_tokens(lexer->tokens);
 	free(lexer);
 }

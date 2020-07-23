@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 09:59:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/21 14:41:46 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/23 01:37:22 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 #include "parser_ast.h"
 
-t_ast_node		*tokens_to_factor(t_token *head, int i,
-t_redirection_aggregation *redir, t_list *env)
+t_ast_n			*tokens_to_factor(t_token *head, int i,
+t_re_ag *redir, t_list *env)
 {
-	char						**cmd;
-	int							count;
+	char		**cmd;
+	int			count;
 
 	count = -1;
 	cmd = (char **)malloc(sizeof(char *) * (i + 1));
@@ -30,11 +30,12 @@ t_redirection_aggregation *redir, t_list *env)
 	return (create_factor(cmd, redir, env));
 }
 
-t_ast_node		*tokens_to_ast_node(t_token *head, t_token *last, t_list *env, t_terminal *term)
+t_ast_n			*tokens_to_ast_node(t_token *head, t_token *last,
+t_list *env, t_terminal *term)
 {
-	t_token						*tmp;
-	t_redirection_aggregation	*redir;
-	int							i;
+	t_token		*tmp;
+	t_re_ag		*redir;
+	int			i;
 
 	redir = NULL;
 	tmp = head;
@@ -54,40 +55,44 @@ t_ast_node		*tokens_to_ast_node(t_token *head, t_token *last, t_list *env, t_ter
 	return (tokens_to_factor(head, i, redir, env));
 }
 
-void			tokens_to_parser_node(t_parser_node_list **list,
-t_token *head, t_token *last, t_list *env, t_terminal *term)
+void			tokens_to_parser_node(t_parser_l **list,
+t_token *head, t_token *last, t_terminal *term)
 {
-	t_parser_node				*ast_nodeobj;
-	t_parser_node				*token_nodeobj;
+	t_parser_n	*ast_nodeobj;
+	t_parser_n	*token_nodeobj;
 
-	ast_nodeobj = malloc(sizeof(t_parser_node));
+	ast_nodeobj = malloc(sizeof(t_parser_n));
 	token_nodeobj = NULL;
 	ast_nodeobj->e_node = AST;
-	ast_nodeobj->nodes.ast_nodeobj = tokens_to_ast_node(head, last, env, term);
-	if ((last->e_type == 3 || last->e_type == 5) && last->next) //tässä
+	ast_nodeobj->nodes.t_a.ast_nodeobj =
+	tokens_to_ast_node(head, last, term->env->linked, term);
+	if ((last->e_type == 3 || last->e_type == 5) && last->next)
 	{
-		token_nodeobj = malloc(sizeof(t_parser_node));
+		token_nodeobj = malloc(sizeof(t_parser_n));
 		token_nodeobj->e_node = TOKEN;
-		token_nodeobj->nodes.token = last;
+		token_nodeobj->nodes.t_t.token = last;
 	}
 	add_node_to_parser_node_list(list, ast_nodeobj, token_nodeobj);
 }
 
-void			tiger_king_stealing_ur_loot(t_ast *ast, t_parser_node_list *head)
+void			tiger_king_stealing_ur_loot(t_ast *ast,
+t_parser_l *head, t_free *willy)
 {
+	free(willy);
 	free_ast(ast);
 	free_parser(head);
 }
 
-void			parse_tokens(t_terminal *term, t_token *tokens)
+void			parse_tokens(t_terminal *term, t_lexer *lexer)
 {
-	t_token						*current;
-	t_token						*head;
-	t_parser_node_list			*nhead;
-	t_ast						*ast;
+	t_token		*current;
+	t_token		*head;
+	t_parser_l	*nhead;
+	t_ast		*ast;
+	t_free		*willy;
 
-	head = tokens;
-	current = tokens;
+	head = lexer->tokens;
+	current = lexer->tokens;
 	nhead = NULL;
 	while (current)
 	{
@@ -95,12 +100,13 @@ void			parse_tokens(t_terminal *term, t_token *tokens)
 		if (current->e_type == TOKEN_PIPE || current->e_type == TOKEN_SEMI ||
 		!current->next)
 		{
-			tokens_to_parser_node(&nhead, head, current, term->env->linked, term);
+			tokens_to_parser_node(&nhead, head, current, term);
 			head = move_token_n_times(current, 1);
 		}
 		current = move_token_n_times(current, 1);
 	}
 	ast = create_ast_list(nhead);
-	execute_ast(ast, term);
-	tiger_king_stealing_ur_loot(ast, nhead);
+	willy = init_willy(lexer, ast, nhead);
+	execute_ast(ast, term, willy);
+	tiger_king_stealing_ur_loot(ast, nhead, willy);
 }

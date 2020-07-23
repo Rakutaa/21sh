@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_env.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/07/22 22:09:28 by hege              #+#    #+#             */
+/*   Updated: 2020/07/22 22:11:44 by hege             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 
-static void	free_linked(t_list	*list)
+static void	free_linked(t_list *list)
 {
 	t_list	*next;
 
@@ -15,17 +27,17 @@ static void	free_linked(t_list	*list)
 	}
 }
 
-void	    free_table(char	**table)
+void		free_table(char **table)
 {
 	int	i;
-	
+
 	i = -1;
-	while(table[++i])
+	while (table[++i])
 		free(table[i]);
-    free(table);
+	free(table);
 }
 
-void	    free_env(t_env *env)
+void		free_env(t_env *env)
 {
 	t_list	*perkele;
 	char	**vittu;

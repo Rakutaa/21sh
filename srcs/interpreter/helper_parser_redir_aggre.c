@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_parser_redir_aggre.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:49:53 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/21 16:27:53 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/23 00:42:08 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 **adding into a simple cmds redirection or aggregation as a linked list
 */
 
-static void							add_redir_aggre_list(
-t_redirection_aggregation **list, t_redirection_aggregation *node)
+static void		add_redir_aggre_list(
+t_re_ag **list, t_re_ag *node)
 {
-	t_redirection_aggregation	*tmp;
+	t_re_ag		*tmp;
 
 	if (!*list)
 		*list = node;
@@ -36,12 +36,16 @@ t_redirection_aggregation **list, t_redirection_aggregation *node)
 **previous list node
 */
 
-void	write_heredoc(int out, char *file, t_terminal *term)
+void			write_heredoc(char *sign,
+t_re_ag *node, char *file, t_terminal *term)
 {
-//	close(in);
-//	(void)in;
-//	dup2(out, 1);
-//	close(out);
+	if (!ft_strequ(sign, "<<"))
+	{
+		node->node.t_re.heredoc = NULL;
+		return ;
+	}
+	node->node.t_re.heredoc = malloc(sizeof(int) * 2);
+	pipe(node->node.t_re.heredoc);
 	while (1)
 	{
 		init_input(term->in);
@@ -49,53 +53,45 @@ void	write_heredoc(int out, char *file, t_terminal *term)
 		start_editor(term);
 		ft_putchar('\n');
 		if (ft_strequ(term->in->string, file))
-			break;
-		ft_putendl_fd(term->in->string, out);
+			break ;
+		ft_putendl_fd(term->in->string, node->node.t_re.heredoc[1]);
 	}
-	close(out);
+	close(node->node.t_re.heredoc[1]);
 }
 
-static t_redirection_aggregation	*create_redir_aggre_node(int type,
+static t_re_ag	*create_redir_aggre_node(int type,
 t_token *file, t_token *sign, t_terminal *term)
 {
-	t_redirection_aggregation	*node;
-	char						*str;
-	int							i;
+	t_re_ag		*node;
+	int			i;
 
-	node = malloc(sizeof(t_redirection_aggregation));
+	node = malloc(sizeof(t_re_ag));
 	node->e_flag = type == 0 ? 0 : 1;
 	if (type == 0)
 	{
-		node->node.t_redirection.file = file->value;
-		node->node.t_redirection.redir = sign->value;
-		if (ft_strequ(sign->value, "<<"))
-		{
-			node->node.t_redirection.heredoc = malloc(sizeof(int) * 2);
-			pipe(node->node.t_redirection.heredoc);
-			write_heredoc(node->node.t_redirection.heredoc[1], file->value, term);
-		}
-		node->next = NULL;
+		node->node.t_re.file = file->value;
+		node->node.t_re.redir = sign->value;
+		write_heredoc(sign->value, node, file->value, term);
 	}
 	else
 	{
-		str = sign->value;
 		i = 0;
-		while (str[i] != '<' && str[i] != '>')
+		while (sign->value[i] != '<' && sign->value[i] != '>')
 			i++;
-		node->node.t_ag.n = i == 0 ? NULL : ft_strsub(str, 0, i);
-		node->node.t_ag.sign = ft_strsub(str, i, 2);
+		node->node.t_ag.n = i == 0 ? NULL : ft_strsub(sign->value, 0, i);
+		node->node.t_ag.sign = ft_strsub(sign->value, i, 2);
 		i = i + 2;
-		node->node.t_ag.word = str[i] == '-' ? ft_strdup("-") :
-		ft_strdup(&str[i]);
-		node->next = NULL;
+		node->node.t_ag.word = sign->value[i] == '-' ? ft_strdup("-") :
+		ft_strdup(&sign->value[i]);
 	}
+	node->next = NULL;
 	return (node);
 }
 
-t_redirection_aggregation			*tokens_to_redirection(
+t_re_ag			*tokens_to_redirection(
 t_token *head, t_token *last, t_terminal *term)
 {
-	t_redirection_aggregation	*rhead;
+	t_re_ag		*rhead;
 
 	rhead = NULL;
 	while (head && head != last)
@@ -114,6 +110,7 @@ t_token *head, t_token *last, t_terminal *term)
 		}
 	}
 	if (last && last->e_type == TOKEN_AGG)
-		add_redir_aggre_list(&rhead, create_redir_aggre_node(1, NULL, last, term));
+		add_redir_aggre_list(&rhead,
+		create_redir_aggre_node(1, NULL, last, term));
 	return (rhead);
 }

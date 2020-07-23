@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   envs.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/07/22 22:07:38 by hege              #+#    #+#             */
+/*   Updated: 2020/07/23 04:27:57 by hege             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexer.h"
 #include "parser_ast.h"
 
@@ -30,5 +42,5 @@ int		buildin_unsetenv(t_terminal *term, char **args)
 int		buildin_env(char **env)
 {
 	ft_arriter(env, ft_putendl);
-	return (0);
+	exit(0);
 }

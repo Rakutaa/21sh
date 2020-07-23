@@ -3,42 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:39:26 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/21 16:30:16 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/23 04:28:45 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser_ast.h"
 
-void		buildin_factor(t_ast_node *obj, t_ast **ast, t_terminal *term)
+void		buildin_factor(t_ast_n *obj, t_ast **ast, t_terminal *term,
+			t_free *willy)
 {
-	if ((*ast)->parent->e_node == 1 && obj != (*ast)->parent->nodes.t_expr.right)
-	{
-		pipe((*ast)->pipe);
-		dup2((*ast)->pipe[1], 1);
-		close((*ast)->pipe[1]);
-	}
 	if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "cd"))
-		buildin_cd(term->env->linked, obj->nodes.t_factor.cmds);
+		buildin_cd(term->env, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "echo"))
-//		buildin_echo(obj->nodes.t_factor.cmds, ast, obj);
-		exec_factor(obj, ast, term->env->table);
+		visit_exec(obj, ast, term->env->table);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "setenv"))
 		buildin_setenv(term, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "unsetenv"))
 		buildin_unsetenv(term, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "env"))
-		buildin_env(term->env->table);
-	// else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "exit"))
-	// 	buildin_exit();
+		visit_exec(obj, ast, term->env->table);
+	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "exit"))
+		free_willy(willy, term);
 }
 
-void		execute_ast(t_ast *ast, t_terminal *term)
+void		execute_ast(t_ast *ast, t_terminal *term, t_free *willy)
 {
-	int i;
-	int ret;
+	int		i;
+	int		ret;
 
 	while (ast)
 	{
@@ -46,10 +40,10 @@ void		execute_ast(t_ast *ast, t_terminal *term)
 		ast->pids = malloc(sizeof(int) * ast->cmds);
 		if (ast->parent->e_node == FACTOR)
 			ast->parent->nodes.t_factor.e_factor == BUILDIN ?
-			buildin_factor(ast->parent, &ast, term) : 
-			exec_factor(ast->parent, &ast, term->env->table);
+			buildin_factor(ast->parent, &ast, term, willy) :
+			visit_exec(ast->parent, &ast, term->env->table);
 		else
-			visit_expression(ast->parent, &ast, term);
+			visit_expression(ast->parent, &ast, term, willy);
 		if (ast->cmds > 0)
 		{
 			while (i != ast->cmds)
@@ -73,7 +67,8 @@ t_ast		*init_ast(void)
 	ast->cmds = 0;
 	ast->pids = NULL;
 	ast->i = 0;
-	ast->pipe = malloc(sizeof(int)*2);
+	ast->rwfd = -1;
+	ast->pipe = malloc(sizeof(int) * 2);
 	ast->parent = NULL;
 	ast->next = NULL;
 	return (ast);
@@ -83,18 +78,18 @@ t_ast		*init_ast(void)
 **either there is mulple cmds separated ; or first cmd
 */
 
-t_ast		*create_ast_node(t_ast *ast, t_parser_node_list **list)
+t_ast		*create_ast_node(t_ast *ast, t_parser_l **list)
 {
 	if (!ast)
 	{
 		ast = init_ast();
-		ast->parent = (*list)->parser_nodeobj->nodes.ast_nodeobj;
+		ast->parent = (*list)->parser_nodeobj->nodes.t_a.ast_nodeobj;
 	}
 	else if ((*list)->next)
 	{
 		ast->next = init_ast();
 		ast->next->parent =
-		(*list)->next->parser_nodeobj->nodes.ast_nodeobj;
+		(*list)->next->parser_nodeobj->nodes.t_a.ast_nodeobj;
 		ast = ast->next;
 		*list = (*list)->next;
 	}
@@ -106,12 +101,7 @@ t_ast		*create_ast_node(t_ast *ast, t_parser_node_list **list)
 **ast->parent update. meaning that there is atleast one pipe
 */
 
-// t_ast_node	*update_ast_parent(t_ast_node *left, t_ast_node *right)
-// {
-// 	return (create_expression(left, right));
-// }
-
-t_ast		*create_ast_list(t_parser_node_list *list)
+t_ast		*create_ast_list(t_parser_l *list)
 {
 	t_ast	*ast;
 	t_ast	*tmp;
@@ -120,7 +110,7 @@ t_ast		*create_ast_list(t_parser_node_list *list)
 	tmp = ast;
 	while (list)
 	{
-		if (list->parser_nodeobj->nodes.token->e_type != TOKEN_PIPE)
+		if (list->parser_nodeobj->nodes.t_t.token->e_type != TOKEN_PIPE)
 		{
 			tmp = create_ast_node(tmp, &list);
 			tmp->cmds++;
@@ -130,7 +120,7 @@ t_ast		*create_ast_list(t_parser_node_list *list)
 		else
 		{
 			tmp->parent = create_expression(tmp->parent,
-			list->next->parser_nodeobj->nodes.ast_nodeobj);
+			list->next->parser_nodeobj->nodes.t_a.ast_nodeobj);
 			list = list->next->next;
 			tmp->cmds++;
 		}
