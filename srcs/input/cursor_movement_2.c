@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:04 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/05/28 13:34:00 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/23 22:58:51 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 
 static void	move_cursor_up(t_terminal *term)
 {
-	term->in->index = term->in->index - term->size.ws_col;
-	if (term->in->index < 0)
-		term->in->index = 0;
+	int result;
+	
+	result = term->in->index - term->size.ws_col;
+	if (result >= 0)
+		term->in->index = result;
 }
 
 static void	move_cursor_down(t_terminal *term)
 {
-	int		len;
+	int		result;
 
-	len = ft_strlen(term->in->string);
-	term->in->index = term->in->index + term->size.ws_col;
-	if (term->in->index > len)
-		term->in->index = len;
+	result = term->in->index + term->size.ws_col;
+	if (result <= (int)ft_strlen(term->in->string))
+		term->in->index = result;
 }
 
 void		cursor_movement_2(t_terminal *term, int sum)
