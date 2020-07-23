@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:10:28 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 15:15:06 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/23 04:35:49 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char		**update_enviroment(t_list *enviroment)
 	size_t	i;
 
 	len = ft_lstlen(&enviroment);
-	env = (char **)malloc(sizeof(char **) * len + 1);
+	env = (char **)malloc(sizeof(char *) * len + 1);
 	if (!env)
 		return (NULL);
 	i = 0;

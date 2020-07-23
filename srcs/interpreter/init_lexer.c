@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/23 01:29:52 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 12:32:50 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,16 @@ void				if_is_ag_re_do_ag_re(int i, t_lexer *lexer)
 		add_token(&lexer->tokens, get_agr(lexer));
 }
 
+// int					check_first_token(t_token *tokens)
+// {
+// 	if (!tokens)
+// 		return (0);
+// 	if (tokens->e_type == TOKEN_SEMI || tokens->e_type == TOKEN_PIPE ||
+// 	tokens->e_type == TOKEN_REDIRECT)
+// 		return (0);
+// 	return (1);
+// }
+
 void				init_lexer(t_terminal *term)
 {
 	t_lexer			*lexer;
@@ -83,7 +93,7 @@ void				init_lexer(t_terminal *term)
 		if (term->in->sigint)
 			break ;
 	}
-	if (!term->in->sigint && ok_to_parser(lexer->tokens, term))
+	if (!term->in->sigint && lexer->tokens && ok_to_parser(lexer->tokens, term))
 		parse_tokens(term, lexer);
 	free_tokens(lexer->tokens);
 	free(lexer);

@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/22 23:58:05 by hege              #+#    #+#             */
-/*   Updated: 2020/07/22 23:58:28 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 12:32:27 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int			check_syntax_error(int i, int j)
 int			syntax_error(int i, int j)
 {
 	if (i == 5 && j == 5)
-		ft_printf("\n21: unexpected syntax error close to keyword \";;\"\n");
+		ft_printf("21: unexpected syntax error close to keyword \";;\"\n");
 	else if (j == 5)
-		ft_printf("\n21: unexpected syntax error close to keyword \";\"\n");
+		ft_printf("21: unexpected syntax error close to keyword \";\"\n");
 	else if (j == 3)
-		ft_printf("\n21: unexpected syntax error close to keyword \"|\"\n");
+		ft_printf("21: unexpected syntax error close to keyword \"|\"\n");
 	else
-		ft_printf("\n21: unexpected syntax error close to keyword \"nl\"\n");
+		ft_printf("21: unexpected syntax error close to keyword \"nl\"\n");
 	return (0);
 }
 
@@ -63,6 +63,8 @@ int			ok_to_parser(t_token *tokens, t_terminal *term)
 	t_token *token;
 	t_token *token_next;
 
+	if (tokens->e_type == TOKEN_SEMI || tokens->e_type == TOKEN_PIPE)
+		return (syntax_error(1, tokens->e_type));
 	while (tokens->next)
 	{
 		token = tokens;
@@ -77,10 +79,9 @@ int			ok_to_parser(t_token *tokens, t_terminal *term)
 		tokens = tokens->next;
 	}
 	if (token_next && token_next->e_type == TOKEN_SEMI)
-	{
 		free_tokens(tokens);
+	if (token_next && token_next->e_type == TOKEN_SEMI)
 		token->next = NULL;
-	}
 	if (token_next && token_next->e_type == TOKEN_PIPE)
 		return (end_with_pipe(term));
 	return (1);
