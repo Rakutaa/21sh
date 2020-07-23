@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 16:40:04 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 01:39:52 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 04:08:40 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ t_ast						*init_ast(void);
 void						buildin_factor(t_ast_n *obj,
 							t_ast **ast, t_terminal *term, t_free *willy);
 char						*value_lookup(t_list *env, char *key);
-int							buildin_cd(t_list *env, char **args);
+int							buildin_cd(t_env *env, char **args);
 void						unset_key(t_list *env, char *key);
 void						set_key(t_list *env, char *k, char *v);
 int							buildin_env(char **env);

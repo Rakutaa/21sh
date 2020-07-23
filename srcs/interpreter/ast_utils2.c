@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:39:26 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 01:41:52 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 04:09:12 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		buildin_factor(t_ast_n *obj, t_ast **ast, t_terminal *term,
 			t_free *willy)
 {
 	if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "cd"))
-		buildin_cd(term->env->linked, obj->nodes.t_factor.cmds);
+		buildin_cd(term->env, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "echo"))
 		visit_exec(obj, ast, term->env->table);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "setenv"))
