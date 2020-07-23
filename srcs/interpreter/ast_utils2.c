@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:39:26 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 04:09:12 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 04:28:45 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		buildin_factor(t_ast_n *obj, t_ast **ast, t_terminal *term,
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "unsetenv"))
 		buildin_unsetenv(term, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "env"))
-		buildin_env(term->env->table);
+		visit_exec(obj, ast, term->env->table);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "exit"))
 		free_willy(willy, term);
 }

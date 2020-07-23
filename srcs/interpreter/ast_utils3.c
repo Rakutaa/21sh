@@ -6,7 +6,7 @@
 /*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 18:02:46 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 01:36:13 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/23 04:30:17 by hege             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ int			child(t_ast_n *obj, t_ast **ast, char **env)
 			close((*ast)->pipe[0]);
 		helper_dup(ast, obj, (*ast)->pipe[1]);
 		if (obj->nodes.t_factor.e_factor == BUILDIN)
-			buildin_echo(obj->nodes.t_factor.cmds);
+			!ft_strcmp(obj->nodes.t_factor.cmds[0], "echo") ?
+			buildin_echo(obj->nodes.t_factor.cmds) :
+			buildin_env(env);
 		execve(obj->nodes.t_factor.path_join, obj->nodes.t_factor.cmds, env);
 		abort();
 	}
