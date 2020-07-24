@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:39:26 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 04:28:45 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/24 14:50:11 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void		buildin_factor(t_ast_n *obj, t_ast **ast, t_terminal *term,
 	if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "cd"))
 		buildin_cd(term->env, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "echo"))
-		visit_exec(obj, ast, term->env->table);
+		visit_exec(obj, ast, term->env);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "setenv"))
 		buildin_setenv(term, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "unsetenv"))
 		buildin_unsetenv(term, obj->nodes.t_factor.cmds);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "env"))
-		visit_exec(obj, ast, term->env->table);
+		visit_exec(obj, ast, term->env);
 	else if (!ft_strcmp(obj->nodes.t_factor.cmds[0], "exit"))
 		free_willy(willy, term);
 }
@@ -39,9 +39,11 @@ void		execute_ast(t_ast *ast, t_terminal *term, t_free *willy)
 		i = 0;
 		ast->pids = malloc(sizeof(int) * ast->cmds);
 		if (ast->parent->e_node == FACTOR)
+		{
 			ast->parent->nodes.t_factor.e_factor == BUILDIN ?
 			buildin_factor(ast->parent, &ast, term, willy) :
-			visit_exec(ast->parent, &ast, term->env->table);
+			visit_exec(ast->parent, &ast, term->env);
+		}
 		else
 			visit_expression(ast->parent, &ast, term, willy);
 		if (ast->cmds > 0)

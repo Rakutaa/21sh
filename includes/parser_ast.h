@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_ast.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 16:40:04 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/24 10:44:10 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/24 16:00:31 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,15 +123,14 @@ typedef struct				s_free
 	t_lexer					*lexer;
 }							t_free;
 
-t_ast_n						*create_factor(char **cmnd, t_re_ag *list, \
-							t_list *env);
+t_ast_n						*create_factor(char **cmnd, t_re_ag *list);
 t_ast_n						*create_expression(t_ast_n *left, \
 							t_ast_n *right);
 void						helper_dup(t_ast **ast, t_ast_n *obj, \
 							int pipe_in);
 void						helper_close(t_ast_n *obj, t_ast **ast);
 void						visit_exec(t_ast_n *obj, t_ast **ast, \
-							char **env);
+							t_env *env);
 void						visit_re_ag(t_ast_n *obj, t_ast **ast);
 void						visit_expression(t_ast_n *obj, \
 							t_ast **ast, t_terminal *term, t_free *willy);
@@ -167,4 +166,5 @@ void						less_greater_than(t_ast **ast, char *file);
 t_free						*init_willy(t_lexer *lexer, t_ast *ast, \
 							t_parser_l *parser);
 void						free_willy(t_free *willy, t_terminal *term);
+char						*if_slash(char *name);
 #endif

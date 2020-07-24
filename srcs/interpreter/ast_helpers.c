@@ -3,18 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   ast_helpers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:34:34 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 00:41:20 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/24 16:00:52 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser_ast.h"
 
+char	*if_slash(char *name)
+{
+	if (access(name, F_OK) == 0)
+		return (ft_strdup(name));
+	return (NULL);
+}
+
 void	cmd_not_found(char *cmd)
 {
-	ft_printf("%s: command not found\n", cmd);
+	if (!ft_strchr(cmd, '/'))
+		ft_dprintf(2, "%s: command not found\n", cmd);
+	else
+		ft_dprintf(2, "%s: no such file of directory\n", cmd);
 }
 
 void	helper_dup(t_ast **ast, t_ast_n *obj, int out)

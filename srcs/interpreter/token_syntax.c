@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/22 23:58:05 by hege              #+#    #+#             */
-/*   Updated: 2020/07/24 14:00:55 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/24 16:07:22 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int			check_syntax_error(int i, int j)
 		if ((j == 5 && i == 5) || j == 3 || j == 4 || i == 3 || i == 4)
 			return (1);
 	if ((j == 3 || i == 3) && (j == 4 || i == 4))
+		return (1);
+	if (j == 3 && i == 3)
 		return (1);
 	return (0);
 }
@@ -64,8 +66,8 @@ int			ok_to_parser(t_token *tokens, t_terminal *term)
 	t_token *token_next;
 
 	token_next = NULL;
-	if (tokens->e_type == TOKEN_SEMI || tokens->e_type == TOKEN_PIPE)
-		return (syntax_error(1, tokens->e_type));
+	if (tokens->e_type == 3 || tokens->e_type == 4 || tokens->e_type == 5)
+		return (syntax_error(0, tokens->e_type));
 	while (tokens->next)
 	{
 		token = tokens;
@@ -73,8 +75,6 @@ int			ok_to_parser(t_token *tokens, t_terminal *term)
 		if (token_next)
 		{
 			if (check_syntax_error(token->e_type, token_next->e_type))
-				return (syntax_error(token->e_type, token_next->e_type));
-			if (token_next->e_type == 3 && token->e_type == 3)
 				return (syntax_error(token->e_type, token_next->e_type));
 		}
 		tokens = tokens->next;

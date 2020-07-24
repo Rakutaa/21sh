@@ -6,7 +6,7 @@
 /*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:36:28 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/24 14:18:23 by vtran            ###   ########.fr       */
+/*   Updated: 2020/07/24 14:50:17 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,54 +21,7 @@ int				is_buildin(char *str)
 	return (0);
 }
 
-static char		*path_join(char *str1, char *str2)
-{
-	size_t		i;
-	char		*ret;
-
-	i = ft_strlen(str1);
-	if (str1[i - 1] == '/')
-		ret = ft_strjoin(str1, str2);
-	else
-	{
-		str1 = ft_strjoin(str1, "/");
-		ret = ft_strjoin(str1, str2);
-		free(str1);
-	}
-	return (ret);
-}
-
-void			add_exec_path(char *name, t_list *env, t_ast_n *facto)
-{
-	char		**paths;
-	char		*env_path_value;
-	int			i;
-	char		*path;
-
-	if (access(name, F_OK) == 0)
-		facto->nodes.t_factor.path_join = ft_strdup(name);
-	if (access(name, F_OK) == 0)
-		return ;
-	i = -1;
-	env_path_value = value_lookup(env, "PATH");
-	if (!env_path_value)
-		return ;
-	paths = ft_strsplit(env_path_value, ':');
-	while (paths[++i])
-	{
-		path = path_join(paths[i], name);
-		if (access(path, F_OK) == 0)
-		{
-			facto->nodes.t_factor.path_join = path;
-			break ;
-		}
-		free(path);
-	}
-	ft_arrfree(paths);
-}
-
-t_ast_n			*create_factor(char **cmnd, t_re_ag *list,
-				t_list *env)
+t_ast_n			*create_factor(char **cmnd, t_re_ag *list)
 {
 	t_ast_n		*facto;
 
@@ -78,11 +31,7 @@ t_ast_n			*create_factor(char **cmnd, t_re_ag *list,
 	if (is_buildin(cmnd[0]))
 		facto->nodes.t_factor.e_factor = BUILDIN;
 	else
-	{
 		facto->nodes.t_factor.e_factor = EXEC;
-		facto->nodes.t_factor.path_join = NULL;
-		add_exec_path(cmnd[0], env, facto);
-	}
 	facto->nodes.t_factor.cmds = cmnd;
 	facto->nodes.t_factor.list = list;
 	return (facto);

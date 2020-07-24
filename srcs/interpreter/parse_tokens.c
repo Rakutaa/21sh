@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_tokens.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/26 09:59:44 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/23 01:37:22 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/24 15:51:27 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "parser_ast.h"
 
 t_ast_n			*tokens_to_factor(t_token *head, int i,
-t_re_ag *redir, t_list *env)
+t_re_ag *redir)
 {
 	char		**cmd;
 	int			count;
@@ -27,11 +27,11 @@ t_re_ag *redir, t_list *env)
 		cmd[count] = head->value;
 		head = move_token_n_times(head, 1);
 	}
-	return (create_factor(cmd, redir, env));
+	return (create_factor(cmd, redir));
 }
 
 t_ast_n			*tokens_to_ast_node(t_token *head, t_token *last,
-t_list *env, t_terminal *term)
+				t_terminal *term)
 {
 	t_token		*tmp;
 	t_re_ag		*redir;
@@ -52,7 +52,7 @@ t_list *env, t_terminal *term)
 		i++;
 		tmp = move_token_n_times(tmp, 1);
 	}
-	return (tokens_to_factor(head, i, redir, env));
+	return (tokens_to_factor(head, i, redir));
 }
 
 void			tokens_to_parser_node(t_parser_l **list,
@@ -65,7 +65,7 @@ t_token *head, t_token *last, t_terminal *term)
 	token_nodeobj = NULL;
 	ast_nodeobj->e_node = AST;
 	ast_nodeobj->nodes.t_a.ast_nodeobj =
-	tokens_to_ast_node(head, last, term->env->linked, term);
+	tokens_to_ast_node(head, last, term);
 	if ((last->e_type == 3 || last->e_type == 5) && last->next)
 	{
 		token_nodeobj = malloc(sizeof(t_parser_n));
