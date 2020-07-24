@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 13:08:11 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/23 01:25:03 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/24 10:39:17 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int					syntax_error(int i, int j);
 void				free_tokens(t_token *list);
 int					not_pipe_semi_re(t_lexer *lexer);
 void				add_token(t_token **tokens, t_token *new);
-void				add_null_redirection(t_token *tokens, t_token *head, t_token **next);
+void				add_null_redirection(t_token *tokens, t_token *head, \
+					t_token **next);
 t_token				*get_token(t_lexer *lexer, t_terminal *term);
 void				free_env(t_env *env);
 void				free_table(char	**table);

@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:09:04 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/23 22:58:51 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/24 10:38:20 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static void	move_cursor_up(t_terminal *term)
 {
 	int result;
-	
+
 	result = term->in->index - term->size.ws_col;
 	if (result >= 0)
 		term->in->index = result;

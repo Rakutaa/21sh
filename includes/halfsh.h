@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   halfsh.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/23 01:23:36 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/24 10:38:49 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <stdbool.h>
-
 
 # define HISTFILE ".history"
 # define HISTSIZE 10
@@ -46,7 +45,6 @@ typedef struct		s_env
 	t_list			*linked;
 	char			**table;
 }					t_env;
-
 
 typedef struct		s_terminal
 {

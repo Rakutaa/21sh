@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/22 23:59:08 by hege              #+#    #+#             */
-/*   Updated: 2020/07/23 00:16:00 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/24 10:37:25 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static char			*get_word(t_lexer *lexer)
 static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 {
 	unsigned int	start;
-	char			*str;
 
 	lexer->i++;
 	start = lexer->i;
@@ -37,7 +36,8 @@ static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 			init_input(term->in);
 			ft_memmove(term->in->prompt, QUOTE, 3);
 			start_editor(term);
-			if (ft_strlen(lexer->data) + 1 + ft_strlen(term->in->string) >= ARG_MAX)
+			if (ft_strlen(lexer->data) + 1 + \
+			ft_strlen(term->in->string) >= ARG_MAX)
 				break ;
 			ft_strcat(lexer->data, "\n");
 			ft_strcat(lexer->data, term->in->string);
@@ -48,9 +48,8 @@ static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 		}
 		lexer->i++;
 	}
-	str = ft_strsub(lexer->data, start, lexer->i - start);
 	lexer->i++;
-	return (str);
+	return (ft_strsub(lexer->data, start, lexer->i - start));
 }
 
 t_token				*create_token(int type, char *value)

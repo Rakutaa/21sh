@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_lexer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/23 12:32:50 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/24 10:37:47 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,6 @@ void				if_is_ag_re_do_ag_re(int i, t_lexer *lexer)
 	else
 		add_token(&lexer->tokens, get_agr(lexer));
 }
-
-// int					check_first_token(t_token *tokens)
-// {
-// 	if (!tokens)
-// 		return (0);
-// 	if (tokens->e_type == TOKEN_SEMI || tokens->e_type == TOKEN_PIPE ||
-// 	tokens->e_type == TOKEN_REDIRECT)
-// 		return (0);
-// 	return (1);
-// }
 
 void				init_lexer(t_terminal *term)
 {
