@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/22 23:59:08 by hege              #+#    #+#             */
-/*   Updated: 2020/07/24 10:37:25 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/24 16:16:09 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char			*get_string(t_lexer *lexer, char quote, t_terminal *term)
 		lexer->i++;
 	}
 	lexer->i++;
-	return (ft_strsub(lexer->data, start, lexer->i - start));
+	return (ft_strsub(lexer->data, start, lexer->i - start - 1));
 }
 
 t_token				*create_token(int type, char *value)
