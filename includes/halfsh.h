@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/24 10:38:49 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/24 10:46:54 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@
 # include <stdbool.h>
 
 # define HISTFILE ".history"
-# define HISTSIZE 10
-# define FCFILE "/private/tmp/21shfc"
+# define HISTSIZE 20
 # define ARG_MAX 262144
 # define INIT "$> "
 # define QUOTE "q> "

@@ -50,10 +50,3 @@ $> ./21sh
 | <kbd>ctrl+k</kbd> | Cut the part of the current command *after* the cursor, and add it to the internal clipboard buffer. |
 | <kbd>ctrl+u</kbd> | Cut the part of the current command *before* the cursor, and add it to the internal clipboard buffer. |
 | <kbd>ctrl+p</kbd> | Paste contents of the internal clipboad to the current command. |
-
-### MacOS Mojave clipboard shortcuts
-| KEY  | FUNCTION |
-| ------------- | ------------- |
-| <kbd>option+c</kbd> | Copy the current command into OS clipboard. |
-| <kbd>option+x</kbd> | Cut the current command into OS clipboard. |
-| <kbd>option+v</kbd> | Paste contents of the OS clipboad to the current command. |
