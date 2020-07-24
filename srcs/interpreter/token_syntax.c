@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/22 23:58:05 by hege              #+#    #+#             */
-/*   Updated: 2020/07/23 12:32:27 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/24 14:00:55 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int			ok_to_parser(t_token *tokens, t_terminal *term)
 	t_token *token;
 	t_token *token_next;
 
+	token_next = NULL;
 	if (tokens->e_type == TOKEN_SEMI || tokens->e_type == TOKEN_PIPE)
 		return (syntax_error(1, tokens->e_type));
 	while (tokens->next)
@@ -79,9 +80,10 @@ int			ok_to_parser(t_token *tokens, t_terminal *term)
 		tokens = tokens->next;
 	}
 	if (token_next && token_next->e_type == TOKEN_SEMI)
+	{
 		free_tokens(tokens);
-	if (token_next && token_next->e_type == TOKEN_SEMI)
 		token->next = NULL;
+	}
 	if (token_next && token_next->e_type == TOKEN_PIPE)
 		return (end_with_pipe(term));
 	return (1);

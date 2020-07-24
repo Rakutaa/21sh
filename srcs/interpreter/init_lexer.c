@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_lexer.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: vtran <vtran@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/13 14:53:00 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/24 10:37:47 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/24 14:02:09 by vtran            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,13 @@ void				init_lexer(t_terminal *term)
 	{
 		if (ft_isspace(lexer->data[lexer->i]))
 		{
-			lexer->i++;
+			while (ft_isspace(lexer->data[lexer->i]))
+				lexer->i++;
 			if (lexer->i > 0)
 				if_is_ag_re_do_ag_re(is_re_ag(lexer), lexer);
 			continue ;
 		}
-		else
+		else if (lexer->data[lexer->i])
 			add_token(&lexer->tokens, get_token(lexer, term));
 		if (term->in->sigint)
 			break ;
