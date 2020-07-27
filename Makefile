@@ -6,7 +6,7 @@
 #    By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/02/10 12:10:34 by vkuokka           #+#    #+#              #
-#    Updated: 2020/07/23 14:36:11 by vkuokka          ###   ########.fr        #
+#    Updated: 2020/07/27 14:55:16 by vkuokka          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,7 +65,6 @@ FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 $(NAME):
-	-@git clone https://github.com/vkuokka/42-libft.git libft
 	@echo "Building library..."
 	@make -C libft/
 	@echo "Compiling program..."
