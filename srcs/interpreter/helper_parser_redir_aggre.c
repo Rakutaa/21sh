@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper_parser_redir_aggre.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hege <hege@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 17:49:53 by vtran             #+#    #+#             */
-/*   Updated: 2020/07/23 00:42:08 by hege             ###   ########.fr       */
+/*   Updated: 2020/07/27 14:36:57 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_re_ag *node, char *file, t_terminal *term)
 		ft_memmove(term->in->prompt, HEREDOC, 4);
 		start_editor(term);
 		ft_putchar('\n');
-		if (ft_strequ(term->in->string, file))
+		if (ft_strequ(term->in->string, file) || term->in->sigeof)
 			break ;
 		ft_putendl_fd(term->in->string, node->node.t_re.heredoc[1]);
 	}

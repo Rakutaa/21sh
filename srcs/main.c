@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 18:59:01 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/23 21:12:02 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/27 14:47:21 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static void		program_loop(t_terminal *term)
 		term->h_current = NULL;
 		init_input(term->in);
 		start_editor(term);
+		if (term->in->sigeof)
+			break ;
 		ft_putchar('\n');
 		if (term->in->string[0] && !term->in->sigint)
 		{

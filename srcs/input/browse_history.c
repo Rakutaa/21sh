@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:46 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/13 11:50:59 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/27 14:46:14 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ static void	search_history(t_terminal *term)
 		else if (!ft_isprint(sum) && sum != BACK)
 			return ;
 	}
+	term->in->sigint ? init_input(term->in) : 0;
 }
 
 void		browse_history(t_terminal *term, int sum)

@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/21 11:08:20 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/24 10:46:54 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/27 14:30:05 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct		s_input
 	int				index;
 	int				line;
 	bool			sigint;
+	bool			sigeof;
 }					t_input;
 
 typedef struct		s_env

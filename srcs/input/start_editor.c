@@ -6,7 +6,7 @@
 /*   By: vkuokka <vkuokka@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/08 19:00:22 by vkuokka           #+#    #+#             */
-/*   Updated: 2020/07/23 21:57:52 by vkuokka          ###   ########.fr       */
+/*   Updated: 2020/07/27 14:46:25 by vkuokka          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ static void	editor_loop(t_terminal *term)
 			add_char(term, sum);
 		else
 			search_action(term, sum);
-		if (term->in->sigint)
-			init_input(term->in);
+		if (term->in->sigeof)
+			break ;
 		print_input(term);
 	}
 }
